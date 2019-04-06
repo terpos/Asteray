@@ -6,7 +6,11 @@ KNOWN_ISSUES 4/6/2019
 
 - No destroy animation for enemies and bosses - will implement it later
 
-- No info bosses and enemies - will do that later but I will upload a doc with info
+- No game over reset - add the reset after game over later
+
+- close the game with escape - will add the close with mouse later
+
+- No info bosses and enemies - will do that later
 
 - No info for weapon - will implement it later
 
@@ -24,6 +28,6 @@ KNOWN_ISSUES 4/6/2019
 
 - no enemy while the background is moving - will implement it later
 
-- physics is not accurate in the game - Not intended to put it in this game but in the future games I will with an external physics library
+- physics is not accurate in the game - Not intended to put it in this game but in the future games I will use an external physics library
 
 - did not put comments in the code - will do it after I finish the game
