@@ -1,0 +1,29 @@
+KNOWN_ISSUES 4/6/2019
+
+- No menu - tried implementing and fixing it using OOP but does not work
+
+- No pause - tried implementing and fixing it but does not work
+
+- No destroy animation for enemies and bosses - will implement it later
+
+- No info bosses and enemies - will do that later but I will upload a doc with info
+
+- No info for weapon - will implement it later
+
+- none of the special weapon destroys the mini boss nor bosses - will do it later
+
+- no design for the splash screen - Will implement it on monday
+
+- some music is a bit distorted - Will fix it after all implementation
+
+- jagged movement - will fix it
+
+- no health refills after bosses - will implement it later
+
+- no cutscenes after the boss and mini bosses are defeated - will implement it later
+
+- no enemy while the background is moving - will implement it later
+
+- physics is not accurate in the game - Not intended to put it in this game but in the future games I will with an external physics library
+
+- did not put comments in the code - will do it after I finish the game
