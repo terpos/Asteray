@@ -1,0 +1,467 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Source Files\Game Window">
+      <UniqueIdentifier>{a752cf30-32ca-49b6-ab0c-e5c8139b3c65}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Window\enemy">
+      <UniqueIdentifier>{efe3aa25-9fed-481b-a758-c8e2dcd4b5a0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Window\weapon">
+      <UniqueIdentifier>{c12e09cb-9023-410d-852a-b1a96abc6f5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Window">
+      <UniqueIdentifier>{3446c562-2a72-4f2d-a79a-3a459b1192c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Window\weapon">
+      <UniqueIdentifier>{b07d1c11-8640-488b-9b00-e45bbae75426}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Window\Enemy">
+      <UniqueIdentifier>{4d4dfe6a-b449-4bd8-b701-49f4891820f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Window\screen_state">
+      <UniqueIdentifier>{32ac29a4-9a6b-44f2-b441-438ca8e8140c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Window\screen_state">
+      <UniqueIdentifier>{fcf566fa-7395-410b-90d2-41fa47a029f7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Source.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="screen_state.cpp">
+      <Filter>Source Files\Game Window\screen_state</Filter>
+    </ClCompile>
+    <ClCompile Include="game_loop.cpp">
+      <Filter>Source Files\Game Window\screen_state</Filter>
+    </ClCompile>
+    <ClCompile Include="screen_manager.cpp">
+      <Filter>Source Files\Game Window\screen_state</Filter>
+    </ClCompile>
+    <ClCompile Include="lazer.cpp">
+      <Filter>Source Files\Game Window\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="enemies.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="blobby.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>Source Files\Game Window</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Source Files\Game Window</Filter>
+    </ClCompile>
+    <ClCompile Include="Main_menu.cpp">
+      <Filter>Source Files\Game Window\screen_state</Filter>
+    </ClCompile>
+    <ClCompile Include="Mechanism.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="weaponManager.cpp">
+      <Filter>Source Files\Game Window\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Source Files\Game Window\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Status.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy_Manager.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Asterix.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Epolice.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Haych.cpp">
+      <Filter>Source Files\Game Window\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Haychba.cpp">
+      <Filter>Source Files\Game Window\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Icet.cpp">
+      <Filter>Source Files\Game Window\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Inferred.cpp">
+      <Filter>Source Files\Game Window\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Jupiball.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Kamekoset.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Mpolice.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Satusphere.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Sonic_Wave.cpp">
+      <Filter>Source Files\Game Window\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Spaceship.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Splash_Screen.cpp">
+      <Filter>Source Files\Game Window\screen_state</Filter>
+    </ClCompile>
+    <ClCompile Include="Spyder.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Volcanon.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Wyrm.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Xybtofy.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Ziggonet.cpp">
+      <Filter>Source Files\Game Window\weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools_manager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Ammo.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Stages.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Animate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="boss.cpp">
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="mini_boss.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Spartak_ball.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Molten_shot.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="v_beam.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="game_loop.h">
+      <Filter>Header Files\Game Window\screen_state</Filter>
+    </ClInclude>
+    <ClInclude Include="screen_manager.h">
+      <Filter>Header Files\Game Window\screen_state</Filter>
+    </ClInclude>
+    <ClInclude Include="screen_state.h">
+      <Filter>Header Files\Game Window\screen_state</Filter>
+    </ClInclude>
+    <ClInclude Include="enemies.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="blobby.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="lazer.h">
+      <Filter>Header Files\Game Window\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>Header Files\Game Window</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files\Game Window</Filter>
+    </ClInclude>
+    <ClInclude Include="global.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Main_menu.h">
+      <Filter>Header Files\Game Window\screen_state</Filter>
+    </ClInclude>
+    <ClInclude Include="Mechanism.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="weaponManager.h">
+      <Filter>Header Files\Game Window\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Header Files\Game Window\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Status.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy_Manager.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Asterix.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Epolice.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Haych.h">
+      <Filter>Header Files\Game Window\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Haychba.h">
+      <Filter>Header Files\Game Window\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Icet.h">
+      <Filter>Header Files\Game Window\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Inferred.h">
+      <Filter>Header Files\Game Window\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Jupiball.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Kamekoset.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Mpolice.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Satusphere.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Sonic_Wave.h">
+      <Filter>Header Files\Game Window\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Splash_Screen.h">
+      <Filter>Header Files\Game Window\screen_state</Filter>
+    </ClInclude>
+    <ClInclude Include="Spyder.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Volcanon.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Wyrm.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Xybtofy.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Ziggonet.h">
+      <Filter>Header Files\Game Window\weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Spaceship.h">
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools_manager.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Ammo.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Stages.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="boss.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Animate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="mini_boss.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spartak_ball.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Molten_shot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="v_beam.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="Disfigurement.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="E_defense gate.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="E_police.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Electrical_charge.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Electrical_charge2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="electricity.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="electricity2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Enerball.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="fireammo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="haych.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Haychbablack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="haychbarammo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Haychbawhite.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Haychblack.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Haychwhite.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="health.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="hubble drawing.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Icazor.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Icazor2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="iceammo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="jupiball.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Kamekoset.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="kamet-khan.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="kamet-khan2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="lazer_blue.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="lazer_red.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="lazer_yellow.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="M_defense_gate.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="m_police.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Martian_B.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Martian_B2.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="redfire.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="satusphere.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ship.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sonicwavelower.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sonicwavemid.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="sonicwaveupper.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="spaceship.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Spartak.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Spartak_energized.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="spyder.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="volcanon.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="waveammo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="wyrm.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Xorgana.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="xybtofy.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="ziggonetammo.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="zigonnet.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Asterix.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="blobby.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="Bluefire.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Programming Log.txt" />
+  </ItemGroup>
+</Project>

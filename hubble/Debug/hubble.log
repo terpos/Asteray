@@ -1,0 +1,14 @@
+﻿  game_loop.cpp
+C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\hubble\game_loop.cpp(167): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\hubble\game_loop.cpp(185): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\hubble\game_loop.cpp(199): warning C4102: 'GAMEOVER': unreferenced label
+C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\hubble\game_loop.cpp(1012): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\hubble\game_loop.cpp(1131): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\hubble\game_loop.cpp(1162): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\hubble\game_loop.cpp(1459): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\hubble\game_loop.cpp(1494): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\hubble\game_loop.cpp(1512): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\hubble\game_loop.cpp(1531): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\hubble\game_loop.cpp(1537): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\hubble\game_loop.cpp(1674): warning C4018: '<': signed/unsigned mismatch
+  hubble.vcxproj -> C:\Users\gebeid\Software Programming\Software and Programs\c++\c++ projects\visual studio\project\Game Development\Asteray Source Code\Debug\hubble.exe
