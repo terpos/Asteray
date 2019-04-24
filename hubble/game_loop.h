@@ -78,7 +78,7 @@ private:
 	Animate ani;
 	Tools_manager T;
 	Enemy_Manager E;
-	//Enemy_Manager E2;
+	Enemy_Manager E2;
 
 	weaponManager shipWeapon;
 	collision col;
