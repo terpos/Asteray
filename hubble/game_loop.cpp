@@ -1334,7 +1334,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		col.win_collsion(spaceship);
 		col.Enemy_boundary_collision(foes, REBOUND);
-		col.Enemy_boundary_collision(foes_while_scroll, REBOUND);
+		col2.Enemy_boundary_collision(foes_while_scroll, REBOUND);
 
 		col.Boss_boundary_collision(E, b);
 
@@ -1349,30 +1349,30 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		col.enemy_gets_damaged(E, T, am, t, foes, hbar, stat, destroy, status, sc);
 		col.enemy_gets_damaged(E, T, am, t, foes, wave, stat, destroy, status, sc);
 
-		col.enemy_gets_damaged(E, T, am, t, foes_while_scroll, laser, stat, destroy, status, sc);
-		col.enemy_gets_damaged(E, T, am, t, foes_while_scroll, Ice, stat, destroy, status, sc);
-		col.enemy_gets_damaged(E, T, am, t, foes_while_scroll, Fire, stat, destroy, status, sc);
-		col.enemy_gets_damaged(E, T, am, t, foes_while_scroll, Lightning, stat, destroy, status, sc);
-		col.enemy_gets_damaged(E, T, am, t, foes_while_scroll, h, stat, destroy, status, sc);
-		col.enemy_gets_damaged(E, T, am, t, foes_while_scroll, hbar, stat, destroy, status, sc);
-		col.enemy_gets_damaged(E, T, am, t, foes_while_scroll, wave, stat, destroy, status, sc);
+		col2.enemy_gets_damaged(E, T, am, t, foes_while_scroll, laser, stat, destroy, status, sc);
+		col2.enemy_gets_damaged(E, T, am, t, foes_while_scroll, Ice, stat, destroy, status, sc);
+		col2.enemy_gets_damaged(E, T, am, t, foes_while_scroll, Fire, stat, destroy, status, sc);
+		col2.enemy_gets_damaged(E, T, am, t, foes_while_scroll, Lightning, stat, destroy, status, sc);
+		col2.enemy_gets_damaged(E, T, am, t, foes_while_scroll, h, stat, destroy, status, sc);
+		col2.enemy_gets_damaged(E, T, am, t, foes_while_scroll, hbar, stat, destroy, status, sc);
+		col2.enemy_gets_damaged(E, T, am, t, foes_while_scroll, wave, stat, destroy, status, sc);
 
 		E.update(foes, b, mb, ball, mball, v, ani);
 		E.update(foes_while_scroll, b, mb, ball, mball, v, ani);
 
 
 		col.enemy_dies(T, am, t, foes, destroy);
-		col.enemy_dies(T, am, t, foes_while_scroll, destroy);
+		col2.enemy_dies(T, am, t, foes_while_scroll, destroy);
 
 	
 		col.player_gets_tool(spaceship, E, foes, t, am, stat, pickup, status, health, ammo);
-		col.player_gets_tool(spaceship, E, foes_while_scroll, t, am, stat, pickup, status, health, ammo);
+		col2.player_gets_tool(spaceship, E, foes_while_scroll, t, am, stat, pickup, status, health, ammo);
 
 
 		col.player_gets_damaged(E, mb, b, foes, spaceship, stat, hit, status, ev, health);
 		col.player_gets_damaged(E, ball, mball, v, spaceship, stat, hit, status, ev, health);
 
-		col.player_gets_damaged(E, mb, b, foes_while_scroll, spaceship, stat, hit, status, ev, health);
+		col2.player_gets_damaged(E, mb, b, foes_while_scroll, spaceship, stat, hit, status, ev, health);
 
 
 		col.Ball_gets_redirected(E, ball, laser, ballreflect, bossdefeated);

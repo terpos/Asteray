@@ -78,9 +78,11 @@ private:
 	Animate ani;
 	Tools_manager T;
 	Enemy_Manager E;
-	
+	//Enemy_Manager E2;
+
 	weaponManager shipWeapon;
 	collision col;
+	collision col2;
 	Status stat;
 	Stages s;
 
