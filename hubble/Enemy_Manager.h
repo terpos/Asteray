@@ -42,6 +42,8 @@ public:
 	
 	void update(std::vector <enemies*> &e, std::vector <boss*> &b, std::vector <mini_boss*> &mb, std::vector <Spartak_ball*> &ball, std::vector <Molten_shot*> &mball,
 		std::vector <v_beam*> &v, Animate &a);
+
+	void update(std::vector<enemies*>& e);
 	
 	void renderenemy(std::vector <enemies*> &e);
 	void renderboss(std::vector <boss*> &b, std::vector <Spartak_ball*> &ball, std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, Animate a, int &frame);

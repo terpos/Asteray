@@ -490,6 +490,20 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 }
 
+void Enemy_Manager::update(std::vector<enemies*>& e)
+{
+	//a.increment_frame();
+
+	for (int i = 0; i < e.size(); i++)
+	{
+		e[i]->update();
+		e[i]->countdown_duration();
+		e[i]->release();
+	}
+
+}
+
+
 void Enemy_Manager::renderenemy(std::vector<enemies*>& e)
 {
 	for (int i = 0; i < e.size(); i++)

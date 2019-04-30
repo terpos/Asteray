@@ -5,10 +5,10 @@ C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(200): warning C410
 C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1013): warning C4018: '<': signed/unsigned mismatch
 C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1132): warning C4018: '<': signed/unsigned mismatch
 C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1163): warning C4018: '<': signed/unsigned mismatch
-C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1460): warning C4018: '<': signed/unsigned mismatch
-C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1495): warning C4018: '<': signed/unsigned mismatch
-C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1513): warning C4018: '<': signed/unsigned mismatch
-C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1532): warning C4018: '<': signed/unsigned mismatch
-C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1538): warning C4018: '<': signed/unsigned mismatch
-C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1675): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1461): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1496): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1514): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1533): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1539): warning C4018: '<': signed/unsigned mismatch
+C:\Users\gebeid\Documents\GitHub\Asteray\hubble\game_loop.cpp(1677): warning C4018: '<': signed/unsigned mismatch
   hubble.vcxproj -> C:\Users\gebeid\Documents\GitHub\Asteray\Debug\hubble.exe
