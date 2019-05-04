@@ -14,7 +14,7 @@ game_loop::game_loop()
 	frame = 0;
 	textframe = 0;
 	num_of_weapon = 1;
-	backgroundvol = .5;
+	backgroundvol = 1.5;
 
 	unlockweapon[ICET] = true;
 	unlockweapon[INFERRED] = false;
@@ -113,6 +113,14 @@ void game_loop::load_stuff()
 	Ballreflect = al_load_sample("49673__ejfortin__energy-short-sword-2.ogg");
 	Bosshit = al_load_sample("404786__owlstorm__retro-video-game-sfx-reflect.ogg");
 	
+	Earth = al_create_sample_instance(earth);
+	Earth_Factory = al_create_sample_instance(earth_factory);
+	Mars = al_create_sample_instance(mars);
+	Mars_Nest = al_create_sample_instance(mars_nest);
+	Astroid = al_create_sample_instance(astroid);
+	Boss = al_create_sample_instance(boss);
+	Saturn = al_create_sample_instance(saturn);
+	Final_Boss = al_create_sample_instance(final_boss);
 
 	lsr = al_create_sample_instance(ls);
 	ice = al_create_sample_instance(ic);
@@ -135,6 +143,14 @@ void game_loop::load_stuff()
 	ballreflect = al_create_sample_instance(Ballreflect);
 	bosshit = al_create_sample_instance(Bosshit);
 
+	al_attach_sample_instance_to_mixer(Earth, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(Earth_Factory, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(Mars, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(Mars_Nest, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(Astroid, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(Boss, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(Saturn, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(Final_Boss, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(lsr, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(ice, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(fire, al_get_default_mixer());
@@ -151,7 +167,15 @@ void game_loop::load_stuff()
 	al_attach_sample_instance_to_mixer(ballreflect, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(bosshit, al_get_default_mixer());
 
-
+	al_set_sample_instance_playmode(Earth, ALLEGRO_PLAYMODE_LOOP);
+	al_set_sample_instance_playmode(Earth_Factory, ALLEGRO_PLAYMODE_LOOP);
+	al_set_sample_instance_playmode(Mars, ALLEGRO_PLAYMODE_LOOP);
+	al_set_sample_instance_playmode(Mars_Nest, ALLEGRO_PLAYMODE_LOOP);
+	al_set_sample_instance_playmode(Astroid, ALLEGRO_PLAYMODE_LOOP);
+	al_set_sample_instance_playmode(Saturn, ALLEGRO_PLAYMODE_LOOP);
+	al_set_sample_instance_playmode(Boss, ALLEGRO_PLAYMODE_LOOP);
+	al_set_sample_instance_playmode(Final_Boss, ALLEGRO_PLAYMODE_LOOP);
+	
 	for (int i = 0; i < 3; i++)
 	{
 		al_set_sample_instance_gain(pickup[i], 2);
@@ -246,7 +270,8 @@ CHANGESTAGE:
 			{
 				battle = false;
 				s.scroll_down();
-				
+				al_stop_sample_instance(Earth);
+				al_set_sample_instance_position(Earth, 0);
 				goto LEVELUP;
 			}
 
@@ -255,7 +280,7 @@ CHANGESTAGE:
 			update_loop(ev, q);
 		}
 
-		al_stop_samples();
+		//al_stop_samples();
 		while (stat.getlvl() == 3)
 		{
 			Event_listenter(ev, q);
@@ -289,7 +314,7 @@ CHANGESTAGE:
 
 		}
 	}
-
+	al_stop_sample_instance(Boss);
 	while (s.get_stage() == MARS)
 	{
 		//b->set_boss(-1);
@@ -322,8 +347,10 @@ CHANGESTAGE:
 			update_loop(ev, q);
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(mars, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+				//al_play_sample(mars, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+				al_set_sample_instance_gain(Mars, backgroundvol);
+				al_set_sample_instance_speed(Mars, 1);
+				al_play_sample_instance(Mars);
 			}
 		}
 
@@ -334,6 +361,7 @@ CHANGESTAGE:
 		
 			if (mb.size() == 0 && battle)
 			{
+				al_stop_sample_instance(Mars);
 				battle = false;
 				s.scroll_down();
 				goto LEVELUP2;
@@ -342,8 +370,10 @@ CHANGESTAGE:
 			update_loop(ev, q);
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(mars, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+				//al_play_sample(mars, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+				al_set_sample_instance_gain(Mars, backgroundvol);
+				al_set_sample_instance_speed(Mars, 1);
+				al_play_sample_instance(Mars);
 			}
 		}
 		al_stop_samples();
@@ -361,8 +391,10 @@ CHANGESTAGE:
 			update_loop(ev, q);
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(mars_nest, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+				//al_play_sample(mars_nest, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+				al_set_sample_instance_gain(Mars_Nest, backgroundvol);
+				al_set_sample_instance_speed(Mars_Nest, 1);
+				al_play_sample_instance(Mars_Nest);
 			}
 		}
 
@@ -384,7 +416,7 @@ CHANGESTAGE:
 			update_loop(ev, q);
 		}
 	}
-
+	al_stop_sample_instance(Boss);
 	while (s.get_stage() == AST)
 	{
 		//b->set_boss(-1);
@@ -460,8 +492,10 @@ CHANGESTAGE:
 			update_loop(ev, q);
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+				al_set_sample_instance_gain(Astroid, backgroundvol);
+				al_set_sample_instance_speed(Astroid, 1);
+				al_play_sample_instance(Astroid);
 			}
 		}
 
@@ -507,8 +541,10 @@ CHANGESTAGE:
 			update_loop(ev, q);
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+				al_set_sample_instance_gain(Astroid, backgroundvol);
+				al_set_sample_instance_speed(Astroid, 1);
+				al_play_sample_instance(Astroid);
 			}
 		}
 
@@ -554,8 +590,10 @@ CHANGESTAGE:
 			update_loop(ev, q);
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+				al_set_sample_instance_gain(Astroid, backgroundvol);
+				al_set_sample_instance_speed(Astroid, 1);
+				al_play_sample_instance(Astroid);
 			}
 		}
 
@@ -602,8 +640,10 @@ CHANGESTAGE:
 			update_loop(ev, q);
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+				al_set_sample_instance_gain(Astroid, backgroundvol);
+				al_set_sample_instance_speed(Astroid, 1);
+				al_play_sample_instance(Astroid);
 			}
 		}
 
@@ -649,8 +689,10 @@ CHANGESTAGE:
 			update_loop(ev, q);
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+				al_set_sample_instance_gain(Astroid, backgroundvol);
+				al_set_sample_instance_speed(Astroid, 1);
+				al_play_sample_instance(Astroid);
 			}
 		}
 
@@ -696,8 +738,10 @@ CHANGESTAGE:
 			update_loop(ev, q);
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+				al_set_sample_instance_gain(Astroid, backgroundvol);
+				al_set_sample_instance_speed(Astroid, 1);
+				al_play_sample_instance(Astroid);
 			}
 		}
 
@@ -742,8 +786,10 @@ CHANGESTAGE:
 			update_loop(ev, q);
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+				al_set_sample_instance_gain(Astroid, backgroundvol);
+				al_set_sample_instance_speed(Astroid, 1);
+				al_play_sample_instance(Astroid);
 			}
 		}
 
@@ -768,11 +814,13 @@ CHANGESTAGE:
 
 			if (s.get_y() == 0 && !battle && lvl == 8)
 			{
-				al_stop_samples();
+				al_stop_sample_instance(Astroid);
 				if (spaceship.size() > 0)
 				{
-					al_play_sample(boss, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
-
+					//al_play_sample(boss, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
+					al_set_sample_instance_gain(Boss, backgroundvol);
+					al_set_sample_instance_speed(Boss, 1);
+					al_play_sample_instance(Boss);
 				}				
 				battle = true;
 				E.spawn_boss(b, KAMETKHAN);
@@ -784,8 +832,10 @@ CHANGESTAGE:
 				s.scroll_down();
 				if (spaceship.size() > 0)
 				{
-					al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+					//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+					al_set_sample_instance_gain(Astroid, backgroundvol);
+					al_set_sample_instance_speed(Astroid, 1);
+					al_play_sample_instance(Astroid);
 				}
 			}
 
@@ -802,7 +852,7 @@ CHANGESTAGE:
 			update_loop(ev, q);
 		}
 	}
-
+	al_stop_sample_instance(Boss);
 	while (s.get_stage() == SATURN)
 	{
 		//b->set_boss(-1);
@@ -876,8 +926,10 @@ CHANGESTAGE:
 			update_loop(ev, q);
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(saturn, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+				//al_play_sample(saturn, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+				al_set_sample_instance_gain(Saturn, backgroundvol);
+				al_set_sample_instance_speed(Saturn, 1);
+				al_play_sample_instance(Saturn);
 			}
 		}
 
@@ -922,8 +974,10 @@ CHANGESTAGE:
 			update_loop(ev, q);
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(saturn, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+				//al_play_sample(saturn, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+				al_set_sample_instance_gain(Saturn, backgroundvol);
+				al_set_sample_instance_speed(Saturn, 1);
+				al_play_sample_instance(Saturn);
 			}
 		}
 
@@ -948,13 +1002,15 @@ CHANGESTAGE:
 
 			if (s.get_y() == 0 && !battle && lvl == 3)
 			{
-				al_stop_samples();
+				al_stop_sample_instance(Saturn);
 				battle = true;
 				s.stop_moving();
 				if (spaceship.size() > 0)
 				{
-					al_play_sample(final_boss, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
-
+					//al_play_sample(final_boss, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
+					al_set_sample_instance_gain(Final_Boss, backgroundvol);
+					al_set_sample_instance_speed(Final_Boss, 1);
+					al_play_sample_instance(Final_Boss);
 				}
 				E.spawn_boss(b, XORGANA);
 			}
@@ -964,8 +1020,10 @@ CHANGESTAGE:
 				s.scroll_down();
 				if (spaceship.size() > 0)
 				{
-					al_play_sample(saturn, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-
+					//al_play_sample(saturn, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+					al_set_sample_instance_gain(Saturn, backgroundvol);
+					al_set_sample_instance_speed(Saturn, 1);
+					al_play_sample_instance(Saturn);
 				}
 			}
 
@@ -1185,7 +1243,10 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 						}
 
 						s.scroll_down();
-						al_play_sample(earth, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
+						//al_play_sample(earth, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
+						al_set_sample_instance_gain(Earth, backgroundvol);
+						al_set_sample_instance_speed(Earth, 1);
+						al_play_sample_instance(Earth);
 					}
 
 					else if ((s.get_y() < -1600 || s.get_y() > -1600) && stat.getlvl() == 2)
@@ -1196,7 +1257,9 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 						}
 
 						s.scroll_down();
-						al_play_sample(earth, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
+						al_set_sample_instance_gain(Earth, backgroundvol);
+						al_set_sample_instance_speed(Earth, 1);
+						al_play_sample_instance(Earth);
 					}
 
 					else if ((s.get_y() < -800 || s.get_y() > -800) && stat.getlvl() == 3)
@@ -1207,7 +1270,9 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 						}
 
 						s.scroll_down();
-						al_play_sample(earth_factory, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
+						al_set_sample_instance_gain(Earth_Factory, backgroundvol);
+						al_set_sample_instance_speed(Earth_Factory, 1);
+						al_play_sample_instance(Earth_Factory);
 					}
 
 					else if ((s.get_y() < 0 || s.get_y() > 0) && stat.getlvl() == 4)
@@ -1218,7 +1283,9 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 						}
 
 						s.scroll_down();
-						al_play_sample(earth_factory, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
+						al_set_sample_instance_gain(Earth_Factory, backgroundvol);
+						al_set_sample_instance_speed(Earth_Factory, 1);
+						al_play_sample_instance(Earth_Factory);
 					}
 				}
 			}
@@ -1318,7 +1385,13 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 			if (spaceship.size() > 0)
 			{
-				al_play_sample(boss, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
+				al_stop_sample_instance(Earth_Factory);
+				al_stop_sample_instance(Mars_Nest);
+				al_set_sample_instance_position(Earth_Factory, 0);
+				al_set_sample_instance_position(Mars_Nest, 0);
+				al_set_sample_instance_gain(Boss, backgroundvol);
+				al_set_sample_instance_speed(Boss, 1);
+				al_play_sample_instance(Boss);
 			}
 
 			if (stagenumber == EARTH)
@@ -1648,6 +1721,15 @@ void game_loop::destroy_stuff()
 	al_destroy_sample(Bosshit);
 
 	al_destroy_sample(Game_over);
+
+	al_destroy_sample_instance(Earth);
+	al_destroy_sample_instance(Earth_Factory);
+	al_destroy_sample_instance(Mars);
+	al_destroy_sample_instance(Mars_Nest);
+	al_destroy_sample_instance(Astroid);
+	al_destroy_sample_instance(Boss);
+	al_destroy_sample_instance(Saturn);
+	al_destroy_sample_instance(Final_Boss);
 
 	al_destroy_sample_instance(lsr);
 	al_destroy_sample_instance(ice);
