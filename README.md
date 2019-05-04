@@ -1,6 +1,6 @@
 # Asteray
 - Source Code for the game:
-  - It is written in the Visual Studio 2019 Community IDE & Visual Studio 2017 Express
+  - It is written in the Visual Studio 2019 Community IDE & Visual Studio 2017 Express IDE
   - The external library that is used to make this game is ALLEGRO 5
 - If you are interested in running this application, then DOWNLOAD:
   - Visual Studio 2019 Community Edition: https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&rel=16
