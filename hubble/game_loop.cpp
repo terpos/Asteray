@@ -317,16 +317,13 @@ CHANGESTAGE:
 	al_stop_sample_instance(Boss);
 	while (s.get_stage() == MARS)
 	{
-		//b->set_boss(-1);
 		s.set_y(-2800);
 		update = true;
 		battle = false;
 
 		Event_listenter(ev, q);
-
-		
-
 		update_loop(ev, q);
+	
 	LEVELUP2:
 
 		lvl++;
@@ -345,20 +342,13 @@ CHANGESTAGE:
 			}
 
 			update_loop(ev, q);
-			if (spaceship.size() > 0)
-			{
-				//al_play_sample(mars, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-				al_set_sample_instance_gain(Mars, backgroundvol);
-				al_set_sample_instance_speed(Mars, 1);
-				al_play_sample_instance(Mars);
-			}
+			
 		}
 
 		while (stat.getlvl() == 2)
 		{
 			Event_listenter(ev, q);
 
-		
 			if (mb.size() == 0 && battle)
 			{
 				al_stop_sample_instance(Mars);
@@ -368,15 +358,8 @@ CHANGESTAGE:
 			}
 
 			update_loop(ev, q);
-			if (spaceship.size() > 0)
-			{
-				//al_play_sample(mars, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-				al_set_sample_instance_gain(Mars, backgroundvol);
-				al_set_sample_instance_speed(Mars, 1);
-				al_play_sample_instance(Mars);
-			}
 		}
-		al_stop_samples();
+
 		while (stat.getlvl() == 3)
 		{
 			Event_listenter(ev, q);
@@ -389,13 +372,6 @@ CHANGESTAGE:
 			}
 
 			update_loop(ev, q);
-			if (spaceship.size() > 0)
-			{
-				//al_play_sample(mars_nest, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-				al_set_sample_instance_gain(Mars_Nest, backgroundvol);
-				al_set_sample_instance_speed(Mars_Nest, 1);
-				al_play_sample_instance(Mars_Nest);
-			}
 		}
 
 		while (stat.getlvl() == 4)
@@ -1195,7 +1171,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 {
-	std::cout << ev.type << std::endl;
+	//std::cout << ev.type << std::endl;
 	if (ev.type == ALLEGRO_EVENT_TIMER && update)
 	{
 		for (int i = 0; i < 6; i++)
@@ -1302,25 +1278,45 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 					if ((s.get_y() < -2400 || s.get_y() > -2400) && stat.getlvl() == 1)
 					{
 						s.scroll_down();
-						al_play_sample(mars, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
+						if (spaceship.size() > 0)
+						{
+							al_set_sample_instance_gain(Mars, backgroundvol);
+							al_set_sample_instance_speed(Mars, 1);
+							al_play_sample_instance(Mars);
+						}
 					}
 
 					else if ((s.get_y() < -1600 || s.get_y() > -1600) && stat.getlvl() == 2)
 					{
 						s.scroll_down();
-						al_play_sample(mars, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
+						if (spaceship.size() > 0)
+						{
+							al_set_sample_instance_gain(Mars, backgroundvol);
+							al_set_sample_instance_speed(Mars, 1);
+							al_play_sample_instance(Mars);
+						}
 					}
 
 					else if ((s.get_y() < -800 || s.get_y() > -800) && stat.getlvl() == 3)
 					{
 						s.scroll_down();
-						al_play_sample(mars_nest, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
+						if (spaceship.size() > 0)
+						{
+							al_set_sample_instance_gain(Mars_Nest, backgroundvol);
+							al_set_sample_instance_speed(Mars_Nest, 1);
+							al_play_sample_instance(Mars_Nest);
+						}
 					}
 
 					else if (s.get_y() < 0 && stat.getlvl() == 4)
 					{
 						s.scroll_down();
-						al_play_sample(mars_nest, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
+						if (spaceship.size() > 0)
+						{
+							al_set_sample_instance_gain(Mars_Nest, backgroundvol);
+							al_set_sample_instance_speed(Mars_Nest, 1);
+							al_play_sample_instance(Mars_Nest);
+						}
 					}
 				}
 			}
@@ -1377,7 +1373,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
-		else if (s.get_y() == 0 && !battle && lvl == 4)
+		else if (s.get_y() == 0 && !battle && (lvl == 4 || lvl == 8))
 		{
 			al_stop_samples();
 			battle = true;
