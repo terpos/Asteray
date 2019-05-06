@@ -9,7 +9,7 @@ game_loop::game_loop()
 	sc = 0;
 	pauseCounter = 0;
 	num_of_enemies = 0;
-	stagenumber = -1;
+	stagenumber = 1;
 	weaponsel = 0;
 	frame = 0;
 	textframe = 0;
@@ -57,12 +57,7 @@ game_loop::game_loop()
 	bossdefeated = false;
 	gameover = false;
 
-	//ballreflect = false;
-
-	
-
 	status = NULL;
-	//earth = NULL;
 }
 
 game_loop::~game_loop()
@@ -396,7 +391,6 @@ CHANGESTAGE:
 	while (s.get_stage() == AST)
 	{
 		//b->set_boss(-1);
-		al_stop_samples();
 		s.set_y(-2800);
 		update = true;
 		battle = false;
@@ -466,13 +460,7 @@ CHANGESTAGE:
 			}
 
 			update_loop(ev, q);
-			if (spaceship.size() > 0)
-			{
-				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-				al_set_sample_instance_gain(Astroid, backgroundvol);
-				al_set_sample_instance_speed(Astroid, 1);
-				al_play_sample_instance(Astroid);
-			}
+			
 		}
 
 		while (stat.getlvl() == 2)
@@ -484,7 +472,6 @@ CHANGESTAGE:
 				s.set_pause(true);
 				update = false;
 				draw = true;
-				//s.stop_moving();
 				render();
 			}
 
@@ -499,7 +486,6 @@ CHANGESTAGE:
 				battle = true;
 				s.stop_moving();
 				E.spawn_boss(b, SPARTAK);
-				//E.spawn_enemy(foes, enemy_health, rand() % 4, 5, MPOLICE);
 			}
 
 			if (s.get_y() < -2400 || s.get_y() > -2400)
@@ -515,13 +501,7 @@ CHANGESTAGE:
 			}
 
 			update_loop(ev, q);
-			if (spaceship.size() > 0)
-			{
-				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-				al_set_sample_instance_gain(Astroid, backgroundvol);
-				al_set_sample_instance_speed(Astroid, 1);
-				al_play_sample_instance(Astroid);
-			}
+			
 		}
 
 		while (stat.getlvl() == 3)
@@ -564,13 +544,7 @@ CHANGESTAGE:
 			}
 
 			update_loop(ev, q);
-			if (spaceship.size() > 0)
-			{
-				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-				al_set_sample_instance_gain(Astroid, backgroundvol);
-				al_set_sample_instance_speed(Astroid, 1);
-				al_play_sample_instance(Astroid);
-			}
+			
 		}
 
 		while (stat.getlvl() == 4)
@@ -596,7 +570,6 @@ CHANGESTAGE:
 			{
 				battle = true;
 				E.spawn_enemy(foes, enemy_health, rand() % 4, 6, ASTERIX);
-				//E2.spawn_enemy(foes, enemy_health, rand() % 4, 4, BLOBBY);
 				s.stop_moving();
 			}
 
@@ -614,13 +587,7 @@ CHANGESTAGE:
 			}
 
 			update_loop(ev, q);
-			if (spaceship.size() > 0)
-			{
-				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-				al_set_sample_instance_gain(Astroid, backgroundvol);
-				al_set_sample_instance_speed(Astroid, 1);
-				al_play_sample_instance(Astroid);
-			}
+			
 		}
 
 		while (stat.getlvl() == 5)
@@ -663,13 +630,7 @@ CHANGESTAGE:
 			}
 
 			update_loop(ev, q);
-			if (spaceship.size() > 0)
-			{
-				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-				al_set_sample_instance_gain(Astroid, backgroundvol);
-				al_set_sample_instance_speed(Astroid, 1);
-				al_play_sample_instance(Astroid);
-			}
+			
 		}
 
 		while (stat.getlvl() == 6)
@@ -712,13 +673,7 @@ CHANGESTAGE:
 			}
 
 			update_loop(ev, q);
-			if (spaceship.size() > 0)
-			{
-				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-				al_set_sample_instance_gain(Astroid, backgroundvol);
-				al_set_sample_instance_speed(Astroid, 1);
-				al_play_sample_instance(Astroid);
-			}
+			
 		}
 
 		while (stat.getlvl() == 7)
@@ -760,13 +715,7 @@ CHANGESTAGE:
 			}
 
 			update_loop(ev, q);
-			if (spaceship.size() > 0)
-			{
-				//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-				al_set_sample_instance_gain(Astroid, backgroundvol);
-				al_set_sample_instance_speed(Astroid, 1);
-				al_play_sample_instance(Astroid);
-			}
+			
 		}
 
 		while (stat.getlvl() == 8)
@@ -790,14 +739,6 @@ CHANGESTAGE:
 
 			if (s.get_y() == 0 && !battle && lvl == 8)
 			{
-				al_stop_sample_instance(Astroid);
-				if (spaceship.size() > 0)
-				{
-					//al_play_sample(boss, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
-					al_set_sample_instance_gain(Boss, backgroundvol);
-					al_set_sample_instance_speed(Boss, 1);
-					al_play_sample_instance(Boss);
-				}				
 				battle = true;
 				E.spawn_boss(b, KAMETKHAN);
 				s.stop_moving();
@@ -806,13 +747,7 @@ CHANGESTAGE:
 			if ((s.get_y() < 0 || s.get_y() > 0) && b.size() == 0)
 			{
 				s.scroll_down();
-				if (spaceship.size() > 0)
-				{
-					//al_play_sample(astroid, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-					al_set_sample_instance_gain(Astroid, backgroundvol);
-					al_set_sample_instance_speed(Astroid, 1);
-					al_play_sample_instance(Astroid);
-				}
+				
 			}
 
 			if (battle && b.size() == 0)
@@ -831,8 +766,6 @@ CHANGESTAGE:
 	al_stop_sample_instance(Boss);
 	while (s.get_stage() == SATURN)
 	{
-		//b->set_boss(-1);
-		al_stop_samples();
 		s.set_y(-800);
 		update = true;
 		battle = false;
@@ -900,13 +833,6 @@ CHANGESTAGE:
 			}
 
 			update_loop(ev, q);
-			if (spaceship.size() > 0)
-			{
-				//al_play_sample(saturn, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-				al_set_sample_instance_gain(Saturn, backgroundvol);
-				al_set_sample_instance_speed(Saturn, 1);
-				al_play_sample_instance(Saturn);
-			}
 		}
 
 		while (stat.getlvl() == 2)
@@ -948,13 +874,6 @@ CHANGESTAGE:
 			}
 
 			update_loop(ev, q);
-			if (spaceship.size() > 0)
-			{
-				//al_play_sample(saturn, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-				al_set_sample_instance_gain(Saturn, backgroundvol);
-				al_set_sample_instance_speed(Saturn, 1);
-				al_play_sample_instance(Saturn);
-			}
 		}
 
 		while (stat.getlvl() == 3)
@@ -981,26 +900,13 @@ CHANGESTAGE:
 				al_stop_sample_instance(Saturn);
 				battle = true;
 				s.stop_moving();
-				if (spaceship.size() > 0)
-				{
-					//al_play_sample(final_boss, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
-					al_set_sample_instance_gain(Final_Boss, backgroundvol);
-					al_set_sample_instance_speed(Final_Boss, 1);
-					al_play_sample_instance(Final_Boss);
-				}
+			
 				E.spawn_boss(b, XORGANA);
 			}
 
 			if ((s.get_y() < 0 || s.get_y() > 0) && b.size() == 0)
 			{
 				s.scroll_down();
-				if (spaceship.size() > 0)
-				{
-					//al_play_sample(saturn, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_ONCE, 0);
-					al_set_sample_instance_gain(Saturn, backgroundvol);
-					al_set_sample_instance_speed(Saturn, 1);
-					al_play_sample_instance(Saturn);
-				}
 			}
 
 			if (b.size() == 0 && battle)
@@ -1323,6 +1229,31 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		}
 
+		else if (stagenumber == AST && b.size() == 0)
+		{
+			if (s.get_y() >= -2800 && s.get_y() < 0)
+			{
+				if (spaceship.size() > 0)
+				{
+					al_set_sample_instance_gain(Astroid, backgroundvol);
+					al_set_sample_instance_speed(Astroid, 1);
+					al_play_sample_instance(Astroid);
+				}
+			}
+		}
+
+		else if (stagenumber == SATURN && b.size() == 0)
+		{
+			if (s.get_y() >= -800 && s.get_y() < 0)
+			{
+				if (spaceship.size() > 0)
+				{
+					al_set_sample_instance_gain(Saturn, backgroundvol);
+					al_set_sample_instance_speed(Saturn, 1);
+					al_play_sample_instance(Saturn);
+				}
+			}
+		}
 
 		if (s.get_y() == -2400 && !battle && lvl == 1 )
 		{
@@ -1373,7 +1304,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
-		else if (s.get_y() == 0 && !battle && (lvl == 4 || lvl == 8))
+		else if (s.get_y() == 0 && !battle && lvl == 4)
 		{
 			al_stop_samples();
 			battle = true;
@@ -1401,7 +1332,27 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
-		
+		else if (s.get_y() == 0 && !battle && lvl == 8 && s.get_stage() == AST)
+		{
+			if (spaceship.size() > 0)
+			{
+				al_stop_sample_instance(Astroid);
+				al_set_sample_instance_gain(Boss, backgroundvol);
+				al_set_sample_instance_speed(Boss, 1);
+				al_play_sample_instance(Boss);
+			}
+		}
+
+		else if (s.get_y() == 0 && !battle && lvl == 3 && s.get_stage() == SATURN)
+		{
+			if (spaceship.size() > 0)
+			{
+				al_stop_sample_instance(Saturn);
+				al_set_sample_instance_gain(Final_Boss, backgroundvol);
+				al_set_sample_instance_speed(Final_Boss, 1);
+				al_play_sample_instance(Final_Boss);
+			}
+		}
 
 		col.win_collsion(spaceship);
 		col.Enemy_boundary_collision(foes, REBOUND);
