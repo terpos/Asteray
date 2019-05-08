@@ -21,6 +21,7 @@ public:
 	void sethealth(int &health, ALLEGRO_FONT *font);
 	void setmaxehealth(int maxhealth);
 	void setnotification(std::string notification, ALLEGRO_FONT *font);
+	void setnotification(std::string notification, ALLEGRO_FONT * font, int x, int y, ALLEGRO_COLOR c);
 	void setnotification(std::string notification, ALLEGRO_FONT *font, int x, int y, int &frame);
 	void setnotification(std::string notification, ALLEGRO_FONT *font, int x, int y);
 	void setlvl(int lvl, ALLEGRO_FONT *font);

@@ -9,7 +9,7 @@ game_loop::game_loop()
 	sc = 0;
 	pauseCounter = 0;
 	num_of_enemies = 0;
-	stagenumber = 1;
+	stagenumber = 0;
 	weaponsel = 0;
 	frame = 0;
 	textframe = 0;
@@ -182,17 +182,12 @@ void game_loop::load_stuff()
 	burned_red = al_load_bitmap("burned_red.png");
 	burned_yellow = al_load_bitmap("burned_yellow.png");
 
-
-
 	for (int j = 0; j < spaceship.size(); j++)
 	{
 		spaceship[j]->load();
 		spaceship[j]->set_coords(winx / 2, winy - 150);
 	}
 
-
-	
-	
 	shipWeapon.load_weapon_img();
 	
 	E.load_enemy_img();
@@ -201,15 +196,15 @@ void game_loop::load_stuff()
 
 void game_loop::loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 {
-	//done = false;
 	for (int j = 0; j < spaceship.size(); j++)
 	{
 		spaceship[j]->set_enable(true);
 	}
-	
+
 	while (!done)
 	{
-		Event_listenter(ev, q);
+		//Event_listenter(ev, q);
+		//update_loop(ev, q);
 		stage(ev, q);
 	}
 }
@@ -235,9 +230,6 @@ CHANGESTAGE:
 
 	while (s.get_stage() == EARTH)
 	{
-		Event_listenter(ev, q);
-		update_loop(ev, q);
-
 	LEVELUP:
 
 		lvl++;
@@ -274,27 +266,24 @@ CHANGESTAGE:
 
 			update_loop(ev, q);
 		}
-
-		//al_stop_samples();
+		
 		while (stat.getlvl() == 3)
 		{
-			Event_listenter(ev, q);
-
 			if (E.get_num_of_enemy(foes) == 0 && battle)
 			{
 				battle = false;
 				s.scroll_down();
 				goto LEVELUP;
 			}
+			
+			Event_listenter(ev, q);
 
 			update_loop(ev, q);
 		
 		}
-		//s.set_y(0);
+
 		while (stat.getlvl() == 4)
 		{
-			Event_listenter(ev, q);
-
 			if (bossdefeated && battle && b.size() == 0)
 			{
 				al_stop_samples();
@@ -304,6 +293,8 @@ CHANGESTAGE:
 				stat.setlvl(lvl, status);
 				goto CHANGESTAGE;
 			}
+
+			Event_listenter(ev, q);
 
 			update_loop(ev, q);
 
@@ -315,10 +306,6 @@ CHANGESTAGE:
 		s.set_y(-2800);
 		update = true;
 		battle = false;
-
-		Event_listenter(ev, q);
-		update_loop(ev, q);
-	
 	LEVELUP2:
 
 		lvl++;
@@ -327,7 +314,6 @@ CHANGESTAGE:
 
 		while (stat.getlvl() == 1)
 		{
-			Event_listenter(ev, q);
 
 			if (E.get_num_of_enemy(foes) == 0 && battle)
 			{
@@ -336,14 +322,14 @@ CHANGESTAGE:
 				goto LEVELUP2;
 			}
 
+			Event_listenter(ev, q);
+
 			update_loop(ev, q);
 			
 		}
 
 		while (stat.getlvl() == 2)
 		{
-			Event_listenter(ev, q);
-
 			if (mb.size() == 0 && battle)
 			{
 				al_stop_sample_instance(Mars);
@@ -352,27 +338,26 @@ CHANGESTAGE:
 				goto LEVELUP2;
 			}
 
+			Event_listenter(ev, q);
+
 			update_loop(ev, q);
 		}
 
 		while (stat.getlvl() == 3)
 		{
-			Event_listenter(ev, q);
-
 			if (E.get_num_of_enemy(foes) == 0 && battle)
 			{
 				battle = false;
 				s.scroll_down();
 				goto LEVELUP2;
 			}
+			Event_listenter(ev, q);
 
 			update_loop(ev, q);
 		}
 
 		while (stat.getlvl() == 4)
 		{
-			Event_listenter(ev, q);
-
 			if (bossdefeated && battle && b.size() == 0)
 			{
 				al_stop_samples();
@@ -383,6 +368,7 @@ CHANGESTAGE:
 				stat.setlvl(lvl, status);
 				goto CHANGESTAGE;
 			}
+			Event_listenter(ev, q);
 
 			update_loop(ev, q);
 		}
@@ -395,48 +381,14 @@ CHANGESTAGE:
 		update = true;
 		battle = false;
 
-		Event_listenter(ev, q);
-
-		if (pauseCounter == 1)
-		{
-			s.set_pause(true);
-			update = false;
-			draw = true;
-			s.stop_moving();
-			render();
-		}
-
-		else if (pauseCounter == 0)
-		{
-			update = true;
-			s.set_pause(false);
-		}
-
-		update_loop(ev, q);
 	LEVELUP3:
 
 		lvl++;
 		stat.setlvl(lvl, status);
 
-
 		while (stat.getlvl() == 1)
 		{
-			Event_listenter(ev, q);
 
-			if (pauseCounter == 1)
-			{
-				s.set_pause(true);
-				update = false;
-				draw = true;
-				//s.stop_moving();
-				render();
-			}
-
-			else if (pauseCounter == 0)
-			{
-				update = true;
-				s.set_pause(false);
-			}
 
 			if (s.get_y() == -2800 && !battle && lvl == 1)
 			{
@@ -459,28 +411,15 @@ CHANGESTAGE:
 				goto LEVELUP3;
 			}
 
+			Event_listenter(ev, q);
+
 			update_loop(ev, q);
 			
 		}
 
 		while (stat.getlvl() == 2)
 		{
-			Event_listenter(ev, q);
-
-			if (pauseCounter == 1)
-			{
-				s.set_pause(true);
-				update = false;
-				draw = true;
-				render();
-			}
-
-			else if (pauseCounter == 0)
-			{
-				update = true;
-				s.set_pause(false);
-			}
-
+			
 			if (s.get_y() == -2400 && !battle && lvl == 2)
 			{
 				battle = true;
@@ -499,6 +438,7 @@ CHANGESTAGE:
 				s.scroll_down();
 				goto LEVELUP3;
 			}
+			Event_listenter(ev, q);
 
 			update_loop(ev, q);
 			
@@ -506,23 +446,6 @@ CHANGESTAGE:
 
 		while (stat.getlvl() == 3)
 		{
-			Event_listenter(ev, q);
-
-			if (pauseCounter == 1)
-			{
-				s.set_pause(true);
-				update = false;
-				draw = true;
-				//s.stop_moving();
-				render();
-			}
-
-			else if (pauseCounter == 0)
-			{
-				update = true;
-				s.set_pause(false);
-			}
-
 			if (s.get_y() == -2000 && !battle && lvl == 3)
 			{
 				battle = true;
@@ -543,29 +466,14 @@ CHANGESTAGE:
 				goto LEVELUP3;
 			}
 
+			Event_listenter(ev, q);
+
 			update_loop(ev, q);
 			
 		}
 
 		while (stat.getlvl() == 4)
 		{
-			Event_listenter(ev, q);
-
-			if (pauseCounter == 1)
-			{
-				s.set_pause(true);
-				update = false;
-				draw = true;
-				//s.stop_moving();
-				render();
-			}
-
-			else if (pauseCounter == 0)
-			{
-				update = true;
-				s.set_pause(false);
-			}
-
 			if (s.get_y() == -1600 && !battle && lvl == 4)
 			{
 				battle = true;
@@ -586,29 +494,14 @@ CHANGESTAGE:
 				goto LEVELUP3;
 			}
 
+			Event_listenter(ev, q);
+
 			update_loop(ev, q);
 			
 		}
 
 		while (stat.getlvl() == 5)
 		{
-			Event_listenter(ev, q);
-
-			if (pauseCounter == 1)
-			{
-				s.set_pause(true);
-				update = false;
-				draw = true;
-				//s.stop_moving();
-				render();
-			}
-
-			else if (pauseCounter == 0)
-			{
-				update = true;
-				s.set_pause(false);
-			}
-
 			if (s.get_y() == -1200 && !battle && lvl == 5)
 			{
 				battle = true;
@@ -629,29 +522,14 @@ CHANGESTAGE:
 				goto LEVELUP3;
 			}
 
+			Event_listenter(ev, q);
+
 			update_loop(ev, q);
 			
 		}
 
 		while (stat.getlvl() == 6)
 		{
-			Event_listenter(ev, q);
-
-			if (pauseCounter == 1)
-			{
-				s.set_pause(true);
-				update = false;
-				draw = true;
-				//s.stop_moving();
-				render();
-			}
-
-			else if (pauseCounter == 0)
-			{
-				update = true;
-				s.set_pause(false);
-			}
-
 			if (s.get_y() == -800 && !battle && lvl == 6)
 			{
 				battle = true;
@@ -672,29 +550,14 @@ CHANGESTAGE:
 				goto LEVELUP3;
 			}
 
+			Event_listenter(ev, q);
+
 			update_loop(ev, q);
 			
 		}
 
 		while (stat.getlvl() == 7)
 		{
-			Event_listenter(ev, q);
-
-			if (pauseCounter == 1)
-			{
-				s.set_pause(true);
-				update = false;
-				draw = true;
-				//s.stop_moving();
-				render();
-			}
-
-			else if (pauseCounter == 0)
-			{
-				update = true;
-				s.set_pause(false);
-			}
-
 			if (s.get_y() == -400 && !battle && lvl == 7)
 			{
 				battle = true;
@@ -714,28 +577,14 @@ CHANGESTAGE:
 				goto LEVELUP3;
 			}
 
+			Event_listenter(ev, q);
+
 			update_loop(ev, q);
 			
 		}
 
 		while (stat.getlvl() == 8)
 		{
-			Event_listenter(ev, q);
-
-			if (pauseCounter == 1)
-			{
-				s.set_pause(true);
-				update = false;
-				draw = true;
-				//s.stop_moving();
-				render();
-			}
-
-			else if (pauseCounter == 0)
-			{
-				update = true;
-				s.set_pause(false);
-			}
 
 			if (s.get_y() == 0 && !battle && lvl == 8)
 			{
@@ -760,6 +609,8 @@ CHANGESTAGE:
 				goto CHANGESTAGE;
 			}
 
+			Event_listenter(ev, q);
+
 			update_loop(ev, q);
 		}
 	}
@@ -770,25 +621,7 @@ CHANGESTAGE:
 		update = true;
 		battle = false;
 
-		Event_listenter(ev, q);
-
-		if (pauseCounter == 1)
-		{
-			s.set_pause(true);
-			update = false;
-			draw = true;
-			s.stop_moving();
-			render();
-		}
-
-		else if (pauseCounter == 0)
-		{
-			update = true;
-			s.set_pause(false);
-		}
-
-		update_loop(ev, q);
-	LEVELUP4:
+LEVELUP4:
 
 		lvl++;
 		stat.setlvl(lvl, status);
@@ -796,23 +629,6 @@ CHANGESTAGE:
 
 		while (stat.getlvl() == 1)
 		{
-			Event_listenter(ev, q);
-
-			if (pauseCounter == 1)
-			{
-				s.set_pause(true);
-				update = false;
-				draw = true;
-				//s.stop_moving();
-				render();
-			}
-
-			else if (pauseCounter == 0)
-			{
-				update = true;
-				s.set_pause(false);
-			}
-
 			if (s.get_y() == -800 && !battle && lvl == 1)
 			{
 				battle = true;
@@ -832,28 +648,13 @@ CHANGESTAGE:
 				goto LEVELUP4;
 			}
 
+			Event_listenter(ev, q);
+
 			update_loop(ev, q);
 		}
 
 		while (stat.getlvl() == 2)
 		{
-			Event_listenter(ev, q);
-
-			if (pauseCounter == 1)
-			{
-				s.set_pause(true);
-				update = false;
-				draw = true;
-				//s.stop_moving();
-				render();
-			}
-
-			else if (pauseCounter == 0)
-			{
-				update = true;
-				s.set_pause(false);
-			}
-
 			if (s.get_y() == -400 && !battle && lvl == 2)
 			{
 				battle = true;
@@ -873,28 +674,13 @@ CHANGESTAGE:
 				goto LEVELUP4;
 			}
 
+			Event_listenter(ev, q);
+
 			update_loop(ev, q);
 		}
 
 		while (stat.getlvl() == 3)
 		{
-			Event_listenter(ev, q);
-
-			if (pauseCounter == 1)
-			{
-				s.set_pause(true);
-				update = false;
-				draw = true;
-				//s.stop_moving();
-				render();
-			}
-
-			else if (pauseCounter == 0)
-			{
-				update = true;
-				s.set_pause(false);
-			}
-
 			if (s.get_y() == 0 && !battle && lvl == 3)
 			{
 				al_stop_sample_instance(Saturn);
@@ -917,6 +703,8 @@ CHANGESTAGE:
 				
 			}
 
+			Event_listenter(ev, q);
+
 			update_loop(ev, q);
 		}
 
@@ -924,20 +712,17 @@ CHANGESTAGE:
 	}
 }
 
-void game_loop::Event_listenter(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
+void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 {
 	al_wait_for_event(q, &ev);
 
 	if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
 	{
-
 			switch (ev.keyboard.keycode)
 			{
 			case ALLEGRO_KEY_ESCAPE:
 				destroy_stuff();
-				//std::cin.get();
 				exit(EXIT_SUCCESS);
-				
 				break;
 
 			case ALLEGRO_KEY_ENTER:
@@ -947,17 +732,14 @@ void game_loop::Event_listenter(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 	}
 
 
-	if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+	if (ev.type == ALLEGRO_EVENT_KEY_DOWN && pauseCounter == 0)
 	{
 
 		for (int j = 0; j < spaceship.size(); j++)
 		{
 			switch (ev.keyboard.keycode)
 			{
-			case ALLEGRO_KEY_ESCAPE:
-				destroy_stuff();
-				exit(EXIT_SUCCESS);
-				break;
+		
 
 			case ALLEGRO_KEY_A:
 				weaponsel++;
@@ -1060,9 +842,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 				break;
 
-			case ALLEGRO_KEY_ENTER:
-				pauseCounter = (pauseCounter + 1) % 2;
-				break;
+			
 			}
 		}
 	}
@@ -1077,9 +857,12 @@ void game_loop::Event_listenter(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 {
-	//std::cout << ev.type << std::endl;
-	if (ev.type == ALLEGRO_EVENT_TIMER && update)
+
+	if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 0)
 	{
+		//std::cout << pauseCounter << std::endl;
+
+
 		for (int i = 0; i < 6; i++)
 		{
 			if (ammo[i] < 0)
@@ -1174,7 +957,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			
 		}
 
-		else if (stagenumber == MARS)
+		if (stagenumber == MARS)
 		{
 			if (!battle)
 			{
@@ -1184,45 +967,21 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 					if ((s.get_y() < -2400 || s.get_y() > -2400) && stat.getlvl() == 1)
 					{
 						s.scroll_down();
-						if (spaceship.size() > 0)
-						{
-							al_set_sample_instance_gain(Mars, backgroundvol);
-							al_set_sample_instance_speed(Mars, 1);
-							al_play_sample_instance(Mars);
-						}
 					}
 
 					else if ((s.get_y() < -1600 || s.get_y() > -1600) && stat.getlvl() == 2)
 					{
 						s.scroll_down();
-						if (spaceship.size() > 0)
-						{
-							al_set_sample_instance_gain(Mars, backgroundvol);
-							al_set_sample_instance_speed(Mars, 1);
-							al_play_sample_instance(Mars);
-						}
 					}
 
 					else if ((s.get_y() < -800 || s.get_y() > -800) && stat.getlvl() == 3)
 					{
 						s.scroll_down();
-						if (spaceship.size() > 0)
-						{
-							al_set_sample_instance_gain(Mars_Nest, backgroundvol);
-							al_set_sample_instance_speed(Mars_Nest, 1);
-							al_play_sample_instance(Mars_Nest);
-						}
 					}
 
-					else if (s.get_y() < 0 && stat.getlvl() == 4)
+					else if ((s.get_y() < 0 || s.get_y() > 0) && stat.getlvl() == 4)
 					{
 						s.scroll_down();
-						if (spaceship.size() > 0)
-						{
-							al_set_sample_instance_gain(Mars_Nest, backgroundvol);
-							al_set_sample_instance_speed(Mars_Nest, 1);
-							al_play_sample_instance(Mars_Nest);
-						}
 					}
 				}
 			}
@@ -1421,11 +1180,27 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		render();
 
 	}
+
+	else if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 1)
+	{
+	
+	al_stop_sample_instance(Earth);
+	al_stop_sample_instance(Earth_Factory);
+	al_stop_sample_instance(Mars);
+	al_stop_sample_instance(Mars_Nest);
+	al_stop_sample_instance(Astroid);
+	al_stop_sample_instance(Boss);
+	al_stop_sample_instance(Saturn);
+	al_stop_sample_instance(Final_Boss);
+
+	draw = true;
+	render();
+	}
 }
 
 void game_loop::render()
 {
-	if (draw)
+	if (draw && pauseCounter == 0)
 	{
 		switch (s.get_stage())
 		{
@@ -1434,8 +1209,22 @@ void game_loop::render()
 			break;
 		case MARS:
 			s.mars();
+			if ((lvl == 1 || lvl == 2) && pauseCounter == 0)
+			{
+				al_set_sample_instance_gain(Mars, backgroundvol);
+				al_set_sample_instance_speed(Mars, 1);
+				al_play_sample_instance(Mars);
+			}
+
+			else if ((lvl == 3 || lvl == 4) && pauseCounter == 0 && b.size() == 0)
+			{
+				al_set_sample_instance_gain(Mars_Nest, backgroundvol);
+				al_set_sample_instance_speed(Mars_Nest, 1);
+				al_play_sample_instance(Mars_Nest);
+			}
 			break;
 		case AST:
+			al_stop_sample_instance(Mars_Nest);
 			s.astroid_belt();
 			break;
 		case SATURN:
@@ -1455,11 +1244,12 @@ void game_loop::render()
 		stat.setscore(sc, status);
 		
 
-		if (spaceship.size() == 0)
+		if (spaceship.size() <= 0)
 		{
 			stat.setnotification("GAME OVER", status, 200, 400, textframe);
 		}
 
+		
 
 		switch (s.get_stage())
 		{
@@ -1477,7 +1267,6 @@ void game_loop::render()
 			break;
 		}
 
-		
 		for (int j = 0; j < spaceship.size(); j++)
 		{
 			spaceship[j]->render();
@@ -1629,16 +1418,20 @@ void game_loop::render()
 			}
 		}
 		
-		/*if (pauseCounter == 1)
-		{
-			stat.setnotification("PAUSE!", status);
-		}*/
-		
 		al_flip_display();
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 		draw = false;
 	}
 	
+	if (draw && pauseCounter == 1)
+	{
+		al_clear_to_color(al_map_rgb(0, 0, 0));
+
+		stat.setnotification("PAUSE", status, 235, 225, al_map_rgb(255,255,255));
+		stat.setnotification("[PRESS ESC IF YOU WANT TO QUIT]", status, 140, 240, al_map_rgb(255, 255, 255));
+
+		al_flip_display();
+	}
 }
 
 void game_loop::destroy_stuff()

@@ -61,6 +61,13 @@ void Status::setnotification(std::string notification, ALLEGRO_FONT *font)
 	al_draw_text(font, al_map_rgb(0, 0, 255), 200, 400,NULL, notification.c_str());
 }
 
+void Status::setnotification(std::string notification, ALLEGRO_FONT *font, int x, int y, ALLEGRO_COLOR c)
+{
+	this->notification = notification;
+
+	al_draw_text(font, c, x, y, NULL, notification.c_str());
+}
+
 void Status::setnotification(std::string notification, ALLEGRO_FONT * font, int x, int y, int & frame)
 {
 	this->notification = notification;

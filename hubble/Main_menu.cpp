@@ -63,9 +63,9 @@ void Main_menu::dochoice(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop g)
 {
 	if (getChoice() == PLAY)
 	{
-		e.type = ALLEGRO_EVENT_TIMER;
 		g.loop(e, q);
 	}
+
 	else if (getChoice() == QUIT)
 	{
 		g.destroy_stuff();

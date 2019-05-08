@@ -30,21 +30,26 @@ void screen_manager::initilize_loop()
 
 	timer = al_create_timer(1 / fps);
 
-	play.load_stuff();
-	menu.load();
-
-	al_register_event_source(queue, al_get_timer_event_source(timer));
-	al_register_event_source(queue, al_get_keyboard_event_source());
-	al_register_event_source(queue, al_get_display_event_source(display));
 	
 
+	al_register_event_source(queue, al_get_keyboard_event_source());
+	al_register_event_source(queue, al_get_timer_event_source(timer));
+	al_register_event_source(queue, al_get_display_event_source(display));
+	
+	play.load_stuff();
+	menu.load();
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+
+	al_flip_display();
+
+	menu.setChoice(PLAY);
+	al_start_timer(timer);
 	
 }
 
 void screen_manager::display_loop()
 {
-	menu.setChoice(PLAY);
-	al_start_timer(timer);
+	
 	while (bool go = true)
 	{
 		al_wait_for_event(queue, &e);

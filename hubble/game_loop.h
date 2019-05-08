@@ -20,7 +20,7 @@ public:
 	void load_stuff();
 	void loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q);
 	void stage(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q);
-	void Event_listenter(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE * q);
+	void Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE * q);
 	void update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q);
 	void render();
 	void destroy_stuff();
