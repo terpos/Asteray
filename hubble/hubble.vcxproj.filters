@@ -464,4 +464,7 @@
   <ItemGroup>
     <Text Include="Programming Log.txt" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
 </Project>

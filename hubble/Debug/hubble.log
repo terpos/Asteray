@@ -1,2 +1,14 @@
-﻿  Status.cpp
-  hubble.vcxproj -> C:\Users\gebeid\Documents\GitHub\Asteray\Debug\hubble.exe
+﻿  game_loop.cpp
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(185): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(199): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(214): warning C4102: 'GAMEOVER': unreferenced label
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(738): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(852): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(886): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1270): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1305): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1323): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1342): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1348): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1499): warning C4018: '<': signed/unsigned mismatch
+  hubble.vcxproj -> C:\Users\Kamal\Documents\GitHub\Asteray\Debug\hubble.exe
