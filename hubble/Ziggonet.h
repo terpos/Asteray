@@ -1,9 +1,8 @@
-#include "global.h"
-#include "Animate.h"
+#include "Weapon.h"
 
 #pragma once
 
-class Ziggonet
+class Ziggonet: public Weapon
 {
 public:
 	Ziggonet(int x, int y);
@@ -13,6 +12,7 @@ public:
 	int getx();
 	int gety();
 	int effect();
+	int getweaponID();
 
 	int get_damage();
 	void set_damage(int damage);

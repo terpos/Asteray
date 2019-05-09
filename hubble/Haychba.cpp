@@ -2,7 +2,7 @@
 
 
 
-Haychba::Haychba(int x, int y)
+Haychba::Haychba(int x, int y) : Weapon(x, y)
 {
 	setx(x);
 	sety(y);
@@ -34,6 +34,11 @@ int Haychba::gety()
 int Haychba::effect()
 {
 	return (rand()%3) + 3;
+}
+
+int Haychba::getweaponID()
+{
+	return HAYCHBA;
 }
 
 int Haychba::get_damage()

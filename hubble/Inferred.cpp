@@ -2,7 +2,7 @@
 
 
 
-Inferred::Inferred(int x, int y)
+Inferred::Inferred(int x, int y) : Weapon(x, y)
 {
 	setx(x);
 	sety(y);
@@ -34,6 +34,11 @@ int Inferred::gety()
 int Inferred::effect()
 {
 	return BURNED;
+}
+
+int Inferred::getweaponID()
+{
+	return INFERRED;
 }
 
 int Inferred::get_damage()

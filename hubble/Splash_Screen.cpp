@@ -4,7 +4,6 @@
 
 Splash_Screen::Splash_Screen()
 {
-	//Sscrn = NULL;
 	splashscrn = NULL;
 	font = NULL;
 	delay = 3;
@@ -21,7 +20,6 @@ void Splash_Screen::init()
 	font = al_load_font("ariblk.ttf", 32, NULL);
 	splashscrn = al_create_display(500, 250);
 	al_set_display_flag(splashscrn, ALLEGRO_NOFRAME, true);
-	//al_clear_to_color(al_map_rgb(100, 0, 100));
 	al_draw_bitmap(scrn, 0, 0, NULL);
 	al_draw_text(font, al_map_rgb(255, 255, 255), 160, 100, NULL, "ASTERAY");
 	al_flip_display();

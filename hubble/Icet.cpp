@@ -2,7 +2,7 @@
 
 
 
-Icet::Icet(int x, int y)
+Icet::Icet(int x, int y): Weapon(x, y)
 {
 	setx(x);
 	sety(y);
@@ -34,6 +34,11 @@ int Icet::gety()
 int Icet::effect()
 {
 	return FROZEN;
+}
+
+int Icet::getweaponID()
+{
+	return ICET;
 }
 
 int Icet::get_damage()

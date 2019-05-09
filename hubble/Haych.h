@@ -1,8 +1,7 @@
-#include "global.h"
-#include "Animate.h"
+#include "Weapon.h"
 
 #pragma once
-class Haych
+class Haych :public Weapon
 {
 public:
 	Haych(int x, int y);

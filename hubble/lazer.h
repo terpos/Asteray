@@ -1,10 +1,8 @@
+#include "Weapon.h"
+
 #pragma once
 
-
-#include "global.h"
-#include "Animate.h"
-
-class lazer
+class lazer: public Weapon
 {
 public:
 	lazer(int x, int y);
@@ -13,23 +11,21 @@ public:
 	
 	void draw(ALLEGRO_BITMAP *bmp1, ALLEGRO_BITMAP *bmp2, ALLEGRO_BITMAP *bmp3);
 	void shoot(bool okay);
-	int getweaponx();
-	int getweapony();
-	bool getweaponlifetime();
+	int getx();
+	int gety();
+	int getweaponID();
 	
 	int get_damage();
 	void set_damage(int damage);
 
-	void setweaponx(int x);
-	void setweapony(int y);
-	void setweaponlifetime(bool &life);
+	void setx(int x);
+	void sety(int y);
 
 private:
 	Animate a;
 	
-	bool lazerlife;
-	int lazerx;
-	int lazery;
+	int x;
+	int y;
 	int frame = 0;
 	int vel;
 	int damage;

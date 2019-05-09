@@ -15,11 +15,8 @@
 #include <time.h>
 #include <math.h>
 
-#include "lazer.h"
-#include "Weapon.h"
 #include "Status.h"
 #include "Animate.h"
-//#include "collision.h"
 
 
 // screen size
@@ -50,7 +47,7 @@ enum {
 };
 
 //weapon
-enum{ICET, INFERRED, ZIGGONET, HAYCH, HAYCHBA, SONICWAVE};
+enum{ICET, INFERRED, ZIGGONET, HAYCH, HAYCHBA, SONICWAVE, LAZER};
 
 //ammo and tools
 enum {HEALTH, DISFIG, ICE=5, FIRE=7, ZIG=9, H=11, HBAR=13, WAVE = 15};

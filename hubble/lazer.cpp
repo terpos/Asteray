@@ -1,10 +1,10 @@
 #include "lazer.h"
 
-lazer::lazer(int x, int y)
+lazer::lazer(int x, int y) : Weapon(x, y)
 {
-	setweaponx(x);
-	setweapony(y);
-	lazerlife = false;
+	setx(x);
+	sety(y);
+	frame = 0;
 	vel = 10;
 }
 
@@ -15,43 +15,38 @@ lazer::~lazer()
 
 void lazer::shoot(bool okay)
 {
-	lazery -= vel*okay;
+	y -= vel*okay;
 	frame++;
 }
 
 void lazer::draw(ALLEGRO_BITMAP *bmp1, ALLEGRO_BITMAP *bmp2, ALLEGRO_BITMAP *bmp3)
 {
-	a.three_frames_animate(bmp1, bmp2, bmp3, getweaponx(), getweapony(), frame);
+	a.three_frames_animate(bmp1, bmp2, bmp3, getx(), gety(), frame);
 }
 
-int lazer::getweapony()
+int lazer::gety()
 {
-	return this->lazery;
+	return this->y;
 }
 
-int lazer::getweaponx()
+int lazer::getweaponID()
 {
-	return this->lazerx;
+	return LAZER;
 }
 
-void lazer::setweaponx(int x)
+int lazer::getx()
 {
-	this->lazerx = x;
+	return this->x;
 }
 
-void lazer::setweapony(int y)
+void lazer::setx(int x)
 {
-	this->lazery = y;
+	this->x = x;
 }
 
-void lazer::setweaponlifetime(bool &life)
+void lazer::sety(int y)
 {
-	lazerlife = life;
-}
-
-bool lazer::getweaponlifetime()
-{
-	return lazerlife;
+	this->y = y;
 }
 
 int lazer::get_damage()

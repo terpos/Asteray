@@ -2,7 +2,7 @@
 
 
 
-Haych::Haych(int x, int y)
+Haych::Haych(int x, int y): Weapon(x, y)
 {
 	setx(x);
 	sety(y);
@@ -29,6 +29,11 @@ void Haych::shoot(bool okay)
 int Haych::gety()
 {
 	return this->y;
+}
+
+int Haych::getweaponID()
+{
+	return HAYCH;
 }
 
 int Haych::effect()

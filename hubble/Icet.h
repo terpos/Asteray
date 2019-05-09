@@ -1,8 +1,7 @@
-#include "global.h"
-#include "Animate.h"
+#include "Weapon.h"
 
 #pragma once
-class Icet
+class Icet: public Weapon
 {
 public:
 	Icet(int x, int y);
@@ -12,6 +11,7 @@ public:
 	int getx();
 	int gety();
 	int effect();
+	int getweaponID();
 
 	int get_damage();
 	void set_damage(int damage);

@@ -36,7 +36,10 @@ public:
 	void Enemy_boundary_collision(std::vector <enemies*> &foe, int destroy_or_rebound);
 	void Boss_boundary_collision(Enemy_Manager EN, std::vector<boss*>& foe);
 	
-	void enemy_gets_damaged(Enemy_Manager EN, Tools_manager &tm, std::vector <Ammo*> &a, std::vector <Tools*> &t, 
+	void enemy_gets_damaged(Enemy_Manager EN, Tools_manager &tm, std::vector <Ammo*> &a, std::vector <Tools*> &t,
+		std::vector <enemies*> &f, std::vector <Weapon*> &l, Status &s, ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_FONT *font, int &score);
+
+	/*void enemy_gets_damaged(Enemy_Manager EN, Tools_manager &tm, std::vector <Ammo*> &a, std::vector <Tools*> &t, 
 		std::vector <enemies*> &f, std::vector <lazer*> &l, Status &s, ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_FONT *font, int &score);
 	void enemy_gets_damaged(Enemy_Manager EN, Tools_manager &tm, std::vector <Ammo*> &a,
 		std::vector <Tools*> &t, std::vector <enemies*> &f, std::vector <Icet*> &l, Status &s, ALLEGRO_SAMPLE_INSTANCE *instance,
@@ -55,7 +58,7 @@ public:
 		ALLEGRO_FONT *font, int &score);
 	void enemy_gets_damaged(Enemy_Manager EN, Tools_manager &tm, std::vector <Ammo*> &a,
 		std::vector <Tools*> &t, std::vector <enemies*> &f, std::vector <Sonic_Wave*> &l, Status &s, ALLEGRO_SAMPLE_INSTANCE *instance,
-		ALLEGRO_FONT *font, int &score);
+		ALLEGRO_FONT *font, int &score);*/
 
 	void enemy_dies(Tools_manager & tm, std::vector<Ammo*>& a, std::vector<Tools*>& t, std::vector<enemies*>& f, ALLEGRO_SAMPLE_INSTANCE * instance);
 
@@ -64,16 +67,16 @@ public:
 	void enemy_gets_damaged(Enemy_Manager EN, std::vector <Tools*> &t, std::vector <enemies*> &f, Status &s, ALLEGRO_FONT *font);
 
 
-	void boss_gets_damaged(Enemy_Manager &EN, std::vector <boss*> &b, std::vector <Spartak_ball*> &ball, std::vector <lazer*> &f, std::vector <Icet*> &l,
+	void boss_gets_damaged(Enemy_Manager &EN, std::vector <boss*> &b, std::vector <Spartak_ball*> &ball, std::vector <Weapon*> &f,
 		ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_SAMPLE_INSTANCE *instance2, bool &bossdefeated);
 
-	void Ball_gets_redirected(Enemy_Manager &EN, std::vector<Spartak_ball*>& b, std::vector<lazer*>& f,  ALLEGRO_SAMPLE_INSTANCE *instance, bool & bossdefeated);
+	void Ball_gets_redirected(Enemy_Manager &EN, std::vector<Spartak_ball*>& b, std::vector<Weapon*>& f,  ALLEGRO_SAMPLE_INSTANCE *instance, bool & bossdefeated);
 
-	void Ball_gets_destroyed(Enemy_Manager & EN, Tools_manager & tm, std::vector<Molten_shot*>& b, std::vector<lazer*>& f, std::vector <Ammo*> &a, ALLEGRO_SAMPLE_INSTANCE * instance, bool & bossdefeated);
+	void Ball_gets_destroyed(Enemy_Manager & EN, Tools_manager & tm, std::vector<Molten_shot*>& b, std::vector<Weapon*>& f, std::vector <Ammo*> &a, ALLEGRO_SAMPLE_INSTANCE * instance, bool & bossdefeated);
 
-	void Ball_gets_destroyed(Enemy_Manager & EN, std::vector<v_beam*>& b, std::vector<lazer*>& f, ALLEGRO_SAMPLE_INSTANCE * instance, bool & bossdefeated);
+	void Ball_gets_destroyed(Enemy_Manager & EN, std::vector<v_beam*>& b, std::vector<Weapon*>& f, ALLEGRO_SAMPLE_INSTANCE * instance, bool & bossdefeated);
 
-	void miniboss_gets_damaged(Enemy_Manager &EN, std::vector<mini_boss*>& mb, std::vector<lazer*>& f, bool & bossdefeated);
+	void miniboss_gets_damaged(Enemy_Manager &EN, std::vector<mini_boss*>& mb, std::vector<Weapon*>& f, bool & bossdefeated);
 
 	void player_gets_damaged(Enemy_Manager &EN, std::vector <mini_boss*> &mb, std::vector <boss*> &b, std::vector <enemies*> &f, std::vector <player*> &p, Status s, ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_FONT *font, ALLEGRO_EVENT e, int &health);
 

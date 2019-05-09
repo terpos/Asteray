@@ -1,6 +1,6 @@
 #include "Sonic_Wave.h"
 
-Sonic_Wave::Sonic_Wave(int x, int y)
+Sonic_Wave::Sonic_Wave(int x, int y) : Weapon(x, y)
 {
 	setx(x);
 	sety(y);
@@ -31,6 +31,11 @@ int Sonic_Wave::gety()
 int Sonic_Wave::effect()
 {
 	return STUNNED;
+}
+
+int Sonic_Wave::getweaponID()
+{
+	return SONICWAVE;
 }
 
 int Sonic_Wave::get_damage()

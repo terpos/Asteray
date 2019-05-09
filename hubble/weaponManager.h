@@ -1,11 +1,15 @@
 #include "global.h"
+#include "Status.h"
+
+#include "Weapon.h"
 #include "Icet.h"
 #include "Inferred.h"
 #include "Ziggonet.h"
 #include "Haych.h"
 #include "Haychba.h"
 #include "Sonic_Wave.h"
-#include "Status.h"
+#include "lazer.h"
+
 
 
 #pragma once
@@ -18,15 +22,23 @@ public:
 	void load_weapon_img();
 	void printout();
 	
-	void load_ammo(std::vector <lazer*> &laser, int x, int y, int lim);
+	void load_ammo(std::vector <Weapon*> &w, int ID, int x, int y, int lim);
+	/*void load_ammo(std::vector <lazer*> &laser, int x, int y, int lim);
 	void load_ammo(std::vector <Icet*> &laser, int x, int y, int lim);
 	void load_ammo(std::vector <Inferred*> &laser, int x, int y, int lim);
 	void load_ammo(std::vector <Ziggonet*> &laser, int x, int y, int lim);
 	void load_ammo(std::vector <Haych*> &laser, int x, int y, int lim);
 	void load_ammo(std::vector <Haychba*> &laser, int x, int y, int lim);
-	void load_ammo(std::vector <Sonic_Wave*> &laser, int x, int y, int lim);
+	void load_ammo(std::vector <Sonic_Wave*> &laser, int x, int y, int lim);*/
 
-	void update(std::vector <lazer*> &laser);
+
+	void update(std::vector <Weapon*> &w);
+
+	void renderweapon(std::vector <Weapon*> &w, int ID, Status s, int ammo);
+	void renderweaponinbox(int ID, Status s, int ammo);
+	void destroy_ammo(std::vector <Weapon*> &w);
+
+	/*void update(std::vector <lazer*> &laser);
 	void update(std::vector <Icet*> &laser);
 	void update(std::vector <Inferred*> &laser);
 	void update(std::vector <Ziggonet*> &laser);
@@ -48,7 +60,7 @@ public:
 	void destroy_ammo(std::vector <Ziggonet*> &laser);
 	void destroy_ammo(std::vector <Haych*> &laser);
 	void destroy_ammo(std::vector <Haychba*> &laser);
-	void destroy_ammo(std::vector <Sonic_Wave*> &laser);
+	void destroy_ammo(std::vector <Sonic_Wave*> &laser);*/
 
 	void destroy_weapon_img();
 	void select_keys(int keys, int p_or_s);

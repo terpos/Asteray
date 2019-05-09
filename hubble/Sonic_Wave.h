@@ -1,8 +1,7 @@
-#include "Animate.h"
-#include "global.h"
+#include "Weapon.h"
 
 #pragma once
-class Sonic_Wave
+class Sonic_Wave: public Weapon
 {
 public:
 	Sonic_Wave(int x, int y);
@@ -12,6 +11,7 @@ public:
 	int getx();
 	int gety();
 	int effect();
+	int getweaponID();
 
 	int get_damage();
 	void set_damage(int damage);

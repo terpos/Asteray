@@ -762,7 +762,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 				break;
 
 			case ALLEGRO_KEY_Z:
-				shipWeapon.load_ammo(laser, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 3);
+				shipWeapon.load_ammo(w, LAZER, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 3);
 				al_set_sample_instance_position(lsr, 0);
 				al_play_sample_instance(lsr);
 				al_set_sample_instance_playmode(lsr, ALLEGRO_PLAYMODE_ONCE);
@@ -778,7 +778,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 						al_set_sample_instance_position(ice, 0);
 						al_play_sample_instance(ice);
 						al_set_sample_instance_playmode(ice, ALLEGRO_PLAYMODE_ONCE);
-						shipWeapon.load_ammo(Ice, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
+						shipWeapon.load_ammo(w, ICET, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
 						ammo[ICET]--;
 					}
 
@@ -790,7 +790,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 						al_set_sample_instance_position(fire, 0);
 						al_play_sample_instance(fire);
 						al_set_sample_instance_playmode(fire, ALLEGRO_PLAYMODE_ONCE);
-						shipWeapon.load_ammo(Fire, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
+						shipWeapon.load_ammo(w, INFERRED, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
 						ammo[INFERRED]--;
 					}
 					break;
@@ -801,7 +801,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 						al_set_sample_instance_position(lit, 0);
 						al_play_sample_instance(lit);
 						al_set_sample_instance_playmode(lit, ALLEGRO_PLAYMODE_ONCE);
-						shipWeapon.load_ammo(Lightning, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
+						shipWeapon.load_ammo(w, ZIGGONET, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
 						ammo[ZIGGONET]--;
 					}
 					break;
@@ -812,7 +812,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 						al_set_sample_instance_position(haa, 0);
 						al_play_sample_instance(haa);
 						al_set_sample_instance_playmode(haa, ALLEGRO_PLAYMODE_ONCE);
-						shipWeapon.load_ammo(h, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
+						shipWeapon.load_ammo(w, HAYCH, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
 						ammo[HAYCH]--;
 					}
 					break;
@@ -823,7 +823,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 						al_set_sample_instance_position(haa, 0);
 						al_play_sample_instance(haa);
 						al_set_sample_instance_playmode(haa, ALLEGRO_PLAYMODE_ONCE);
-						shipWeapon.load_ammo(hbar, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
+						shipWeapon.load_ammo(w, HAYCH, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
 						ammo[HAYCHBA]--;
 					}
 					break;
@@ -834,15 +834,13 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 						al_set_sample_instance_position(wavey, 0);
 						al_play_sample_instance(wavey);
 						al_set_sample_instance_playmode(wavey, ALLEGRO_PLAYMODE_ONCE);
-						shipWeapon.load_ammo(wave, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
+						shipWeapon.load_ammo(w, SONICWAVE, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
 						ammo[SONICWAVE]--;
 					}
 					break;
 				}
 
 				break;
-
-			
 			}
 		}
 	}
@@ -860,8 +858,6 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 	if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 0)
 	{
-		//std::cout << pauseCounter << std::endl;
-
 
 		for (int i = 0; i < 6; i++)
 		{
@@ -1119,24 +1115,11 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		col.Boss_boundary_collision(E, b);
 
-		col.boss_gets_damaged(E, b, ball, laser, Ice, bosshit, reflect, bossdefeated);
-		col.miniboss_gets_damaged(E, mb, laser, bossdefeated);
+		col.boss_gets_damaged(E, b, ball, w, bosshit, reflect, bossdefeated);
+		col.miniboss_gets_damaged(E, mb, w, bossdefeated);
 
-		col.enemy_gets_damaged(E, T, am, t, foes, laser, stat, destroy, status, sc);
-		col.enemy_gets_damaged(E, T, am, t, foes, Ice, stat, destroy, status, sc);
-		col.enemy_gets_damaged(E, T, am, t, foes, Fire, stat, destroy, status, sc);
-		col.enemy_gets_damaged(E, T, am, t, foes, Lightning, stat, destroy, status, sc);
-		col.enemy_gets_damaged(E, T, am, t, foes, h, stat, destroy, status, sc);
-		col.enemy_gets_damaged(E, T, am, t, foes, hbar, stat, destroy, status, sc);
-		col.enemy_gets_damaged(E, T, am, t, foes, wave, stat, destroy, status, sc);
-
-		col2.enemy_gets_damaged(E2, T, am, t, foes_while_scroll, laser, stat, destroy, status, sc);
-		col2.enemy_gets_damaged(E2, T, am, t, foes_while_scroll, Ice, stat, destroy, status, sc);
-		col2.enemy_gets_damaged(E2, T, am, t, foes_while_scroll, Fire, stat, destroy, status, sc);
-		col2.enemy_gets_damaged(E2, T, am, t, foes_while_scroll, Lightning, stat, destroy, status, sc);
-		col2.enemy_gets_damaged(E2, T, am, t, foes_while_scroll, h, stat, destroy, status, sc);
-		col2.enemy_gets_damaged(E2, T, am, t, foes_while_scroll, hbar, stat, destroy, status, sc);
-		col2.enemy_gets_damaged(E2, T, am, t, foes_while_scroll, wave, stat, destroy, status, sc);
+		col.enemy_gets_damaged(E, T, am, t, foes, w, stat, destroy, status, sc);
+		col2.enemy_gets_damaged(E2, T, am, t, foes_while_scroll, w, stat, destroy, status, sc);
 
 		E.update(foes, b, mb, ball, mball, v, ani);
 		E2.update(foes_while_scroll);
@@ -1156,25 +1139,12 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		col2.player_gets_damaged(E2, mb, b, foes_while_scroll, spaceship, stat, hit, status, ev, health);
 
 
-		col.Ball_gets_redirected(E, ball, laser, ballreflect, bossdefeated);
-		col.Ball_gets_destroyed(E, T, mball, laser, am, reflect, bossdefeated);
-		col.Ball_gets_destroyed(E, v, laser, reflect, bossdefeated);
-
-		shipWeapon.update(laser);
-		shipWeapon.update(Ice);
-		shipWeapon.update(Fire);
-		shipWeapon.update(Lightning);
-		shipWeapon.update(h);
-		shipWeapon.update(hbar);
-		shipWeapon.update(wave);
-
-		shipWeapon.destroy_ammo(laser);
-		shipWeapon.destroy_ammo(Ice);
-		shipWeapon.destroy_ammo(Fire);
-		shipWeapon.destroy_ammo(Lightning);
-		shipWeapon.destroy_ammo(h);
-		shipWeapon.destroy_ammo(hbar);
-		shipWeapon.destroy_ammo(wave);
+		col.Ball_gets_redirected(E, ball, w, ballreflect, bossdefeated);
+		col.Ball_gets_destroyed(E, T, mball, w, am, reflect, bossdefeated);
+		col.Ball_gets_destroyed(E, v, w, reflect, bossdefeated);
+		
+		shipWeapon.update(w);
+		shipWeapon.destroy_ammo(w);
 		
 		draw = true;
 		render();
@@ -1183,18 +1153,18 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 	else if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 1)
 	{
-	
-	al_stop_sample_instance(Earth);
-	al_stop_sample_instance(Earth_Factory);
-	al_stop_sample_instance(Mars);
-	al_stop_sample_instance(Mars_Nest);
-	al_stop_sample_instance(Astroid);
-	al_stop_sample_instance(Boss);
-	al_stop_sample_instance(Saturn);
-	al_stop_sample_instance(Final_Boss);
 
-	draw = true;
-	render();
+		al_stop_sample_instance(Earth);
+		al_stop_sample_instance(Earth_Factory);
+		al_stop_sample_instance(Mars);
+		al_stop_sample_instance(Mars_Nest);
+		al_stop_sample_instance(Astroid);
+		al_stop_sample_instance(Boss);
+		al_stop_sample_instance(Saturn);
+		al_stop_sample_instance(Final_Boss);
+
+		draw = true;
+		render();
 	}
 }
 
@@ -1272,36 +1242,45 @@ void game_loop::render()
 			spaceship[j]->render();
 		}
 		
-		shipWeapon.renderweapon(laser, stat);
 
+		for (int k = 0; k < w.size(); k++)
+		{
+			shipWeapon.renderweapon(w, w[k]->getweaponID(), stat, ammo[w[k]->getweaponID()]);
+
+		}
+
+		shipWeapon.renderweaponinbox(LAZER, stat, NULL);
+		
 		switch (weaponsel)
 		{
 		case ICET:
-			shipWeapon.renderweapon(Ice, stat, ammo[ICET]);
+			shipWeapon.renderweaponinbox(ICET, stat, ammo[ICET]);
 			break;
 
 		case INFERRED:
-			shipWeapon.renderweapon(Fire, stat, ammo[INFERRED]);
+			shipWeapon.renderweaponinbox(INFERRED, stat, ammo[INFERRED]);
 			break;
 
 		case ZIGGONET:
-			shipWeapon.renderweapon(Lightning, stat, ammo[ZIGGONET]);
+			shipWeapon.renderweaponinbox(ZIGGONET, stat, ammo[ZIGGONET]);
 			break;
 
 		case HAYCH:
-			shipWeapon.renderweapon(h, stat, ammo[HAYCH]);
+			shipWeapon.renderweaponinbox(HAYCH, stat, ammo[HAYCH]);
 			break;
 
 		case HAYCHBA:
-			shipWeapon.renderweapon(hbar, stat, ammo[HAYCHBA]);
+			shipWeapon.renderweaponinbox(HAYCHBA, stat, ammo[HAYCHBA]);
 			break;
 
 		case SONICWAVE:
-			shipWeapon.renderweapon(wave, stat, ammo[SONICWAVE]);
+			shipWeapon.renderweaponinbox(SONICWAVE, stat, ammo[SONICWAVE]);
 			break;
 
 		}
 		
+		
+
 		for (int i = 0; i < foes.size(); i++)
 		{
 			if (foes[i]->get_duration() > 0)
@@ -1427,8 +1406,12 @@ void game_loop::render()
 	{
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 
-		stat.setnotification("PAUSE", status, 235, 225, al_map_rgb(255,255,255));
-		stat.setnotification("[PRESS ESC IF YOU WANT TO QUIT]", status, 140, 240, al_map_rgb(255, 255, 255));
+		stat.setnotification("PAUSE", status, 235, 205, al_map_rgb(0,255,0));
+		stat.setnotification("[PRESS (ESC) IF YOU WANT TO QUIT]", status, 140, 225, al_map_rgb(255, 255, 255));
+		stat.setnotification("[PRESS (ENTER) IF YOU WANT TO CONTINUE]", status, 125, 245, al_map_rgb(255, 255, 255));
+		stat.setnotification("[PRESS (DIR KEY) TO MOVE THE PLAYER]", status, 130, 280, al_map_rgb(0, 200, 255));
+		stat.setnotification("[PRESS (Z) TO SHOOT LAZERS]", status, 160, 300, al_map_rgb(0, 200, 255));
+		stat.setnotification("[PRESS (X) TO SHOOT SPECIAL WEAPONS]", status, 125, 320, al_map_rgb(0, 200, 255));
 
 		al_flip_display();
 	}

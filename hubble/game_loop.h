@@ -56,6 +56,7 @@ private:
 	std::vector <Haych*> h;
 	std::vector <Haychba*> hbar;
 	std::vector <Sonic_Wave*> wave;
+	std::vector <Weapon*> w;
 
 	std::vector <int> duration;
 

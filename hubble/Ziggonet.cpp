@@ -2,7 +2,7 @@
 
 
 
-Ziggonet::Ziggonet(int x, int y)
+Ziggonet::Ziggonet(int x, int y) : Weapon(x, y)
 {
 	setx(x);
 	sety(y);
@@ -34,6 +34,11 @@ int Ziggonet::gety()
 int Ziggonet::effect()
 {
 	return STUNNED;
+}
+
+int Ziggonet::getweaponID()
+{
+	return ZIGGONET;
 }
 
 int Ziggonet::get_damage()
