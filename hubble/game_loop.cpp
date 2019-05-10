@@ -16,7 +16,7 @@ game_loop::game_loop()
 	num_of_weapon = 1;
 	backgroundvol = 1.5;
 
-	unlockweapon[ICET] = true;
+	unlockweapon[ICET] = false;
 	unlockweapon[INFERRED] = false;
 	unlockweapon[ZIGGONET] = false;
 	unlockweapon[HAYCH] = false;
@@ -953,7 +953,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			
 		}
 
-		if (stagenumber == MARS)
+		else if (stagenumber == MARS)
 		{
 			if (!battle)
 			{
@@ -982,32 +982,6 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 				}
 			}
 
-		}
-
-		else if (stagenumber == AST && b.size() == 0)
-		{
-			if (s.get_y() >= -2800 && s.get_y() < 0)
-			{
-				if (spaceship.size() > 0)
-				{
-					al_set_sample_instance_gain(Astroid, backgroundvol);
-					al_set_sample_instance_speed(Astroid, 1);
-					al_play_sample_instance(Astroid);
-				}
-			}
-		}
-
-		else if (stagenumber == SATURN && b.size() == 0)
-		{
-			if (s.get_y() >= -800 && s.get_y() < 0)
-			{
-				if (spaceship.size() > 0)
-				{
-					al_set_sample_instance_gain(Saturn, backgroundvol);
-					al_set_sample_instance_speed(Saturn, 1);
-					al_play_sample_instance(Saturn);
-				}
-			}
 		}
 
 		if (s.get_y() == -2400 && !battle && lvl == 1 )
@@ -1061,20 +1035,9 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		else if (s.get_y() == 0 && !battle && lvl == 4)
 		{
-			al_stop_samples();
+			
 			battle = true;
 			s.stop_moving();
-
-			if (spaceship.size() > 0)
-			{
-				al_stop_sample_instance(Earth_Factory);
-				al_stop_sample_instance(Mars_Nest);
-				al_set_sample_instance_position(Earth_Factory, 0);
-				al_set_sample_instance_position(Mars_Nest, 0);
-				al_set_sample_instance_gain(Boss, backgroundvol);
-				al_set_sample_instance_speed(Boss, 1);
-				al_play_sample_instance(Boss);
-			}
 
 			if (stagenumber == EARTH)
 			{
@@ -1087,39 +1050,17 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
-		else if (s.get_y() == 0 && !battle && lvl == 8 && s.get_stage() == AST)
-		{
-			if (spaceship.size() > 0)
-			{
-				al_stop_sample_instance(Astroid);
-				al_set_sample_instance_gain(Boss, backgroundvol);
-				al_set_sample_instance_speed(Boss, 1);
-				al_play_sample_instance(Boss);
-			}
-		}
-
-		else if (s.get_y() == 0 && !battle && lvl == 3 && s.get_stage() == SATURN)
-		{
-			if (spaceship.size() > 0)
-			{
-				al_stop_sample_instance(Saturn);
-				al_set_sample_instance_gain(Final_Boss, backgroundvol);
-				al_set_sample_instance_speed(Final_Boss, 1);
-				al_play_sample_instance(Final_Boss);
-			}
-		}
-
 		col.win_collsion(spaceship);
 		col.Enemy_boundary_collision(foes, REBOUND);
 		col2.Enemy_boundary_collision(foes_while_scroll, REBOUND);
 
 		col.Boss_boundary_collision(E, b);
 
-		col.boss_gets_damaged(E, b, ball, w, bosshit, reflect, bossdefeated);
-		col.miniboss_gets_damaged(E, mb, w, bossdefeated);
+		col.boss_gets_damaged(E, shipWeapon, b, ball, w, bosshit, reflect, bossdefeated);
+		col.miniboss_gets_damaged(E, shipWeapon, mb, w, bossdefeated);
 
-		col.enemy_gets_damaged(E, T, am, t, foes, w, stat, destroy, status, sc);
-		col2.enemy_gets_damaged(E2, T, am, t, foes_while_scroll, w, stat, destroy, status, sc);
+		col.enemy_gets_damaged(E, shipWeapon, T, am, t, foes, w, stat, destroy, status, sc);
+		col2.enemy_gets_damaged(E2, shipWeapon, T, am, t, foes_while_scroll, w, stat, destroy, status, sc);
 
 		E.update(foes, b, mb, ball, mball, v, ani);
 		E2.update(foes_while_scroll);
@@ -1139,9 +1080,9 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		col2.player_gets_damaged(E2, mb, b, foes_while_scroll, spaceship, stat, hit, status, ev, health);
 
 
-		col.Ball_gets_redirected(E, ball, w, ballreflect, bossdefeated);
-		col.Ball_gets_destroyed(E, T, mball, w, am, reflect, bossdefeated);
-		col.Ball_gets_destroyed(E, v, w, reflect, bossdefeated);
+		col.Ball_gets_redirected(E, shipWeapon, ball, w, ballreflect, bossdefeated);
+		col.Ball_gets_destroyed(E, shipWeapon, T, mball, w, am, reflect, bossdefeated);
+		col.Ball_gets_destroyed(E, shipWeapon, v, w, reflect, bossdefeated);
 		
 		shipWeapon.update(w);
 		shipWeapon.destroy_ammo(w);
@@ -1172,34 +1113,105 @@ void game_loop::render()
 {
 	if (draw && pauseCounter == 0)
 	{
-		switch (s.get_stage())
+		if (b.size() == 0 && spaceship.size() > 0)
 		{
-		case EARTH:
-			s.earth();
-			break;
-		case MARS:
-			s.mars();
-			if ((lvl == 1 || lvl == 2) && pauseCounter == 0)
+			switch (s.get_stage())
 			{
-				al_set_sample_instance_gain(Mars, backgroundvol);
-				al_set_sample_instance_speed(Mars, 1);
-				al_play_sample_instance(Mars);
+			case EARTH:
+				s.earth();
+				if (lvl == 1 || lvl == 2)
+				{
+					al_set_sample_instance_gain(Earth, backgroundvol);
+					al_set_sample_instance_speed(Earth, 1);
+					al_play_sample_instance(Earth);
+				}
+
+				else if (lvl == 3 || lvl == 4)
+				{
+					al_stop_sample_instance(Earth);
+					al_set_sample_instance_gain(Earth_Factory, backgroundvol);
+					al_set_sample_instance_speed(Earth_Factory, 1);
+					al_play_sample_instance(Earth_Factory);
+				}
+				break;
+
+			case MARS:
+				s.mars();
+				if (lvl == 1 || lvl == 2)
+				{
+					al_stop_sample_instance(Earth_Factory);
+
+					al_set_sample_instance_gain(Mars, backgroundvol);
+					al_set_sample_instance_speed(Mars, 1);
+					al_play_sample_instance(Mars);
+				}
+
+				else if (lvl == 3 || lvl == 4)
+				{
+					al_set_sample_instance_gain(Mars_Nest, backgroundvol);
+					al_set_sample_instance_speed(Mars_Nest, 1);
+					al_play_sample_instance(Mars_Nest);
+				}
+				break;
+
+			case AST:
+				al_stop_sample_instance(Mars_Nest);
+				al_set_sample_instance_gain(Astroid, backgroundvol);
+				al_set_sample_instance_speed(Astroid, 1);
+				al_play_sample_instance(Astroid);
+				s.astroid_belt();
+				break;
+
+			case SATURN:
+				al_set_sample_instance_gain(Saturn, backgroundvol);
+				al_set_sample_instance_speed(Saturn, 1);
+				al_play_sample_instance(Saturn);
+				s.saturn();
+				break;
+			}
+		}
+		
+		else if (b.size() > 0 && spaceship.size() > 0)
+		{
+
+			switch (s.get_stage())
+			{
+			case EARTH:
+				s.earth();
+				break;
+
+			case MARS:
+				s.mars();
+				break;
+
+			case AST:
+				s.astroid_belt();
+				break;
+
+			case SATURN:
+				s.saturn();
+				break;
 			}
 
-			else if ((lvl == 3 || lvl == 4) && pauseCounter == 0 && b.size() == 0)
+			if (s.get_stage() == SATURN)
 			{
-				al_set_sample_instance_gain(Mars_Nest, backgroundvol);
-				al_set_sample_instance_speed(Mars_Nest, 1);
-				al_play_sample_instance(Mars_Nest);
+				al_stop_sample_instance(Saturn);
+				al_set_sample_instance_gain(Final_Boss, backgroundvol);
+				al_set_sample_instance_speed(Final_Boss, 1);
+				al_play_sample_instance(Final_Boss);
 			}
-			break;
-		case AST:
-			al_stop_sample_instance(Mars_Nest);
-			s.astroid_belt();
-			break;
-		case SATURN:
-			s.saturn();
-			break;
+
+			else
+			{
+				al_stop_sample_instance(Mars_Nest);
+				al_stop_sample_instance(Mars);
+				al_stop_sample_instance(Earth);
+				al_stop_sample_instance(Earth_Factory);
+				al_stop_sample_instance(Astroid);
+				al_set_sample_instance_gain(Boss, backgroundvol);
+				al_set_sample_instance_speed(Boss, 1);
+				al_play_sample_instance(Boss);
+			}
 		}
 	
 		E.renderenemy(foes);

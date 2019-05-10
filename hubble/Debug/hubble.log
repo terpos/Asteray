@@ -16,26 +16,49 @@ c:\users\kamal\documents\github\asteray\hubble\collision.cpp(401): warning C4018
 c:\users\kamal\documents\github\asteray\hubble\collision.cpp(523): warning C4018: '<': signed/unsigned mismatch
 c:\users\kamal\documents\github\asteray\hubble\collision.cpp(575): warning C4018: '<': signed/unsigned mismatch
 c:\users\kamal\documents\github\asteray\hubble\collision.cpp(577): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(604): warning C4018: '<': signed/unsigned mismatch
 c:\users\kamal\documents\github\asteray\hubble\collision.cpp(606): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(608): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(642): warning C4018: '<': signed/unsigned mismatch
 c:\users\kamal\documents\github\asteray\hubble\collision.cpp(644): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(646): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(672): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(674): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(693): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(695): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(717): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(719): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(756): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(758): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(787): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(789): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(816): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(818): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(842): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(844): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(873): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(875): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(905): warning C4018: '<': signed/unsigned mismatch
-c:\users\kamal\documents\github\asteray\hubble\collision.cpp(907): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(668): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(670): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(689): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(691): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(713): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(715): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(752): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(754): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(783): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(785): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(812): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(814): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(838): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(840): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(869): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(871): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(901): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\collision.cpp(903): warning C4018: '<': signed/unsigned mismatch
+  game_loop.cpp
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(185): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(199): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(214): warning C4102: 'GAMEOVER': unreferenced label
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(738): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(850): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(882): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1252): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1258): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1296): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1314): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1333): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1339): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\game_loop.cpp(1494): warning C4018: '<': signed/unsigned mismatch
+  Main_menu.cpp
+  screen_manager.cpp
+  Source.cpp
+  weaponManager.cpp
+c:\users\kamal\documents\github\asteray\hubble\weaponmanager.cpp(128): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\weaponmanager.cpp(164): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\weaponmanager.cpp(173): warning C4018: '<': signed/unsigned mismatch
+c:\users\kamal\documents\github\asteray\hubble\weaponmanager.cpp(234): warning C4018: '<': signed/unsigned mismatch
+  Generating Code...
   hubble.vcxproj -> C:\Users\Kamal\Documents\GitHub\Asteray\Debug\hubble.exe

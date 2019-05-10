@@ -6,7 +6,6 @@ weaponManager::weaponManager()
 {
 }
 
-
 weaponManager::~weaponManager()
 {
 }
@@ -56,14 +55,67 @@ void weaponManager::select_keys(int keys, int p_or_s)
 	}
 }
 
-void weaponManager::setweaponID(int id)
-{
-	this->id = id;
-}
-
 int weaponManager::getweaponID()
 {
 	return HAYCH;
+}
+
+int weaponManager::geth(int ID)
+{
+	switch (ID)
+	{
+	case LAZER:
+		return al_get_bitmap_height(shiplaser[BLUE]);
+		break;
+	case ICET:
+		return al_get_bitmap_height(icet[0]);
+		break;
+	case INFERRED:
+		return al_get_bitmap_height(inferred[0]);
+		break;
+	case ZIGGONET:
+		return al_get_bitmap_height(ziggonet);
+		break;
+	case HAYCH:
+		return al_get_bitmap_height(haych[0]);
+		break;
+	case HAYCHBA:
+		return al_get_bitmap_height(haychba[0]);
+		break;
+	case SONICWAVE:
+		return al_get_bitmap_height(sonic_wave);
+		break;
+	}
+	return NULL;
+}
+
+int weaponManager::getw(int ID)
+{
+	switch (ID)
+	{
+	case LAZER:
+		return al_get_bitmap_width(shiplaser[BLUE]);
+		break;
+	case ICET:
+		return al_get_bitmap_width(icet[0]);
+		break;
+	case INFERRED:
+		return al_get_bitmap_width(inferred[0]);
+		break;
+	case ZIGGONET:
+		return al_get_bitmap_width(ziggonet);
+		break;
+	case HAYCH:
+		return al_get_bitmap_width(haych[0]);
+		break;
+	case HAYCHBA:
+		return al_get_bitmap_width(haychba[0]);
+		break;
+	case SONICWAVE:
+		return al_get_bitmap_width(sonic_wave);
+		break;
+	}
+	return NULL;
 }
 
 void weaponManager::printout()
@@ -187,165 +239,6 @@ void weaponManager::destroy_ammo(std::vector<Weapon*>& w)
 		}
 	}
 }
-
-/*
-void weaponManager::renderweapon(std::vector <lazer*> &laser, Status s)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		laser[i]->draw(shiplaser[BLUE], shiplaser[YELLOW], shiplaser[RED]);
-		//laser[i]->draw(icet[BLUE], icet[YELLOW], shiplaser[RED]);
-		
-	}
-	s.prime_Weapon_box(shiplaser[BLUE], font);
-}
-
-void weaponManager::renderweapon(std::vector <Icet*> &laser, Status s, int ammo)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		laser[i]->draw(icet[0], icet[1]);
-	}
-	s.secondary_Weapon_box(icet[0], font, ammo);
-	
-}
-
-void weaponManager::renderweapon(std::vector <Inferred*> &laser, Status s, int ammo)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		laser[i]->draw(inferred[0], inferred[1]);
-	}
-	s.secondary_Weapon_box(inferred[0], font, ammo);
-
-}
-
-void weaponManager::renderweapon(std::vector <Ziggonet*> &laser, Status s, int ammo)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		laser[i]->draw(ziggonet, ziggonet);
-	}
-	s.secondary_Weapon_box(ziggonet, font, ammo);
-
-}
-
-void weaponManager::renderweapon(std::vector <Haych*> &laser, Status s, int ammo)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		laser[i]->draw(haych[0], haych[1]);
-	}
-	s.secondary_Weapon_box(haych[0], font, ammo);
-}
-
-void weaponManager::renderweapon(std::vector <Haychba*> &laser, Status s, int ammo)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		laser[i]->draw(haychba[0], haychba[1]);
-	}
-	s.secondary_Weapon_box(haychba[0], font, ammo);
-}
-
-void weaponManager::renderweapon(std::vector <Sonic_Wave*> &laser, Status s, int ammo)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		laser[i]->draw(sonic_wave, sonic_wave);
-	}
-	s.secondary_Weapon_box(sonic_wave, font, ammo);
-}
-
-
-void weaponManager::destroy_ammo(std::vector <lazer*> &laser)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		if (laser[i]->gety() < 0)
-		{
-			laser.erase(laser.begin() + i);
-		}
-		
-		
-	}
-}
-
-void weaponManager::destroy_ammo(std::vector <Icet*> &laser)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		if (laser[i]->gety() < 0)
-		{
-			laser.erase(laser.begin() + i);
-		}
-
-
-	}
-}
-
-void weaponManager::destroy_ammo(std::vector <Inferred*> &laser)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		if (laser[i]->gety() < 0)
-		{
-			laser.erase(laser.begin() + i);
-		}
-
-
-	}
-}
-
-void weaponManager::destroy_ammo(std::vector <Ziggonet*> &laser)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		if (laser[i]->gety() < 0)
-		{
-			laser.erase(laser.begin() + i);
-		}
-
-
-	}
-}
-
-void weaponManager::destroy_ammo(std::vector <Haych*> &laser)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		if (laser[i]->gety() < 0)
-		{
-			laser.erase(laser.begin() + i);
-		}
-
-
-	}
-}
-
-void weaponManager::destroy_ammo(std::vector <Haychba*> &laser)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		if (laser[i]->gety() < 0)
-		{
-			laser.erase(laser.begin() + i);
-		}
-	}
-}
-
-void weaponManager::destroy_ammo(std::vector <Sonic_Wave*> &laser)
-{
-	for (int i = 0; i < laser.size(); i++)
-	{
-		if (laser[i]->gety() < 0)
-		{
-			laser.erase(laser.begin() + i);
-		}
-	}
-	
-
-}*/
 
 void weaponManager::destroy_weapon_img()
 {

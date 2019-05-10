@@ -155,7 +155,7 @@ void collision::Boss_boundary_collision(Enemy_Manager EN, std::vector <boss*> &f
 	}
 }
 
-void collision::enemy_gets_damaged(Enemy_Manager EN, Tools_manager & tm, std::vector<Ammo*>& a,
+void collision::enemy_gets_damaged(Enemy_Manager EN, weaponManager W, Tools_manager & tm, std::vector<Ammo*>& a,
 	std::vector<Tools*>& t, std::vector<enemies*>& f, std::vector<Weapon*>& l, 
 	Status & s, ALLEGRO_SAMPLE_INSTANCE * instance, ALLEGRO_FONT * font, int & score)
 {
@@ -163,8 +163,8 @@ void collision::enemy_gets_damaged(Enemy_Manager EN, Tools_manager & tm, std::ve
 	{
 		for (int j = 0; j < l.size(); j++)
 		{
-			if (f[i]->get_x() < l[j]->getx() + 25 && f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) > l[j]->getx() &&
-				f[i]->get_y() < l[j]->gety() + 50 && f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) > l[j]->gety())
+			if (f[i]->get_x() < l[j]->getx() + W.getw(l[j]->getweaponID()) && f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) > l[j]->getx() &&
+				f[i]->get_y() < l[j]->gety() + W.geth(l[j]->getweaponID()) && f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) > l[j]->gety())
 			{
 				//f[i]->setlife(false);
 				
@@ -331,8 +331,8 @@ void collision::enemy_gets_damaged(Enemy_Manager EN, std::vector<Tools*>& t, std
 		for (int j = 0; j < stunned_enemy.size(); j++)
 		{
 
-			if (f[i]->get_x() + 50 < f[stunned_enemy[j]]->get_x() && f[i]->get_x() < f[stunned_enemy[j]]->get_x() + 50 
-				&& f[i]->get_y() + 50 < f[stunned_enemy[j]]->get_y() && f[i]->get_y() < f[stunned_enemy[j]]->get_y())
+			if (f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) < f[stunned_enemy[j]]->get_x() && f[i]->get_x() < f[stunned_enemy[j]]->get_x() + 50 
+				&& f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) < f[stunned_enemy[j]]->get_y() && f[i]->get_y() < f[stunned_enemy[j]]->get_y())
 			{
 				num_of_kill += 1;
 				set_num_of_kills(num_of_kill);
@@ -352,7 +352,7 @@ void collision::enemy_gets_damaged(Enemy_Manager EN, std::vector<Tools*>& t, std
 	}
 }
 
-void collision::boss_gets_damaged(Enemy_Manager &EN, std::vector <boss*> &b, std::vector <Spartak_ball*> &ball, std::vector <Weapon*> &f, 
+void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vector <boss*> &b, std::vector <Spartak_ball*> &ball, std::vector <Weapon*> &f, 
 	ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_SAMPLE_INSTANCE *instance2, bool &bossdefeated)
 {
 
@@ -408,8 +408,8 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, std::vector <boss*> &b, std
 			switch (b[i]->get_boss())
 			{
 			case SPARTAK:
-				if ((b[i]->get_y() < f[j]->gety() + 50 && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
-					b[i]->get_x() < f[j]->getx() + 50 && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx()) && f[j]->getweaponID() == LAZER)
+				if ((b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
+					b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx()) && f[j]->getweaponID() == LAZER)
 				{
 					al_set_sample_instance_position(instance2, 0);
 
@@ -422,8 +422,8 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, std::vector <boss*> &b, std
 				break;
 
 			case MARTIANB:
-				if ((b[i]->get_y() < f[j]->gety() + 50 && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
-					b[i]->get_x() < f[j]->getx() + 50 && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx()) && f[j]->getweaponID() == LAZER)
+				if ((b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
+					b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx()) && f[j]->getweaponID() == LAZER)
 				{
 
 					if (b[i]->get_health() == 0)
@@ -468,8 +468,8 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, std::vector <boss*> &b, std
 				break;
 
 			case KAMETKHAN:
-				if (b[i]->get_y() < f[j]->gety() + 50 && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
-					b[i]->get_x() < f[j]->getx() + 50 && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx())
+				if (b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
+					b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx())
 				{
 					al_set_sample_instance_position(instance2, 0);
 					al_set_sample_instance_gain(instance2, 1);
@@ -481,8 +481,8 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, std::vector <boss*> &b, std
 				break;
 
 			case XORGANA:
-				if (b[i]->get_y() < f[j]->gety() + 50 && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
-					b[i]->get_x() < f[j]->getx() + 25 && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx())
+				if (b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
+					b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx())
 				{
 					if (b[i]->get_health() == 0)
 					{
@@ -530,8 +530,8 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, std::vector <boss*> &b, std
 			if (b[i]->get_boss() == KAMETKHAN)
 			{
 
-				if ((b[i]->get_y() < f[k]->gety() + 50 && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[k]->gety() &&
-					b[i]->get_x() < f[k]->getx() + 25 && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[k]->getx()) && f[k]->getweaponID()==ICET)
+				if ((b[i]->get_y() < f[k]->gety() + W.geth(f[k]->getweaponID()) && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[k]->gety() &&
+					b[i]->get_x() < f[k]->getx() + W.getw(f[k]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[k]->getx()) && f[k]->getweaponID()==ICET)
 				{
 					if (b[i]->get_health() == 0)
 					{
@@ -570,26 +570,24 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, std::vector <boss*> &b, std
 	}
 }
 
-void collision::Ball_gets_redirected(Enemy_Manager &EN, std::vector <Spartak_ball*> &b, std::vector <Weapon*> &f, ALLEGRO_SAMPLE_INSTANCE *instance, bool &bossdefeated)
+void collision::Ball_gets_redirected(Enemy_Manager &EN, weaponManager W, std::vector <Spartak_ball*> &b, std::vector <Weapon*> &f, ALLEGRO_SAMPLE_INSTANCE *instance, bool &bossdefeated)
 {
 	for (int i = 0; i < b.size(); i++)
 	{
 		for (int j = 0; j < f.size(); j++)
 		{
 			
-			if (b[i]->get_y() < f[j]->gety() + 50 && b[i]->get_y() + EN.get_ball_h() > f[j]->gety() &&
-					b[i]->get_x() < f[j]->getx() + 25 && b[i]->get_x() + EN.get_ball_w() > f[j]->getx())
+			if (b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_ball_h() > f[j]->gety() &&
+					b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_ball_w() > f[j]->getx())
 			{
 				al_set_sample_instance_position(instance, 0);
 				al_set_sample_instance_gain(instance, 1);
 				al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
 				al_play_sample_instance(instance);
-				//b[i]->set_shot(false);
+
 				b[i]->set_reflect(true);
 				b[i]->set_coord_ID(UP);
 				f.erase(f.begin() + j);
-
-					//f[j]->setweapony(f[j]->getweapony() + 1);
 				break;
 			}
 			
@@ -600,7 +598,7 @@ void collision::Ball_gets_redirected(Enemy_Manager &EN, std::vector <Spartak_bal
 	}
 }
 
-void collision::Ball_gets_destroyed(Enemy_Manager &EN, Tools_manager & tm, std::vector <Molten_shot*> &b, std::vector <Weapon*> &f,
+void collision::Ball_gets_destroyed(Enemy_Manager &EN, weaponManager W, Tools_manager & tm, std::vector <Molten_shot*> &b, std::vector <Weapon*> &f,
 	std::vector <Ammo*> &a, ALLEGRO_SAMPLE_INSTANCE *instance, bool &bossdefeated)
 {
 	for (int i = 0; i < b.size(); i++)
@@ -608,8 +606,8 @@ void collision::Ball_gets_destroyed(Enemy_Manager &EN, Tools_manager & tm, std::
 		for (int j = 0; j < f.size(); j++)
 		{
 
-			if (b[i]->get_y() < f[j]->gety() + 50 && b[i]->get_y() + EN.get_ball_h() > f[j]->gety() &&
-				b[i]->get_x() < f[j]->getx() + 25 && b[i]->get_x() + EN.get_ball_w() > f[j]->getx())
+			if (b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_ball_h() > f[j]->gety() &&
+				b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_ball_w() > f[j]->getx())
 			{
 				tm.set_tool_ID(rand() % 21);
 
@@ -639,15 +637,15 @@ void collision::Ball_gets_destroyed(Enemy_Manager &EN, Tools_manager & tm, std::
 	
 }
 
-void collision::Ball_gets_destroyed(Enemy_Manager &EN, std::vector <v_beam*> &b, std::vector <Weapon*> &f, ALLEGRO_SAMPLE_INSTANCE *instance, bool &bossdefeated)
+void collision::Ball_gets_destroyed(Enemy_Manager &EN, weaponManager W, std::vector <v_beam*> &b, std::vector <Weapon*> &f, ALLEGRO_SAMPLE_INSTANCE *instance, bool &bossdefeated)
 {
 	for (int i = 0; i < b.size(); i++)
 	{
 		for (int j = 0; j < f.size(); j++)
 		{
 
-			if (b[i]->get_y() < f[j]->gety() + 50 && b[i]->get_y() + EN.get_ball_h() > f[j]->gety() &&
-				b[i]->get_x() < f[j]->getx() + 25 && b[i]->get_x() + EN.get_ball_w() > f[j]->getx())
+			if (b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_ball_h() > f[j]->gety() &&
+				b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_ball_w() > f[j]->getx())
 			{
 				al_set_sample_instance_position(instance, 0);
 				al_set_sample_instance_gain(instance, 1);
@@ -659,22 +657,20 @@ void collision::Ball_gets_destroyed(Enemy_Manager &EN, std::vector <v_beam*> &b,
 				break;
 			}
 
-
-
 		}
 
 	}
 }
 
 
-void collision::miniboss_gets_damaged(Enemy_Manager &EN, std::vector <mini_boss*> &mb, std::vector <Weapon*> &f, bool &bossdefeated)
+void collision::miniboss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vector <mini_boss*> &mb, std::vector <Weapon*> &f, bool &bossdefeated)
 {
 	for (int i = 0; i < mb.size(); i++)
 	{
 		for (int j = 0; j < f.size(); j++)
 		{
-			if (mb[i]->get_y() < f[j]->gety() + 50 && mb[i]->get_y() + EN.get_E_h() > f[j]->gety() &&
-				mb[i]->get_x() < f[j]->getx() + 25 && mb[i]->get_x() + EN.get_E_w() > f[j]->getx())
+			if ((mb[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && mb[i]->get_y() + EN.get_E_h() > f[j]->gety() &&
+				mb[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && mb[i]->get_x() + EN.get_E_w() > f[j]->getx()) && f[j]->getweaponID() == LAZER)
 			{
 				//::cout << "You Win" << std::endl;
 				mb.erase(mb.begin()+i);
