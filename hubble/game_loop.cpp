@@ -9,7 +9,7 @@ game_loop::game_loop()
 	sc = 0;
 	pauseCounter = 0;
 	num_of_enemies = 0;
-	stagenumber = -1;
+	stagenumber = 2;
 	weaponsel = 0;
 	frame = 0;
 	textframe = 0;
@@ -1155,6 +1155,7 @@ void game_loop::render()
 				break;
 
 			case AST:
+				al_stop_sample_instance(Boss);
 				al_stop_sample_instance(Mars_Nest);
 				al_set_sample_instance_gain(Astroid, backgroundvol);
 				al_set_sample_instance_speed(Astroid, 1);

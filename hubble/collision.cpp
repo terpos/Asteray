@@ -245,7 +245,6 @@ void collision::enemy_gets_damaged(Enemy_Manager EN, weaponManager W, Tools_mana
 	}
 }
 
-
 void collision::enemy_dies(Tools_manager & tm, std::vector<Ammo*>& a, std::vector<Tools*>& t, std::vector<enemies*>& f, ALLEGRO_SAMPLE_INSTANCE * instance)
 {
 	for (int i = 0; i < f.size(); i++)
@@ -322,7 +321,6 @@ void collision::enemy_dies(Tools_manager & tm, std::vector<Ammo*>& a, std::vecto
 
 	}
 }
-
 
 void collision::enemy_gets_damaged(Enemy_Manager EN, std::vector<Tools*>& t, std::vector<enemies*>& f, Status & s, ALLEGRO_FONT * font)
 {
@@ -468,8 +466,8 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vecto
 				break;
 
 			case KAMETKHAN:
-				if (b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
-					b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx())
+				if ((b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
+					b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx()) && f[j]->getweaponID() == LAZER)
 				{
 					al_set_sample_instance_position(instance2, 0);
 					al_set_sample_instance_gain(instance2, 1);
@@ -570,7 +568,8 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vecto
 	}
 }
 
-void collision::Ball_gets_redirected(Enemy_Manager &EN, weaponManager W, std::vector <Spartak_ball*> &b, std::vector <Weapon*> &f, ALLEGRO_SAMPLE_INSTANCE *instance, bool &bossdefeated)
+void collision::Ball_gets_redirected(Enemy_Manager &EN, weaponManager W, std::vector <Spartak_ball*> &b, std::vector <Weapon*> &f,
+	ALLEGRO_SAMPLE_INSTANCE *instance, bool &bossdefeated)
 {
 	for (int i = 0; i < b.size(); i++)
 	{
@@ -661,7 +660,6 @@ void collision::Ball_gets_destroyed(Enemy_Manager &EN, weaponManager W, std::vec
 
 	}
 }
-
 
 void collision::miniboss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vector <mini_boss*> &mb, std::vector <Weapon*> &f, bool &bossdefeated)
 {
