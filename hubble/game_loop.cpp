@@ -9,7 +9,7 @@ game_loop::game_loop()
 	sc = 0;
 	pauseCounter = 0;
 	num_of_enemies = 0;
-	stagenumber = 2;
+	stagenumber = -1;
 	weaponsel = 0;
 	frame = 0;
 	textframe = 0;
