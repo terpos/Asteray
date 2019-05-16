@@ -5,7 +5,7 @@ game_loop::game_loop()
 {
 	key = 0;
 	health = 100;
-	lvl = -1;
+	lvl = 3;
 	sc = 0;
 	pauseCounter = 0;
 	num_of_enemies = 0;
@@ -36,17 +36,17 @@ game_loop::game_loop()
 	maxammo[HAYCHBA] = 3;
 	maxammo[SONICWAVE] = 5;
 
-	enemy_health[BLOBBY] = 8; // DEFAULT:8
-	enemy_health[ASTERIX] = 10; // DEFAULT:10
-	enemy_health[EPOLICE] = 3; // DEFAULT:3
-	enemy_health[JUPIBALL] = 8; // DEFAULT:8
+	enemy_health[BLOBBY] = 1; // DEFAULT:8
+	enemy_health[ASTERIX] = 1; // DEFAULT:10
+	enemy_health[EPOLICE] = 1; // DEFAULT:3
+	enemy_health[JUPIBALL] = 1; // DEFAULT:8
 	enemy_health[KAMEKOSET] = 1; // DEFAULT:1
-	enemy_health[MPOLICE] = 6; // DEFAULT:6
-	enemy_health[SATUSPHERE] = 20; // DEFAULT:20
-	enemy_health[SPACESHIP] = 2; // DEFAULT:2
-	enemy_health[SPYDER] = 3; // DEFAULT:3
-	enemy_health[VOLCANON] = 5; // DEFAULT:5
-	enemy_health[WYRM] = 12; // DEFAULT:12
+	enemy_health[MPOLICE] = 1; // DEFAULT:6
+	enemy_health[SATUSPHERE] = 1; // DEFAULT:20
+	enemy_health[SPACESHIP] = 1; // DEFAULT:2
+	enemy_health[SPYDER] = 1; // DEFAULT:3
+	enemy_health[VOLCANON] = 1; // DEFAULT:5
+	enemy_health[WYRM] = 1; // DEFAULT:12
 	enemy_health[XYBTOFY] = 1; // DEFAULT:1
 
 	//spaceship = player();
@@ -178,10 +178,10 @@ void game_loop::load_stuff()
 
 	al_set_sample_instance_gain(destroy, 2);
 	al_set_sample_instance_gain(hit, 2);
-
+	s.set_y(0);
 	burned_red = al_load_bitmap("burned_red.png");
 	burned_yellow = al_load_bitmap("burned_yellow.png");
-
+	
 	for (int j = 0; j < spaceship.size(); j++)
 	{
 		spaceship[j]->load();
@@ -904,7 +904,6 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 						}
 
 						s.scroll_down();
-						//al_play_sample(earth, backgroundvol, 0, 1, ALLEGRO_PLAYMODE_LOOP, 0);
 						al_set_sample_instance_gain(Earth, backgroundvol);
 						al_set_sample_instance_speed(Earth, 1);
 						al_play_sample_instance(Earth);
@@ -1062,7 +1061,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		col.enemy_gets_damaged(E, shipWeapon, T, am, t, foes, w, stat, destroy, status, sc);
 		col2.enemy_gets_damaged(E2, shipWeapon, T, am, t, foes_while_scroll, w, stat, destroy, status, sc);
 
-		E.update(foes, b, mb, ball, mball, v, ani);
+		E.update(foes, b, mb, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, ani);
 		E2.update(foes_while_scroll);
 
 
@@ -1217,7 +1216,7 @@ void game_loop::render()
 	
 		E.renderenemy(foes);
 		E.renderenemy(foes_while_scroll);
-		E.renderboss(b, ball, mball, v, ani, frame);
+		E.renderboss(b, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, ani, frame);
 		E.renderminiboss(mb, ani);
 
 		stat.Status_box(0, winy - 100, winx, winy);

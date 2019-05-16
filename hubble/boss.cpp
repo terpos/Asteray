@@ -60,36 +60,20 @@ void boss::update(ALLEGRO_BITMAP * bmp)
 	switch (get_boss())
 	{
 	case SPARTAK:
-		
-		if (get_energize())
-		{
-			this->frame++;
-			set_frame(this->frame);
-		}
 
-		if (get_frame() == 200 && get_energize())
-		{
-			is_energizing(false);
-			set_frame(0);
-			set_coordID(rand() % 4);
-			this->action = MOVE;
-		}
+		move();
 
 		if (get_coordID() == UP || get_coordID() == DOWN)
 		{
 			std::cout << get_energize() << std::endl;
 			std::cout << get_coordID() << std::endl;
 
-			if (!get_energize())
-			{
-				move();
-			}
-
 			if (get_y() % al_get_bitmap_height(bmp) == 0)
 			{
-				action = rand() % 4;
+				this->action = rand() % 4;
+				set_action(this->action);
 
-				if (action == ATTACK)
+				if (get_action() == ATTACK)
 				{
 					this->cid = 10;
 					set_coordID(this->cid);
@@ -98,7 +82,7 @@ void boss::update(ALLEGRO_BITMAP * bmp)
 					is_energizing(this->energize);
 				}
 				
-				else if (action >= MOVE)
+				else if (get_action() >= MOVE)
 				{
 					this->cid = rand() % 4;
 					set_coordID(this->cid);
@@ -114,16 +98,16 @@ void boss::update(ALLEGRO_BITMAP * bmp)
 		{
 			std::cout << get_energize() << std::endl;
 
-			if (!get_energize())
-			{
-				move();
-			}
+			std::cout << get_coordID() << std::endl;
+
 
 			if (get_x() % al_get_bitmap_width(bmp) == 0)
 			{
 				action = rand() % 4;
+				set_action(this->action);
 
-				if (action == ATTACK)
+
+				if (get_action() == ATTACK)
 				{
 					this->cid = 10;
 					set_coordID(this->cid);
@@ -132,7 +116,7 @@ void boss::update(ALLEGRO_BITMAP * bmp)
 					is_energizing(this->energize);
 				}
 
-				else if (action >= MOVE)
+				else if (get_action() >= MOVE)
 				{
 					this->cid = rand() % 4;
 					set_coordID(this->cid);
@@ -147,8 +131,7 @@ void boss::update(ALLEGRO_BITMAP * bmp)
 		break;
 
 	case MARTIANB:
-		this->frame++;
-		set_frame(this->frame);
+		
 		
 		move();
 

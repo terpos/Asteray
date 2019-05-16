@@ -19,8 +19,6 @@ public:
 
 	void dochoice(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE * q, game_loop g);
 
-	//void choice(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop g);
-
 	void update(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q);
 
 	void draw();
@@ -38,5 +36,8 @@ private:
 	
 	ALLEGRO_FONT *menuSel[2];
 
+	ALLEGRO_SAMPLE *mt;
+
+	ALLEGRO_SAMPLE_INSTANCE *Main_Theme;
 };
 

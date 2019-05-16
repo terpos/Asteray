@@ -367,25 +367,26 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vecto
 					ball.erase(ball.begin() + l);
 					b.erase(b.begin() + i);
 					bossdefeated = true;
-
+					EN.sethit(true);
 
 					break;
 				}
 
 				else
 				{
+					b[i]->set_frame(0);
 					b[i]->set_y(b[i]->get_y() - 50);
 					b[i]->set_health(b[i]->get_health() - 1);
 					ball.erase(ball.begin() + l);
 					al_set_sample_instance_position(instance, 0);
 					EN.sethit(true);
 					b[i]->set_vel(b[i]->get_vel() + 1);
+					b[i]->set_action(rand() % 4);
 					if (b[i]->get_vel() > 3)
 					{
 						b[i]->set_vel(3);
 					}
 					al_set_sample_instance_gain(instance, 1.5);
-					//al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
 					al_play_sample_instance(instance);
 					break;
 				}

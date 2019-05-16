@@ -24,7 +24,7 @@
 #define winy 500
 
 //coord dir
-enum { UP, DOWN, LEFT, RIGHT };
+enum { UP, DOWN, LEFT, RIGHT, UPRIGHT, DOWNRIGHT, UPLEFT, DOWNLEFT };
 
 //kinds of weapon
 enum {PRIME, SECONDARY};
@@ -60,3 +60,15 @@ enum { E, M };
 
 //choice for boss
 enum {ATTACK, MOVE};
+
+//Spartak's Attack Moves
+enum {BALL, DIAMONDS, S_LAZER};
+
+//MartianB's Attack Moves
+enum {CHARGE, EGG, TURBULENCE, B_LAZER};
+
+//KametKhan's Attack Moves
+enum {MOLTEN, KAMET, HEAT};
+
+//Xorgana's Attack Moves
+enum {SINGTW, V};

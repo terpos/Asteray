@@ -74,7 +74,14 @@ private:
 	std::vector <Spartak_ball*> ball;
 	std::vector <Molten_shot*> mball;
 	std::vector <v_beam*> v;
-
+	std::vector <Diamond_shot*> ds;
+	std::vector <Egg_Bomb*> EB;
+	std::vector <Sonic_Turbulence*> ST;
+	std::vector <Lazer_B*> LB;
+	std::vector <Kamet*> K;
+	std::vector <Heat_Wave*> hw;
+	std::vector <Single_Twin*> st;
+	std::vector <Spartak_Laser*> sl;
 
 	Animate ani;
 	Tools_manager T;
