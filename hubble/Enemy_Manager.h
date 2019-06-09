@@ -26,6 +26,7 @@
 #include "Kamet.h"
 #include "Heat_wave.h"
 #include "Single_Twin.h"
+#include "Enemy_Lazer.h"
 
 #include "boss.h"
 #include "mini_boss.h"
@@ -115,8 +116,11 @@ private:
 	ALLEGRO_BITMAP *mars_gate;
 	ALLEGRO_BITMAP *electricity[2];
 
+	ALLEGRO_BITMAP *E_Lazer;
+
 	ALLEGRO_SAMPLE *Energized;
 	ALLEGRO_SAMPLE *Release;
+	
 
 	ALLEGRO_SAMPLE_INSTANCE *energized;
 	ALLEGRO_SAMPLE_INSTANCE *release;
@@ -125,6 +129,9 @@ private:
 
 	int attack_Move;
 	int diamond_vel;
+	int single_twin_probability;
+	int enemy_shooting_probability;
 
+	std::vector <Enemy_Lazer*> lazer;
 };
 

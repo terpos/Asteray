@@ -52,11 +52,8 @@ void boss::energize_spartak(ALLEGRO_BITMAP *bmp1, ALLEGRO_BITMAP *bmp2)
 	//a.two_frames_custom(Spartak[0], Spartak[1], winx / 3, 0, frame, 13, 0, 6);
 }
 
-void boss::update(ALLEGRO_BITMAP * bmp)
+void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove)
 {
-	
-	
-
 	switch (get_boss())
 	{
 	case SPARTAK:
@@ -149,13 +146,15 @@ void boss::update(ALLEGRO_BITMAP * bmp)
 
 			if (get_y() < 0 && this->cid == UP)
 			{
-				this->cid = LEFT;
+				this->cid = rand() % 2 + 2;
 				set_coordID(this->cid);
+				this->vel = 1;
+				set_vel(this->vel);
 			}
 
 		}
 
-		if (get_coordID() == LEFT || get_coordID() == RIGHT)
+		else if (get_coordID() == LEFT || get_coordID() == RIGHT)
 		{
 			
 			if (get_x() % al_get_bitmap_width(bmp) == 0)
@@ -164,24 +163,22 @@ void boss::update(ALLEGRO_BITMAP * bmp)
 
 				if (this->action == ATTACK)
 				{
-					this->cid = DOWN;
-					set_coordID(this->cid);
-
-					this->vel = 15;
-					set_vel(this->vel);
-					
+					attackmove = rand() % 4;	
+					//std::cout << attackmove << std::endl;
 					move();
 				}
 
 				else if (this->action >= MOVE)
 				{
-					this->cid = (rand() % 2) + 2;
-					set_coordID(this->cid);
-					//this->vel = 1;
-					//set_vel(this->vel);
+
+					if (attackmove != CHARGE)
+					{
+						this->cid = (rand() % 2) + 2;
+						set_coordID(this->cid);
+					}
+					
 					move();
 				}
-
 			}
 		}
 
@@ -204,7 +201,7 @@ void boss::update(ALLEGRO_BITMAP * bmp)
 				if (this->action == ATTACK || this->action > MOVE)
 				{
 					is_energizing(true);
-
+					attackmove = rand() % 2;
 					move();
 				}
 
@@ -240,6 +237,8 @@ void boss::update(ALLEGRO_BITMAP * bmp)
 
 				if (get_action() == ATTACK || get_action() > MOVE)
 				{
+					attackmove = rand() % 2;
+
 					move();
 				}
 

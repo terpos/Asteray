@@ -139,6 +139,7 @@
     <ClCompile Include="Diamond_shot.cpp" />
     <ClCompile Include="Egg_Bomb.cpp" />
     <ClCompile Include="enemies.cpp" />
+    <ClCompile Include="Enemy_Lazer.cpp" />
     <ClCompile Include="Enemy_Manager.cpp" />
     <ClCompile Include="Epolice.cpp" />
     <ClCompile Include="Event.cpp" />
@@ -193,6 +194,7 @@
     <ClInclude Include="Diamond_shot.h" />
     <ClInclude Include="Egg_Bomb.h" />
     <ClInclude Include="enemies.h" />
+    <ClInclude Include="Enemy_Lazer.h" />
     <ClInclude Include="Enemy_Manager.h" />
     <ClInclude Include="Epolice.h" />
     <ClInclude Include="Event.h" />

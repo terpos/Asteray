@@ -12,7 +12,7 @@ public:
 
 	void draw_boss(int x, int y);
 	void energize_spartak(ALLEGRO_BITMAP *bmp1, ALLEGRO_BITMAP *bmp2);
-	void update(ALLEGRO_BITMAP *bmp);
+	void update(ALLEGRO_BITMAP *bmp, int &attackmove);
 	void destroy();
 	void move();
 
