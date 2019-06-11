@@ -52,7 +52,7 @@ void boss::energize_spartak(ALLEGRO_BITMAP *bmp1, ALLEGRO_BITMAP *bmp2)
 	//a.two_frames_custom(Spartak[0], Spartak[1], winx / 3, 0, frame, 13, 0, 6);
 }
 
-void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove)
+void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 {
 	switch (get_boss())
 	{
@@ -67,6 +67,7 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove)
 
 			if (get_y() % al_get_bitmap_height(bmp) == 0)
 			{
+
 				this->action = rand() % 4;
 				set_action(this->action);
 
@@ -84,8 +85,8 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove)
 					this->cid = rand() % 4;
 					set_coordID(this->cid);
 					move();
-					this->energize = false;
-					is_energizing(this->energize);
+					//this->energize = false;
+					//is_energizing(this->energize);
 				}
 
 			}
@@ -118,8 +119,10 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove)
 					this->cid = rand() % 4;
 					set_coordID(this->cid);
 					move();
-					this->energize = false;
-					is_energizing(this->energize);
+					this->action = rand() % 4;
+					set_action(this->action);
+					//this->energize = false;
+					//is_energizing(this->energize);
 				}
 
 			}
@@ -128,20 +131,18 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove)
 		break;
 
 	case MARTIANB:
-		
-		
-		move();
-
+		//move();
 		if (get_coordID() == DOWN || get_coordID() == UP)
 		{
 
-			if (get_y() > winx - 200)
+			if (get_y() + al_get_bitmap_height(bmp) > winy - 100)
 			{
+				std::cout << get_y() << std::endl;
 				this->cid = UP;
 				set_coordID(this->cid);
-
-				this->vel = 5;
+				this->vel = 10;
 				set_vel(this->vel);
+				//
 			}
 
 			if (get_y() < 0 && this->cid == UP)
@@ -150,6 +151,7 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove)
 				set_coordID(this->cid);
 				this->vel = 1;
 				set_vel(this->vel);
+				set_y(0);
 			}
 
 		}
@@ -159,13 +161,31 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove)
 			
 			if (get_x() % al_get_bitmap_width(bmp) == 0)
 			{
-				this->action = rand() % 4;
+				
+
+				if (lazerb_shoot <= 4)
+				{
+					this->action = ATTACK;
+				}
+
+				else
+				{
+					this->action = rand() % 4;
+				}
 
 				if (this->action == ATTACK)
 				{
-					attackmove = rand() % 4;	
-					//std::cout << attackmove << std::endl;
-					move();
+					if (lazerb_shoot <= 4)
+					{
+						attackmove = B_LAZER;
+					}
+
+					else
+					{
+						attackmove = rand() % 4;
+						move();
+					}
+					
 				}
 
 				else if (this->action >= MOVE)

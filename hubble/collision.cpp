@@ -109,15 +109,17 @@ void collision::Boss_boundary_collision(Enemy_Manager EN, std::vector <boss*> &f
 		{
 			if (foe[i]->get_x() + EN.get_boss_w(foe[i]->get_boss()) > winx)
 			{
-				cid = LEFT;
+				cid = DOWN;
 				foe[i]->set_coordID(cid);
+				foe[i]->set_action(rand() % 4);
 				break;
 			}
 
 			if (foe[i]->get_x() < 0)
 			{
-				cid = RIGHT;
+				cid = UP;
 				foe[i]->set_coordID(cid);
+				foe[i]->set_action(rand() % 4);
 				break;
 			}
 
@@ -125,6 +127,7 @@ void collision::Boss_boundary_collision(Enemy_Manager EN, std::vector <boss*> &f
 			{
 				cid = DOWN;
 				foe[i]->set_coordID(cid);
+				foe[i]->set_action(rand() % 4);
 				break;
 			}
 
@@ -132,6 +135,7 @@ void collision::Boss_boundary_collision(Enemy_Manager EN, std::vector <boss*> &f
 			{
 				cid = UP;
 				foe[i]->set_coordID(cid);
+				foe[i]->set_action(rand() % 4);
 				break;
 			}
 		}
@@ -142,6 +146,7 @@ void collision::Boss_boundary_collision(Enemy_Manager EN, std::vector <boss*> &f
 			{
 				cid = LEFT;
 				foe[i]->set_coordID(cid);
+				foe[i]->set_action(rand() % 4);
 				break;
 			}
 
@@ -149,6 +154,7 @@ void collision::Boss_boundary_collision(Enemy_Manager EN, std::vector <boss*> &f
 			{
 				cid = RIGHT;
 				foe[i]->set_coordID(cid);
+				foe[i]->set_action(rand() % 4);
 				break;
 			}
 		}

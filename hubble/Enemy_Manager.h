@@ -126,10 +126,12 @@ private:
 	ALLEGRO_SAMPLE_INSTANCE *release;
 
 	bool damaged;
+	bool lazerb_action;
 
 	int attack_Move;
 	int diamond_vel;
 	int single_twin_probability;
+	int lazerb_shoot;
 	int enemy_shooting_probability;
 
 	std::vector <Enemy_Lazer*> lazer;

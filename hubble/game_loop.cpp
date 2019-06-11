@@ -1040,7 +1040,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 			if (stagenumber == EARTH)
 			{
-				E.spawn_boss(b, XORGANA);
+				E.spawn_boss(b, SPARTAK);
 			}
 
 			else if (stagenumber == MARS)
