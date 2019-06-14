@@ -3,6 +3,9 @@
 #include "global.h"
 #include "game_loop.h"
 
+enum { PLAY, HOWTO, QUIT };
+
+
 class Main_menu
 {
 public:
@@ -12,7 +15,7 @@ public:
 	int getChoice();
 	
 	void setChoice(int choice);
-
+	void setscreen(int screen);
 	void load();
 
 	void loop(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q);
@@ -29,12 +32,19 @@ public:
 private:
 	int choice;
 	int fontSize[2];
+	int screen;
 
 	bool render;
+
+	Status stat;
 
 	ALLEGRO_BITMAP *menuBG;
 	
 	ALLEGRO_FONT *menuSel[2];
+	ALLEGRO_FONT *pause;
+	ALLEGRO_FONT *pause_options;
+	ALLEGRO_FONT *status;
+
 
 	ALLEGRO_SAMPLE *mt;
 

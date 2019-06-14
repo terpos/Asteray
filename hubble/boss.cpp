@@ -221,7 +221,7 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 				if (this->action == ATTACK || this->action > MOVE)
 				{
 					is_energizing(true);
-					attackmove = rand() % 2;
+					attackmove = rand() % 3;
 					move();
 				}
 

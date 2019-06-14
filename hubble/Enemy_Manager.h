@@ -51,16 +51,16 @@ public:
 	
 	void update(std::vector <enemies*> &e, std::vector <boss*> &b, std::vector <mini_boss*> &mb, std::vector <Spartak_ball*> &ball, std::vector <Diamond_shot*> &ds, 
 		std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K, 
-		std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, Animate &a);
+		std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, Animate &a);
 
 	void update(std::vector<enemies*>& e);
 	
-	void renderenemy(std::vector <enemies*> &e);
+	void renderenemy(std::vector <enemies*> &e,	std::vector <Enemy_Lazer*> &lazer);
 
 	void renderboss(std::vector <boss*> &b, std::vector <Spartak_ball*> &ball, std::vector <Diamond_shot*> &ds,
 		std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K,
 		std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball,
-		std::vector <v_beam*> &v, Animate a, int &frame);
+		std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, Animate a, int &frame);
 
 	void renderminiboss(std::vector <mini_boss*> &mb, Animate a);
 	
@@ -75,14 +75,32 @@ public:
 	int get_E_w();
 	int get_M_w();
 	int get_boss_w(int bossID);
+	
 	int get_ball_w();
+	int get_EB_w();
+	int get_Vshot_w();
+	int get_mball_w();
+	int get_ds_w();
+	int get_lazerb_w();
+	int get_lazers_w();
+	int get_st_w();
+	int get_elazer_w();
+	int get_K_w();
 
 
 	int get_E_h();
 	int get_M_h();
 	int get_boss_h(int bossID);
 	int get_ball_h();
-
+	int get_EB_h();
+	int get_Vshot_h();
+	int get_mball_h();
+	int get_ds_h();
+	int get_lazerb_h();
+	int get_lazers_h();
+	int get_st_h();
+	int get_elazer_h();
+	int get_K_h();
 
 	int get_num_of_enemy(std::vector <enemies*> e);
 
@@ -134,6 +152,5 @@ private:
 	int lazerb_shoot;
 	int enemy_shooting_probability;
 
-	std::vector <Enemy_Lazer*> lazer;
 };
 

@@ -1,6 +1,5 @@
 #include "screen_manager.h"
 
-enum { PLAY, QUIT };
 
 screen_manager::screen_manager()
 {
@@ -61,8 +60,17 @@ void screen_manager::display_loop()
 		{			
 			if (e.keyboard.keycode == ALLEGRO_KEY_ENTER)
 			{
-				break;
+				if (menu.getChoice() == HOWTO)
+				{
+					menu.setscreen(1);
+				}
+				else
+				{
+					break;
+				}
 			}
+
+
 		}
 
 		menu.update(e, queue);

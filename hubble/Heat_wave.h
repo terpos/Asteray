@@ -9,6 +9,7 @@ public:
 
 	int get_x();
 	int get_y();
+	int get_r();
 	int get_vel();
 	int get_coord_ID();
 	bool isshot();
@@ -19,10 +20,10 @@ public:
 	void set_coord_ID(int cid);
 	void set_shot(bool isshot);
 
-	void shootball();
+	void grow_heat(int x, int y);
 
 private:
-	int x, y, vel, cid;
+	int x, y, r, vel, cid;
 	bool reflected, shot;
 
 };

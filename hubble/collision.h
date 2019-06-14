@@ -53,13 +53,19 @@ public:
 
 	void Ball_gets_destroyed(Enemy_Manager & EN, weaponManager W, Tools_manager & tm, std::vector<Molten_shot*>& b, std::vector<Weapon*>& f, std::vector <Ammo*> &a, ALLEGRO_SAMPLE_INSTANCE * instance, bool & bossdefeated);
 
-	void Ball_gets_destroyed(Enemy_Manager & EN, weaponManager W, std::vector<v_beam*>& b, std::vector<Weapon*>& f, ALLEGRO_SAMPLE_INSTANCE * instance, bool & bossdefeated);
+	void Boss_weapon_immune_to_weapon(Enemy_Manager & EN, weaponManager W, std::vector <Diamond_shot*> &ds,
+		std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K,
+		std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl,
+		std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, std::vector<Weapon*>& f, ALLEGRO_SAMPLE_INSTANCE * instance, bool & bossdefeated);
 
 	void miniboss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vector<mini_boss*>& mb, std::vector<Weapon*>& f, bool & bossdefeated);
 
 	void player_gets_damaged(Enemy_Manager &EN, std::vector <mini_boss*> &mb, std::vector <boss*> &b, std::vector <enemies*> &f, std::vector <player*> &p, Status s, ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_FONT *font, ALLEGRO_EVENT e, int &health);
 
-	void player_gets_damaged(Enemy_Manager &EN, std::vector<Spartak_ball*>& b, std::vector<Molten_shot*>& mball, std::vector<v_beam*>& v, std::vector<player*>& p, Status s, ALLEGRO_SAMPLE_INSTANCE * instance, ALLEGRO_FONT * font, ALLEGRO_EVENT e, int & health);
+	void player_gets_damaged(Enemy_Manager &EN, std::vector <Spartak_ball*> &b, std::vector <Diamond_shot*> &ds,
+		std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K,
+		std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl,
+		std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, std::vector<player*>& p, Status s, ALLEGRO_SAMPLE_INSTANCE * instance, ALLEGRO_FONT * font, ALLEGRO_EVENT e, int & health);
 	
 	void player_gets_tool(std::vector <player*> &p, Enemy_Manager EN, std::vector <enemies*> &fo, std::vector <Tools*> &t, std::vector <Ammo*> &a, Status s, ALLEGRO_SAMPLE_INSTANCE *instance[3], ALLEGRO_FONT *f, int &health, int(&ammo)[6]);
 

@@ -17,6 +17,8 @@ public:
 	game_loop();
 	~game_loop();
 
+	void replay();
+
 	void load_stuff();
 	void loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q);
 	void stage(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q);
@@ -42,6 +44,9 @@ private:
 	int num_of_enemies;
 	int stagenumber;
 	int num_of_weapon;
+
+	int options;
+	
 
 	bool unlockweapon[6];
 	int ammo[6];
@@ -82,6 +87,8 @@ private:
 	std::vector <Heat_Wave*> hw;
 	std::vector <Single_Twin*> st;
 	std::vector <Spartak_Laser*> sl;
+	std::vector <Enemy_Lazer*> elazer;
+
 
 	Animate ani;
 	Tools_manager T;
@@ -95,6 +102,8 @@ private:
 	Stages s;
 
 	ALLEGRO_FONT *status;
+	ALLEGRO_FONT *pause;
+	ALLEGRO_FONT *pause_options;
 
 	ALLEGRO_BITMAP *frozen;
 	ALLEGRO_BITMAP *burned_red;

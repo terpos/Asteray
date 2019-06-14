@@ -7,6 +7,7 @@ Heat_Wave::Heat_Wave(int x, int y, int vel, int cid)
 	set_vel(vel);
 	set_coord_ID(cid);
 	set_shot(shot);
+	r = 0;
 }
 
 Heat_Wave::~Heat_Wave()
@@ -21,6 +22,11 @@ int Heat_Wave::get_x()
 int Heat_Wave::get_y()
 {
 	return this->y;
+}
+
+int Heat_Wave::get_r()
+{
+	return this->r;
 }
 
 int Heat_Wave::get_vel()
@@ -63,30 +69,13 @@ void Heat_Wave::set_shot(bool isshot)
 	this->shot = isshot;
 }
 
-void Heat_Wave::shootball()
+void Heat_Wave::grow_heat(int x, int y)
 {
-	if (get_coord_ID() == DOWN)
-	{
-		this->y += get_vel();
-		set_y(this->y);
-	}
+	r += get_vel();
 
-	if (get_coord_ID() == UP)
-	{
-		this->y -= get_vel();
-		set_y(this->y);
-	}
-
-	if (get_coord_ID() == LEFT)
-	{
-		this->x -= get_vel();
-		set_y(this->x);
-	}
-
-	if (get_coord_ID() == RIGHT)
-	{
-		this->x += get_vel();
-		set_y(this->x);
-	}
+	set_x(x);
+	set_y(y);
 }
+
+
 

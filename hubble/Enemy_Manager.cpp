@@ -271,7 +271,7 @@ void Enemy_Manager::spawn_enemy(std::vector <enemies*> &e, int enemy_health[12],
 void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std::vector <mini_boss*> &mb, std::vector <Spartak_ball*> &ball, std::vector <Diamond_shot*> &ds, 
 	std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K,
 	std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st,
-	std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, Animate &a)
+	std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, Animate &a)
 {
 	a.increment_frame();
 
@@ -623,16 +623,6 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					}
 
 				}
-
-				for (int m = 0; m < mball.size(); m++)
-				{
-					mball[m]->shootball();
-				}
-
-				for (int m = 0; m < K.size(); m++)
-				{
-					K[m]->shootball();
-				}
 			}
 
 			else
@@ -650,6 +640,20 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					{
 						K.push_back(new Kamet(b[j]->get_x(), b[j]->get_y(), 10, DOWN));
 					}
+
+					else if (attack_Move == HEAT)
+					{
+						if (hw.size() == 0)
+						{
+							hw.push_back(new Heat_Wave((b[j]->get_x() + get_boss_w(KAMETKHAN)) / 2, (b[j]->get_y() + get_boss_h(KAMETKHAN)) / 2, 5, NULL));
+						}
+
+						else if (hw.size() > 1)
+						{
+							hw.erase(hw.end());
+						}
+					}
+								
 					b[j]->set_action(MOVE);
 				}
 
@@ -661,6 +665,15 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 				for (int m = 0; m < K.size(); m++)
 				{
 					K[m]->shootball();
+				}
+
+				for (int m = 0; m < hw.size(); m++)
+				{
+					
+					hw[m]->set_x(hw[m]->get_x() + b[j]->get_vel());
+					std::cout << hw[m]->get_x() << ", " << hw[m]->get_y() << std::endl;
+
+					hw[m]->grow_heat(b[j]->get_x() + (get_boss_w(KAMETKHAN) / 2), b[j]->get_y() + (get_boss_h(KAMETKHAN) / 2));
 				}
 
 			}
@@ -720,7 +733,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 						
 						else if (single_twin_probability == 1)
 						{
-							st.push_back(new Single_Twin(b[j]->get_x(), 0, 5, DOWN));
+							st.push_back(new Single_Twin(b[j]->get_x() + (get_boss_w(XORGANA)/2), 0, 5, DOWN));
 						}
 
 					}
@@ -841,6 +854,18 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 		}
 	}
 
+	for (int l = 0; l < hw.size(); l++)
+	{
+		
+
+		if (hw[l]->get_r() > 150)
+		{
+			hw.erase(hw.begin() + l);
+		}
+
+		
+	}
+
 	for (int m = 0; m < mball.size(); m++)
 	{
 
@@ -897,7 +922,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e)
 }
 
 
-void Enemy_Manager::renderenemy(std::vector<enemies*>& e)
+void Enemy_Manager::renderenemy(std::vector<enemies*>& e, std::vector <Enemy_Lazer*> &lazer)
 {
 	for (int laz = 0; laz < lazer.size(); laz++)
 	{
@@ -952,7 +977,7 @@ void Enemy_Manager::renderenemy(std::vector<enemies*>& e)
 void Enemy_Manager::renderboss(std::vector <boss*> &b, std::vector <Spartak_ball*> &ball, std::vector <Diamond_shot*> &ds, 
 	std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K,
 	std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl,
-	std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, Animate a, int &frame)
+	std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, Animate a, int &frame)
 {
 	
 	for (int i = 0; i < b.size(); i++)
@@ -1126,6 +1151,11 @@ void Enemy_Manager::renderboss(std::vector <boss*> &b, std::vector <Spartak_ball
 				for (int m = 0; m < K.size(); m++)
 				{
 					al_draw_bitmap(kamet, K[m]->get_x(), K[m]->get_y(), NULL);
+				}
+
+				for (int m = 0; m < hw.size(); m++)
+				{
+					al_draw_filled_circle(hw[m]->get_x(), hw[m]->get_y(), hw[m]->get_r(), al_map_rgb(150, 0, 0));
 				}
 
 				a.two_frames_custom(Kametkhan[0], Kametkhan[1], b[i]->get_x(), b[i]->get_y(), b[i]->get_frame(), 17, 0, 8);
@@ -1447,6 +1477,109 @@ int Enemy_Manager::get_ball_w()
 {
 	return al_get_bitmap_width(Spartakball);
 }
+
+int Enemy_Manager::get_EB_w()
+{
+	return al_get_bitmap_width(Egg_bomb);
+}
+
+int Enemy_Manager::get_Vshot_w()
+{
+	return al_get_bitmap_width(Xorgana_weapon);
+}
+
+int Enemy_Manager::get_mball_w()
+{
+	return al_get_bitmap_width(Kamekhan_weapon);
+}
+
+int Enemy_Manager::get_ds_w()
+{
+	return al_get_bitmap_width(Diamond);
+}
+
+int Enemy_Manager::get_lazerb_w()
+{
+	return al_get_bitmap_width(LaserB);
+}
+
+int Enemy_Manager::get_lazers_w()
+{
+	for (int i = 0; i < 6; i++)
+	{
+		return al_get_bitmap_width(S_laser[i]);
+
+	}
+	return al_get_bitmap_width(S_laser[5]);
+}
+
+int Enemy_Manager::get_st_w()
+{
+	return al_get_bitmap_width(Sonic_Turbulance);
+}
+
+int Enemy_Manager::get_elazer_w()
+{
+	return al_get_bitmap_width(E_Lazer);
+}
+
+int Enemy_Manager::get_K_w()
+{
+	return al_get_bitmap_width(kamet);
+}
+
+
+
+int Enemy_Manager::get_EB_h()
+{
+	return al_get_bitmap_height(Egg_bomb);
+}
+
+int Enemy_Manager::get_Vshot_h()
+{
+	return al_get_bitmap_height(Xorgana_weapon);
+}
+
+int Enemy_Manager::get_mball_h()
+{
+	return al_get_bitmap_height(Kamekhan_weapon);
+}
+
+int Enemy_Manager::get_ds_h()
+{
+	return al_get_bitmap_height(Diamond);
+}
+
+int Enemy_Manager::get_lazerb_h()
+{
+	return al_get_bitmap_height(LaserB);
+}
+
+int Enemy_Manager::get_lazers_h()
+{
+	for (int i = 0; i < 6; i++)
+	{
+		return al_get_bitmap_height(S_laser[i]);
+
+	}
+	return al_get_bitmap_height(S_laser[5]);
+}
+
+int Enemy_Manager::get_st_h()
+{
+	return al_get_bitmap_height(Sonic_Turbulance);
+}
+
+int Enemy_Manager::get_elazer_h()
+{
+	return al_get_bitmap_height(E_Lazer);
+}
+
+int Enemy_Manager::get_K_h()
+{
+	return al_get_bitmap_height(kamet);
+}
+
 
 
 int Enemy_Manager::get_num_of_enemy(std::vector <enemies*> e)

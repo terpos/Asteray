@@ -15,8 +15,10 @@ game_loop::game_loop()
 	textframe = 0;
 	num_of_weapon = 1;
 	backgroundvol = 1.5;
+	options = 0;
+	s.set_y(0);
 
-	unlockweapon[ICET] = false;
+	unlockweapon[ICET] = true;
 	unlockweapon[INFERRED] = false;
 	unlockweapon[ZIGGONET] = false;
 	unlockweapon[HAYCH] = false;
@@ -58,10 +60,59 @@ game_loop::game_loop()
 	gameover = false;
 
 	status = NULL;
+
 }
 
 game_loop::~game_loop()
 {
+
+}
+
+void game_loop::replay()
+{
+	al_stop_sample_instance(Earth);
+	al_stop_sample_instance(Earth_Factory);
+	al_stop_sample_instance(Mars);
+	al_stop_sample_instance(Mars_Nest);
+	al_stop_sample_instance(Astroid);
+	al_stop_sample_instance(Boss);
+	al_stop_sample_instance(Saturn);
+	al_stop_sample_instance(Final_Boss);
+
+	key = 0;
+	health = 100;
+	lvl = 0;
+	sc = 0;
+	pauseCounter = 0;
+	num_of_enemies = 0;
+	stagenumber = -1;
+
+	ammo[ICET] = 10;
+	ammo[INFERRED] = 8;
+	ammo[ZIGGONET] = 10;
+	ammo[HAYCH] = 5;
+	ammo[HAYCHBA] = 3;
+	ammo[SONICWAVE] = 5;
+
+	stat.setlvl(lvl, status);
+	s.set_stage(stagenumber);
+	s.set_y(-2800);
+
+	foes.clear();
+	b.clear();
+	foes_while_scroll.clear();	
+	mb.clear();
+	spaceship.push_back(new player());
+	t.clear();
+	am.clear();
+
+	for (int i = 0; i < spaceship.size(); i++)
+	{
+		spaceship[i]->load();
+		spaceship[i]->set_coords(winx / 2, winy - 150);
+
+	}
+	stat.sethealth(health, status);
 
 }
 
@@ -71,6 +122,9 @@ void game_loop::load_stuff()
 	T.load();
 	spaceship.push_back(new player());
 	status = al_load_ttf_font("bahnschrift.ttf", 15, NULL);
+	pause = al_load_ttf_font("bahnschrift.ttf", 30, NULL);
+	pause_options = al_load_ttf_font("bahnschrift.ttf", 20, NULL);
+
 
 	frozen = al_load_bitmap("Frozen.png");
 
@@ -178,7 +232,7 @@ void game_loop::load_stuff()
 
 	al_set_sample_instance_gain(destroy, 2);
 	al_set_sample_instance_gain(hit, 2);
-	s.set_y(0);
+
 	burned_red = al_load_bitmap("burned_red.png");
 	burned_yellow = al_load_bitmap("burned_yellow.png");
 	
@@ -203,25 +257,12 @@ void game_loop::loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 	while (!done)
 	{
-		//Event_listenter(ev, q);
-		//update_loop(ev, q);
 		stage(ev, q);
 	}
 }
 
 void game_loop::stage(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 {
-GAMEOVER:
-
-	while (gameover)
-	{
-		update = false;
-
-		al_stop_samples();
-
-		update_loop(ev, q);
-	}
-
 
 CHANGESTAGE:
 	
@@ -234,6 +275,7 @@ CHANGESTAGE:
 
 		lvl++;
 		stat.setlvl(lvl, status);
+
 
 		while (stat.getlvl() == 1)
 		{
@@ -613,7 +655,8 @@ CHANGESTAGE:
 
 			update_loop(ev, q);
 		}
-	}
+	
+}
 	al_stop_sample_instance(Boss);
 	while (s.get_stage() == SATURN)
 	{
@@ -716,8 +759,10 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 {
 	al_wait_for_event(q, &ev);
 
-	if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
+	if (ev.type == ALLEGRO_EVENT_KEY_DOWN && pauseCounter == 1 && spaceship.size() > 0)
 	{
+		for (int j = 0; j < spaceship.size(); j++)
+		{
 			switch (ev.keyboard.keycode)
 			{
 			case ALLEGRO_KEY_ESCAPE:
@@ -725,21 +770,121 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 				exit(EXIT_SUCCESS);
 				break;
 
-			case ALLEGRO_KEY_ENTER:
+			case ALLEGRO_KEY_P:
 				pauseCounter = (pauseCounter + 1) % 2;
 				break;
+
+			case ALLEGRO_KEY_R:
+
+				if (spaceship.size() != 0)
+				{
+					spaceship[j]->destroy();
+					spaceship.erase(spaceship.begin());
+				}
+				replay();
+				stage(ev, q);
+				break;
+
+			case ALLEGRO_KEY_DOWN:
+				options = (options + 1) % 4;
+				break;
+			case ALLEGRO_KEY_UP:
+				options = (options - 1) % 4;
+				if (options < 0)
+				{
+					options = 3;
+				}
+				std::cout << options << std::endl;
+				break;
+
+			case ALLEGRO_KEY_ENTER:
+				switch (options)
+				{
+				case 0:
+					pauseCounter = (pauseCounter + 1) % 2;
+					break;
+
+				case 1:
+					if (spaceship.size() != 0)
+					{
+						spaceship.erase(spaceship.begin());
+					}
+					replay();
+					stage(ev, q);
+					break;
+
+				case 2:
+					pauseCounter = 3;
+					break;
+
+				case 3:
+					destroy_stuff();
+					exit(EXIT_SUCCESS);
+					break;
+				}
+				break;
+
 			}
+		}
+
+
+
 	}
 
+	else if (ev.type == ALLEGRO_EVENT_KEY_DOWN && spaceship.size() <= 0)
+	{
+		switch (ev.keyboard.keycode)
+		{
 
-	if (ev.type == ALLEGRO_EVENT_KEY_DOWN && pauseCounter == 0)
+		case ALLEGRO_KEY_ESCAPE:
+			destroy_stuff();
+			exit(EXIT_SUCCESS);
+			break;
+
+		case ALLEGRO_KEY_R:
+			replay();
+			stage(ev, q);
+			break;
+
+		case ALLEGRO_KEY_DOWN:
+			options = (options + 1) % 2;
+			break;
+		case ALLEGRO_KEY_UP:
+			options = abs((options - 1) % 2);
+			break;
+
+		case ALLEGRO_KEY_ENTER:
+			switch (options)
+			{
+			case 0:
+				replay();
+				stage(ev, q);
+				break;
+
+			case 1:
+				destroy_stuff();
+				exit(EXIT_SUCCESS);
+				break;
+			}
+			break;
+		}
+	}
+
+	else if (ev.type == ALLEGRO_EVENT_KEY_DOWN && pauseCounter == 0 && spaceship.size() > 0)
 	{
 
 		for (int j = 0; j < spaceship.size(); j++)
 		{
 			switch (ev.keyboard.keycode)
 			{
-		
+			case ALLEGRO_KEY_ESCAPE:
+				destroy_stuff();
+				exit(EXIT_SUCCESS);
+				break;
+
+			case ALLEGRO_KEY_P:
+				pauseCounter = (pauseCounter + 1) % 2;
+				break;
 
 			case ALLEGRO_KEY_A:
 				weaponsel++;
@@ -841,11 +986,30 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 				}
 
 				break;
+
 			}
 		}
 	}
-	
-	
+
+	else if (ev.type == ALLEGRO_EVENT_KEY_DOWN && pauseCounter == 3 && spaceship.size() > 0)
+	{
+
+
+		switch (ev.keyboard.keycode)
+		{
+		case ALLEGRO_KEY_ESCAPE:
+			destroy_stuff();
+			exit(EXIT_SUCCESS);
+			break;
+
+		case ALLEGRO_KEY_SPACE:
+			pauseCounter = 1;
+			break;
+
+
+		}
+	}
+
 
 	for (int j = 0; j < spaceship.size(); j++)
 	{
@@ -853,10 +1017,29 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 	}
 }
 
+
 void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 {
+	if (stat.gethealth() <= 0)
+	{
+		for (int i = 0; i < spaceship.size(); i++)
+		{
 
-	if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 0)
+			if (spaceship.size() > 0)
+			{
+				spaceship[i]->destroy();
+
+				al_stop_samples();
+				spaceship.erase(spaceship.begin());
+				al_set_sample_instance_position(game_over, 0);
+				al_set_sample_instance_playmode(game_over, ALLEGRO_PLAYMODE_ONCE);
+				al_play_sample_instance(game_over);
+				std::cout << "Ship Size: " << spaceship.size() << std::endl;
+			}
+		}
+	}
+
+	if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 0 && spaceship.size() > 0)
 	{
 
 		for (int i = 0; i < 6; i++)
@@ -867,17 +1050,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 		
-		if (stat.gethealth() <= 0)
-		{
-			if (spaceship.size() > 0)
-			{
-				al_stop_samples();
-				spaceship.erase(spaceship.begin());
-				al_set_sample_instance_position(game_over, 0);
-				al_set_sample_instance_playmode(game_over, ALLEGRO_PLAYMODE_ONCE);
-				al_play_sample_instance(game_over);
-			}
-		}
+		
 
 		for (int j = 0; j < spaceship.size(); j++)
 		{
@@ -1061,7 +1234,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		col.enemy_gets_damaged(E, shipWeapon, T, am, t, foes, w, stat, destroy, status, sc);
 		col2.enemy_gets_damaged(E2, shipWeapon, T, am, t, foes_while_scroll, w, stat, destroy, status, sc);
 
-		E.update(foes, b, mb, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, ani);
+		E.update(foes, b, mb, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, elazer, ani);
 		E2.update(foes_while_scroll);
 
 
@@ -1074,14 +1247,14 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 
 		col.player_gets_damaged(E, mb, b, foes, spaceship, stat, hit, status, ev, health);
-		col.player_gets_damaged(E, ball, mball, v, spaceship, stat, hit, status, ev, health);
+		col.player_gets_damaged(E, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, elazer, spaceship, stat, hit, status, ev, health);
 
 		col2.player_gets_damaged(E2, mb, b, foes_while_scroll, spaceship, stat, hit, status, ev, health);
 
 
 		col.Ball_gets_redirected(E, shipWeapon, ball, w, ballreflect, bossdefeated);
 		col.Ball_gets_destroyed(E, shipWeapon, T, mball, w, am, reflect, bossdefeated);
-		col.Ball_gets_destroyed(E, shipWeapon, v, w, reflect, bossdefeated);
+		col.Boss_weapon_immune_to_weapon(E, shipWeapon, ds, EB, ST, LB, K, hw, st, sl, mball, v, elazer, w, reflect, bossdefeated);
 		
 		shipWeapon.update(w);
 		shipWeapon.destroy_ammo(w);
@@ -1091,7 +1264,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 	}
 
-	else if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 1)
+	else if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 1 && spaceship.size() > 0)
 	{
 
 		al_stop_sample_instance(Earth);
@@ -1106,14 +1279,37 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		draw = true;
 		render();
 	}
+
+	else if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 3 && spaceship.size() > 0)
+	{
+
+	draw = true;
+	render();
+	}
+	else if (ev.type == ALLEGRO_EVENT_TIMER && spaceship.size() <= 0)
+	{
+
+	al_stop_sample_instance(Earth);
+	al_stop_sample_instance(Earth_Factory);
+	al_stop_sample_instance(Mars);
+	al_stop_sample_instance(Mars_Nest);
+	al_stop_sample_instance(Astroid);
+	al_stop_sample_instance(Boss);
+	al_stop_sample_instance(Saturn);
+	al_stop_sample_instance(Final_Boss);
+
+	draw = true;
+	render();
+	}
 }
 
 void game_loop::render()
 {
-	if (draw && pauseCounter == 0)
+	if (draw && pauseCounter == 0 && spaceship.size() > 0)
 	{
 		if (b.size() == 0 && spaceship.size() > 0)
 		{
+
 			switch (s.get_stage())
 			{
 			case EARTH:
@@ -1214,9 +1410,9 @@ void game_loop::render()
 			}
 		}
 	
-		E.renderenemy(foes);
-		E.renderenemy(foes_while_scroll);
-		E.renderboss(b, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, ani, frame);
+		E.renderenemy(foes,elazer);
+		E.renderenemy(foes_while_scroll, elazer);
+		E.renderboss(b, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, elazer, ani, frame);
 		E.renderminiboss(mb, ani);
 
 		stat.Status_box(0, winy - 100, winx, winy);
@@ -1224,12 +1420,6 @@ void game_loop::render()
 		stat.set_health_bar(211, 440, 311, 455);
 		stat.setlvl(lvl, status);
 		stat.setscore(sc, status);
-		
-
-		if (spaceship.size() <= 0)
-		{
-			stat.setnotification("GAME OVER", status, 200, 400, textframe);
-		}
 
 		
 
@@ -1414,18 +1604,93 @@ void game_loop::render()
 		draw = false;
 	}
 	
-	if (draw && pauseCounter == 1)
+	else if (draw && pauseCounter == 1 && spaceship.size() > 0)
 	{
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 
-		stat.setnotification("PAUSE", status, 235, 205, al_map_rgb(0,255,0));
-		stat.setnotification("[PRESS (ESC) IF YOU WANT TO QUIT]", status, 140, 225, al_map_rgb(255, 255, 255));
-		stat.setnotification("[PRESS (ENTER) IF YOU WANT TO CONTINUE]", status, 125, 245, al_map_rgb(255, 255, 255));
+		stat.setnotification("PAUSE", pause, 200, 150, al_map_rgb(0,255,0));
+		
+		stat.setnotification("CONTINUE [P]", pause_options, 190, 230, al_map_rgb(255, 255, 255));
+		stat.setnotification("REPLAY [R]", pause_options, 195, 260, al_map_rgb(255, 255, 255));
+		stat.setnotification("HOW TO PLAY", pause_options, 190, 290, al_map_rgb(255, 255, 255));
+		stat.setnotification("QUIT [ESC]", pause_options, 200, 320, al_map_rgb(255, 255, 255));
+		
+		switch (options)
+		{
+		case 0:
+			stat.setnotification("CONTINUE [P]", pause_options, 190, 230, al_map_rgb(255, 0, 0));
+			break;
+
+		case 1:
+			stat.setnotification("REPLAY [R]", pause_options, 195, 260, al_map_rgb(255, 0, 0));
+			break;
+
+		case 2:
+			stat.setnotification("HOW TO PLAY", pause_options, 190, 290, al_map_rgb(255, 0, 0));
+			break;
+
+		case 3:
+			stat.setnotification("QUIT [ESC]", pause_options, 200, 320, al_map_rgb(255, 0, 0));
+			break;
+
+		
+		}
+
+		
+		
+		/*stat.setnotification("[PRESS (ESC) IF YOU WANT TO QUIT]", status, 140, 225, al_map_rgb(255, 255, 255));
+		stat.setnotification("[PRESS (ENTER) IF YOU WANT TO CONTINUE OR PAUSE]", status, 125, 245, al_map_rgb(255, 255, 255));
+		stat.setnotification("[PRESS (R) TO RESET THE GAME (ONLY IN PAUSE MENU)]", status, 125, 245, al_map_rgb(0, 0, 0));
 		stat.setnotification("[PRESS (DIR KEY) TO MOVE THE PLAYER]", status, 130, 280, al_map_rgb(0, 200, 255));
 		stat.setnotification("[PRESS (Z) TO SHOOT LAZERS]", status, 160, 300, al_map_rgb(0, 200, 255));
 		stat.setnotification("[PRESS (X) TO SHOOT SPECIAL WEAPONS]", status, 125, 320, al_map_rgb(0, 200, 255));
+		stat.setnotification("[PRESS (A) or (S) TO SWITCH SPECIAL WEAPONS]", status, 125, 320, al_map_rgb(0, 200, 255));*/
 
 		al_flip_display();
+	}
+
+	else if (draw && spaceship.size() <= 0)
+	{
+		al_clear_to_color(al_map_rgb(200, 0, 0));
+
+		stat.setnotification("GAME OVER", pause, 170, 150, al_map_rgb(0, 0, 0));
+		
+		
+		stat.setnotification("PLAY AGAIN", pause_options, 190, 230, al_map_rgb(0, 0, 0));
+		stat.setnotification("QUIT [ESC]", pause_options, 200, 260, al_map_rgb(0, 0, 0));
+
+		switch (options)
+		{
+		case 0:
+			stat.setnotification("PLAY AGAIN", pause_options, 190, 230, al_map_rgb(0, 0, 255));
+			break;
+
+		case 1:
+			stat.setnotification("QUIT [ESC]", pause_options, 200, 260, al_map_rgb(0, 0, 255));
+			break;
+		}
+		
+		al_flip_display();
+	}
+
+	else if (draw && pauseCounter == 3 && spaceship.size() > 0)
+	{
+	al_clear_to_color(al_map_rgb(0, 0, 0));
+
+	stat.setnotification("HOW TO PLAY", pause, 150, 0, al_map_rgb(200, 0, 100));
+
+	stat.setnotification("PRESS (ESC) IF YOU WANT TO QUIT", pause_options, 0, 100, al_map_rgb(50, 255, 255));
+	stat.setnotification("PRESS (P) IF YOU WANT TO CONTINUE OR PAUSE", pause_options, 0, 130, al_map_rgb(50, 255, 255));
+	stat.setnotification("PRESS (R) TO RESET THE GAME (ONLY IN PAUSE MENU)", pause_options, 0, 160, al_map_rgb(50, 255, 255));
+	stat.setnotification("PRESS (DIRECTIONAL KEY) TO MOVE THE PLAYER", pause_options, 0, 190, al_map_rgb(50, 255, 255));
+	stat.setnotification("PRESS (Z) TO SHOOT LAZERS", pause_options, 0, 220, al_map_rgb(50, 255, 255));
+	stat.setnotification("PRESS (X) TO SHOOT SPECIAL WEAPONS", pause_options, 0, 250, al_map_rgb(50, 255, 255));
+	stat.setnotification("PRESS (A) or (S) TO SWITCH SPECIAL WEAPONS", pause_options, 0, 280, al_map_rgb(50, 255, 255));
+
+	stat.setnotification("[PRESS (SPACEBAR) TO GO BACK TO PAUSE MENU]", status, 75, 500 - 30, al_map_rgb(255, 255, 255));
+
+	al_flip_display();
+	
 	}
 }
 
@@ -1498,6 +1763,8 @@ void game_loop::destroy_stuff()
 
 	shipWeapon.destroy_weapon_img();
 	al_destroy_font(status);
+	al_destroy_font(pause);
+	al_destroy_font(pause_options);
 
 }
 
