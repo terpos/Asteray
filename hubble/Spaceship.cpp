@@ -50,6 +50,11 @@ int Spaceship::get_damage()
 	return 5;
 }
 
+int Spaceship::get_score()
+{
+	return 100;
+}
+
 void Spaceship::set_x(int x)
 {
 	this->x = x;
@@ -129,6 +134,6 @@ void Spaceship::movedown()
 	set_y(this->y);
 }
 
-void Spaceship::ability(player & p, ALLEGRO_EVENT e)
+void Spaceship::ability(player* & p, ALLEGRO_EVENT e)
 {
 }

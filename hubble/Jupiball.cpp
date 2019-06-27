@@ -50,6 +50,11 @@ int Jupiball::get_damage()
 	return 5;
 }
 
+int Jupiball::get_score()
+{
+	return 250;
+}
+
 void Jupiball::set_x(int x)
 {
 	this->x = x;
@@ -105,6 +110,37 @@ void Jupiball::decrement_health(int damage)
 	set_health(this->health);
 }
 
+void Jupiball::gravity(player * p)
+{
+	p->set_vel(3);
+
+	if (p->get_coords_ID() == DOWN)
+	{
+		p->set_y(p->get_y() + p->get_vel());
+		p->set_keys(p->get_coords_ID(), true);
+	}
+
+	else if (p->get_coords_ID() == UP)
+	{
+		p->set_y(p->get_y() - p->get_vel());
+		p->set_keys(p->get_coords_ID(), true);
+	}
+
+	else if (p->get_coords_ID() == LEFT)
+	{
+		p->set_y(p->get_x() - p->get_vel());
+		p->set_keys(p->get_coords_ID(), true);
+	}
+
+	else if (p->get_coords_ID() == RIGHT)
+	{
+		p->set_y(p->get_x() + p->get_vel());
+		p->set_keys(p->get_coords_ID(), true);
+	}
+
+
+}
+
 void Jupiball::moveleft()
 {
 	this->x--;
@@ -129,6 +165,6 @@ void Jupiball::movedown()
 	set_y(this->y);
 }
 
-void Jupiball::ability(player & p, ALLEGRO_EVENT e)
+void Jupiball::ability(player* & p, ALLEGRO_EVENT e)
 {
 }

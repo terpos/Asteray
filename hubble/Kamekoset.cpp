@@ -51,6 +51,11 @@ int Kamekoset::get_damage()
 	return 5;
 }
 
+int Kamekoset::get_score()
+{
+	return 50;
+}
+
 void Kamekoset::set_x(int x)
 {
 	this->x = x;
@@ -127,8 +132,9 @@ void Kamekoset::movedown()
 	set_y(this->y);
 }
 
-void Kamekoset::ability(player & p, ALLEGRO_EVENT e)
+void Kamekoset::ability(player* &p, ALLEGRO_EVENT e)
 {
+	
 }
 
 void Kamekoset::draw(ALLEGRO_BITMAP * bmp)

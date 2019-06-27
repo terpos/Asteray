@@ -25,6 +25,14 @@ public:
 	void draw(int ammoID, bool weaponammo[6], int x, int y);
 	void destroy();
 
+	void update(std::vector <Ammo *> &a, std::vector <Tools *> &t);
+
+	int get_ammo_w(int ammo_ID);
+	int get_tools_w(int tools_ID);
+
+	int get_ammo_h(int ammo_ID);
+	int get_tools_h(int tools_ID);
+
 	void set_tool_ID(int ID);
 
 	void set_x(int x);

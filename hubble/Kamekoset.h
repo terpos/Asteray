@@ -13,6 +13,7 @@ public:
 	int get_name_ID();
 	int get_health();
 	int get_damage();
+	int get_score();
 
 	void set_x(int x);
 	void set_y(int y);
@@ -32,7 +33,7 @@ public:
 
 	
 
-	void ability(player &p, ALLEGRO_EVENT e);
+	void ability(player* &p, ALLEGRO_EVENT e);
 
 	void draw(ALLEGRO_BITMAP * bmp);
 

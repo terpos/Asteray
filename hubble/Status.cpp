@@ -103,6 +103,19 @@ void Status::setscore(int score, ALLEGRO_FONT *font)
 	al_draw_textf(font, al_map_rgb(0, 0, 0), 50, 455, NULL, "SCORE: %i", score);
 }
 
+void Status::setscore(int score, ALLEGRO_FONT *font, int x, int y)
+{
+	this->score = score;
+	al_draw_textf(font, al_map_rgb(0, 0, 0), x, y, NULL, "SCORE: %i", score);
+}
+
+void Status::setscore(int score, ALLEGRO_FONT * font, std::string sctype, int x, int y)
+{
+	this->score = score;
+	al_draw_textf(font, al_map_rgb(0, 0, 0), x, y, NULL, "%s %i", sctype.c_str(), score);
+}
+
+
 void Status::set_health_bar(int x, int y, int x2, int y2)
 {
 	al_draw_filled_rectangle(x, y, x2, y2, al_map_rgb(255, 0, 0));

@@ -50,6 +50,11 @@ int Xybtofy::get_damage()
 	return 5;
 }
 
+int Xybtofy::get_score()
+{
+	return 50;
+}
+
 void Xybtofy::set_x(int x)
 {
 	this->x = x;
@@ -129,6 +134,6 @@ void Xybtofy::movedown()
 	set_y(this->y);
 }
 
-void Xybtofy::ability(player & p, ALLEGRO_EVENT e)
+void Xybtofy::ability(player* & p, ALLEGRO_EVENT e)
 {
 }

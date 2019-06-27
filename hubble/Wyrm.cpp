@@ -50,6 +50,11 @@ int Wyrm::get_damage()
 	return 5;
 }
 
+int Wyrm::get_score()
+{
+	return 100;
+}
+
 void Wyrm::set_x(int x)
 {
 	this->x = x;
@@ -129,6 +134,9 @@ void Wyrm::movedown()
 	set_y(this->y);
 }
 
-void Wyrm::ability(player & p, ALLEGRO_EVENT e)
+void Wyrm::ability(player* & p, ALLEGRO_EVENT e)
 {
+	p->set_movement(false);
+	p->set_duration(100);
+	p->set_ability_to_shoot(false);
 }

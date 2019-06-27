@@ -125,38 +125,31 @@ void weaponManager::printout()
 
 void weaponManager::load_ammo(std::vector<Weapon*>& w, int ID, int x, int y, int lim)
 {
-	if (w.size() < lim)
+	switch (ID)
 	{
-		switch (ID)
-		{
-		case LAZER:
-			w.push_back(new lazer(x, y));
-			break;
-		case ICET:
-			w.push_back(new Icet(x, y));
-			break;
-		case INFERRED:
-			w.push_back(new Inferred(x, y));
-			break;
-		case ZIGGONET:
-			w.push_back(new Ziggonet(x, y));
-			break;
-		case HAYCH:
-			w.push_back(new Haych(x, y));
-			break;
-		case HAYCHBA:
-			w.push_back(new Haychba(x, y));
-			break;
-		case SONICWAVE:
-			w.push_back(new Sonic_Wave(x, y));
-			break;
-		}
+	case LAZER:
+		w.push_back(new lazer(x, y));
+		break;
+	case ICET:
+		w.push_back(new Icet(x, y));
+		break;
+	case INFERRED:
+		w.push_back(new Inferred(x, y));
+		break;
+	case ZIGGONET:
+		w.push_back(new Ziggonet(x, y));
+		break;
+	case HAYCH:
+		w.push_back(new Haych(x, y));
+		break;
+	case HAYCHBA:
+		w.push_back(new Haychba(x, y));
+		break;
+	case SONICWAVE:
+		w.push_back(new Sonic_Wave(x, y));
+		break;
 	}
-
-	if (w.size() > 2)
-	{
-		w.erase(w.begin() + 3, w.end());
-	}
+	
 }
 
 void weaponManager::update(std::vector<Weapon*>& w)

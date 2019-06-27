@@ -3,6 +3,7 @@
 
 screen_manager::screen_manager()
 {
+	loop = true;
 }
 
 
@@ -12,7 +13,10 @@ screen_manager::~screen_manager()
 
 void screen_manager::initilize_loop()
 {
-	
+	al_install_audio();
+	al_install_keyboard();
+	al_install_mouse();
+
 	al_init_primitives_addon();
 	al_init_image_addon();
 	al_init_font_addon();
@@ -30,16 +34,15 @@ void screen_manager::initilize_loop()
 	timer = al_create_timer(1 / fps);
 
 	
-
+	al_register_event_source(queue, al_get_mouse_event_source());
 	al_register_event_source(queue, al_get_keyboard_event_source());
 	al_register_event_source(queue, al_get_timer_event_source(timer));
 	al_register_event_source(queue, al_get_display_event_source(display));
 	
+	
+
 	play.load_stuff();
 	menu.load();
-	al_clear_to_color(al_map_rgb(0, 0, 0));
-
-	al_flip_display();
 
 	menu.setChoice(PLAY);
 	al_start_timer(timer);
@@ -49,34 +52,21 @@ void screen_manager::initilize_loop()
 void screen_manager::display_loop()
 {
 	
-	while (bool go = true)
+	while (loop)
 	{
 		al_wait_for_event(queue, &e);
 
-		//play.loop(e, queue);
-		menu.loop(e, queue);
-
-		if (e.type == ALLEGRO_EVENT_KEY_DOWN)
-		{			
-			if (e.keyboard.keycode == ALLEGRO_KEY_ENTER)
-			{
-				if (menu.getChoice() == HOWTO)
-				{
-					menu.setscreen(1);
-				}
-				else
-				{
-					break;
-				}
-			}
-
-
+		if (e.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
+		{
+			loop = false;
 		}
 
-		menu.update(e, queue);
 		
+		menu.event_listener(e, queue);
+
+		menu.update(e, queue, play, loop);
 	}
-	menu.dochoice(e, queue, play);
+	
 }
 
 

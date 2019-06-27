@@ -2,7 +2,7 @@
 class Ammo
 {
 public:
-	Ammo();
+	Ammo(int x, int y, int ID);
 	~Ammo();
 
 	int get_ammo_ID();

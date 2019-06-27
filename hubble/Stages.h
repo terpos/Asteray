@@ -1,5 +1,5 @@
 #include "global.h"
-#include "Enemy_Manager.h"
+
 
 #pragma once
 enum {EARTH, MARS, AST, SATURN};

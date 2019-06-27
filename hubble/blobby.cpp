@@ -74,6 +74,11 @@ int blobby::get_coord_ID()
 	return this->CID;
 }
 
+int blobby::get_score()
+{
+	return 150;
+}
+
 
 
 void blobby::set_x(int x)
@@ -107,8 +112,10 @@ void blobby::set_coord_ID(int CID)
 	this->CID = CID;
 }
 
-void blobby::ability(player & p, ALLEGRO_EVENT e)
+void blobby::ability(player* & p, ALLEGRO_EVENT e)
 {
+	p->set_movement(false);
+	p->set_duration(100);
 }
 
 void blobby::moveleft()

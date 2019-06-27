@@ -20,7 +20,8 @@ public:
 	void destroy_stuff();
 
 private:
-	bool close = false;
+	bool loop;
+
 	
 	ALLEGRO_EVENT e;
 	

@@ -33,6 +33,8 @@
 
 #include "Animate.h"
 
+#include "Stages.h"
+
 #include "global.h"
 
 class Enemy_Manager
@@ -51,11 +53,14 @@ public:
 	
 	void update(std::vector <enemies*> &e, std::vector <boss*> &b, std::vector <mini_boss*> &mb, std::vector <Spartak_ball*> &ball, std::vector <Diamond_shot*> &ds, 
 		std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K, 
-		std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, Animate &a);
+		std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball, 
+		std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, Animate &a, Animate &hit);
 
-	void update(std::vector<enemies*>& e);
+	void update(std::vector<enemies*>& e, Animate &hit);
 	
-	void renderenemy(std::vector <enemies*> &e,	std::vector <Enemy_Lazer*> &lazer);
+	void renderenemy(std::vector<Enemy_Lazer*>& lazer);
+
+	void renderenemy(std::vector<enemies*>& e, Animate & hit);
 
 	void renderboss(std::vector <boss*> &b, std::vector <Spartak_ball*> &ball, std::vector <Diamond_shot*> &ds,
 		std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K,
@@ -111,6 +116,10 @@ private:
 
 	std::vector <ALLEGRO_BITMAP*> Enemy;
 
+	std::vector <ALLEGRO_BITMAP*> Enemy_damaged;
+
+	ALLEGRO_BITMAP *enemy_destroyed[3];
+
 	ALLEGRO_BITMAP *Spartak[3];
 	ALLEGRO_BITMAP *Spartakball;
 	ALLEGRO_BITMAP *Diamond;
@@ -151,6 +160,7 @@ private:
 	int single_twin_probability;
 	int lazerb_shoot;
 	int enemy_shooting_probability;
+
 
 };
 

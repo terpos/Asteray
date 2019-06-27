@@ -13,16 +13,18 @@ public:
 	~Main_menu();
 
 	int getChoice();
+	bool isselected();
 	
+	void set_sel_event(bool sel);
 	void setChoice(int choice);
 	void setscreen(int screen);
 	void load();
 
-	void loop(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q);
+	void event_listener(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q);
 
-	void dochoice(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE * q, game_loop g);
+	void dochoice(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE * q, game_loop g, bool &loop);
 
-	void update(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q);
+	void update(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop g, bool & loop);
 
 	void draw();
 
@@ -35,6 +37,8 @@ private:
 	int screen;
 
 	bool render;
+	bool mouse;
+	bool sel;
 
 	Status stat;
 

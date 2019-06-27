@@ -18,6 +18,7 @@
 #include "boss.h"
 #include "mini_boss.h"
 #include "weaponManager.h"
+#include "Animate.h"
 
 #include <vector>
 #include <iostream>
@@ -33,13 +34,13 @@ public:
 
 	//if about to go outside of the border the object does not move
 	void win_collsion (std::vector <player*> &p);
-	void Enemy_boundary_collision(std::vector <enemies*> &foe, int destroy_or_rebound);
+	void Enemy_boundary_collision(Enemy_Manager EN, std::vector <enemies*> &foe, int destroy_or_rebound);
 	void Boss_boundary_collision(Enemy_Manager EN, std::vector<boss*>& foe);
 	
 	void enemy_gets_damaged(Enemy_Manager EN, weaponManager W, Tools_manager &tm, std::vector <Ammo*> &a, std::vector <Tools*> &t,
-		std::vector <enemies*> &f, std::vector <Weapon*> &l, Status &s, ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_FONT *font, int &score);
+		std::vector <enemies*> &f, std::vector <Weapon*> &l, Status &s, ALLEGRO_SAMPLE_INSTANCE *instance,  ALLEGRO_FONT *font, Animate &hit, int &score);
 
-	void enemy_dies(Tools_manager & tm, std::vector<Ammo*>& a, std::vector<Tools*>& t, std::vector<enemies*>& f, ALLEGRO_SAMPLE_INSTANCE * instance);
+	void enemy_dies(ALLEGRO_FONT *font, Animate &d, Status &s, int &score, Tools_manager & tm, std::vector<Ammo*>& a, std::vector<Tools*>& t, std::vector<enemies*>& f, ALLEGRO_SAMPLE_INSTANCE * instance);
 
 
 
@@ -60,14 +61,17 @@ public:
 
 	void miniboss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vector<mini_boss*>& mb, std::vector<Weapon*>& f, bool & bossdefeated);
 
-	void player_gets_damaged(Enemy_Manager &EN, std::vector <mini_boss*> &mb, std::vector <boss*> &b, std::vector <enemies*> &f, std::vector <player*> &p, Status s, ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_FONT *font, ALLEGRO_EVENT e, int &health);
+	void player_gets_damaged(Enemy_Manager &EN, std::vector <mini_boss*> &mb, std::vector <boss*> &b, std::vector <enemies*> &f, 
+		std::vector <player*> &p, Status s, ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_FONT *font, ALLEGRO_EVENT e, Animate &hit, int &health);
 
 	void player_gets_damaged(Enemy_Manager &EN, std::vector <Spartak_ball*> &b, std::vector <Diamond_shot*> &ds,
 		std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K,
 		std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl,
-		std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, std::vector<player*>& p, Status s, ALLEGRO_SAMPLE_INSTANCE * instance, ALLEGRO_FONT * font, ALLEGRO_EVENT e, int & health);
+		std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, std::vector<player*>& p, Status s, 
+		ALLEGRO_SAMPLE_INSTANCE * instance, ALLEGRO_FONT * font, ALLEGRO_EVENT e, Animate &hit, int & health);
 	
-	void player_gets_tool(std::vector <player*> &p, Enemy_Manager EN, std::vector <enemies*> &fo, std::vector <Tools*> &t, std::vector <Ammo*> &a, Status s, ALLEGRO_SAMPLE_INSTANCE *instance[3], ALLEGRO_FONT *f, int &health, int(&ammo)[6]);
+	void player_gets_tool(std::vector <player*> &p, Enemy_Manager EN, std::vector <enemies*> &fo, std::vector <Tools*> &t, std::vector <Ammo*> &a, Tools_manager tm,
+		Status s, ALLEGRO_SAMPLE_INSTANCE *instance[3], ALLEGRO_FONT *f, int &health, int(&ammo)[6], bool &kill_all);
 
 	int get_num_of_kills();
 	void set_num_of_kills(int kill);

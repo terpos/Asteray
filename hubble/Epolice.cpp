@@ -50,6 +50,11 @@ int Epolice::get_damage()
 	return 5;
 }
 
+int Epolice::get_score()
+{
+	return 100;
+}
+
 void Epolice::set_x(int x)
 {
 	this->x = x;
@@ -129,6 +134,6 @@ void Epolice::movedown()
 	set_y(this->y);
 }
 
-void Epolice::ability(player & p, ALLEGRO_EVENT e)
+void Epolice::ability(player* & p, ALLEGRO_EVENT e)
 {
 }

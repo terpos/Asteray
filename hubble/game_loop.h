@@ -6,7 +6,7 @@
 #include "weaponManager.h"
 #include "collision.h"
 #include "Tools_manager.h"
-#include "Stages.h"
+
 #include "boss.h"
 #include "mini_boss.h"
 //#include "blobby.h"
@@ -20,9 +20,10 @@ public:
 	void replay();
 
 	void load_stuff();
-	void loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q);
-	void stage(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q);
-	void Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE * q);
+	void loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop);
+	void stage(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop);
+	void stage_advance(player *&p);
+	void Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE * q, bool &loop);
 	void update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q);
 	void render();
 	void destroy_stuff();
@@ -35,6 +36,8 @@ private:
 	bool battle;
 	bool bossdefeated;
 	bool gameover;
+	bool mouse;
+	bool disfig;
 
 	int key;
 	int health;
@@ -44,16 +47,15 @@ private:
 	int num_of_enemies;
 	int stagenumber;
 	int num_of_weapon;
+	int disfig_index;
 
 	int options;
-	
 
 	bool unlockweapon[6];
 	int ammo[6];
 	int maxammo[6];
 	int enemy_health[12];
 
-	std::vector <blobby*> blob;
 	std::vector <lazer*> laser;
 	std::vector <Icet*> Ice;
 	std::vector <Inferred*> Fire;
@@ -66,13 +68,33 @@ private:
 	std::vector <int> duration;
 
 	std::vector <enemies*> foes;
-	std::vector <enemies*> foes_while_scroll;
+	std::vector <enemies*> foes_scroll1;
+	std::vector <enemies*> foes_scroll2;
+	std::vector <enemies*> foes_scroll3;
+	std::vector <enemies*> foes_scroll4;
+	std::vector <enemies*> foes_scroll5;
+	std::vector <enemies*> foes_scroll6;
+
 
 	std::vector <boss*> b;
 	std::vector <mini_boss*> mb;
 
 	std::vector <Tools*> t;
+	std::vector <Tools*> t2;
+	std::vector <Tools*> t3;
+	std::vector <Tools*> t4;
+	std::vector <Tools*> t5;
+	std::vector <Tools*> t6;
+
+
 	std::vector <Ammo*> am;
+	std::vector <Ammo*> am2;
+	std::vector <Ammo*> am3;
+	std::vector <Ammo*> am4;
+	std::vector <Ammo*> am5;
+	std::vector <Ammo*> am6;
+
+
 
 	std::vector <player*> spaceship;
 
@@ -91,13 +113,39 @@ private:
 
 
 	Animate ani;
+	Animate adestroy;
+	Animate credit;
+	Animate player_damaged;
+	Animate enemy_damaged;
+	Animate enemy_while_scroll_damaged;
+
 	Tools_manager T;
+	Tools_manager T2;
+	Tools_manager T3;
+	Tools_manager T4;
+	Tools_manager T5;
+	Tools_manager T6;
+
+
 	Enemy_Manager E;
 	Enemy_Manager E2;
+	Enemy_Manager E3;
+	Enemy_Manager E4;
+	Enemy_Manager E5;
+	Enemy_Manager E6;
+
 
 	weaponManager shipWeapon;
+
 	collision col;
 	collision col2;
+	collision col3;
+	collision col4;
+	collision col5;
+	collision col6;
+
+
+	
 	Status stat;
 	Stages s;
 
@@ -132,6 +180,9 @@ private:
 	ALLEGRO_SAMPLE *Destroy;
 	ALLEGRO_SAMPLE *Hit;
 
+	ALLEGRO_SAMPLE *PO;
+	ALLEGRO_SAMPLE *POF;
+
 	ALLEGRO_SAMPLE *Game_over;
 
 	ALLEGRO_SAMPLE *Reflect;
@@ -160,15 +211,23 @@ private:
 
 	ALLEGRO_SAMPLE_INSTANCE *hit;
 
+	ALLEGRO_SAMPLE_INSTANCE *Pause_On;
+	ALLEGRO_SAMPLE_INSTANCE *Pause_Off;
+
 	ALLEGRO_SAMPLE_INSTANCE *game_over;
 
 	ALLEGRO_SAMPLE_INSTANCE *reflect;
 	ALLEGRO_SAMPLE_INSTANCE *ballreflect;
 	ALLEGRO_SAMPLE_INSTANCE *bosshit;
 
+	bool startanimating;
+	bool minibossdefeated;
+
 	int weaponsel;
 	int frame;
 	int textframe;
 	float backgroundvol;
+	int scorecounter;
+	int increment;
 };
 

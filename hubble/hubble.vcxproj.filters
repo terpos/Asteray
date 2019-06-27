@@ -37,6 +37,18 @@
     <Filter Include="Source Files\Game Window\screen_state">
       <UniqueIdentifier>{fcf566fa-7395-410b-90d2-41fa47a029f7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Game Window\Boss Weapon">
+      <UniqueIdentifier>{48938b9c-7e93-4a9e-bb58-fd350ee7defc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Window\Boss Weapon">
+      <UniqueIdentifier>{dce7c2de-5c33-4715-a28a-e8d86dd9da44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Window\Power Ups">
+      <UniqueIdentifier>{a8b234ed-4021-4a35-a13e-796e8c2c2a3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Game Window\Power Ups">
+      <UniqueIdentifier>{fa83461a-0069-42f1-9511-ebe5aff72ce0}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -141,62 +153,62 @@
     <ClCompile Include="Ziggonet.cpp">
       <Filter>Source Files\Game Window\weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Tools_manager.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Tools.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Ammo.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Stages.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Animate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="boss.cpp">
-      <Filter>Source Files\Game Window\enemy</Filter>
-    </ClCompile>
     <ClCompile Include="mini_boss.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Spartak_ball.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Molten_shot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="v_beam.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Diamond_shot.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Spartak_Laser.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Egg_Bomb.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Single_Twin.cpp">
+      <Filter>Source Files\Game Window\Boss Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Sonic_Turbulence.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game Window\Boss Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Lazer_B.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Spartak_ball.cpp">
+      <Filter>Source Files\Game Window\Boss Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Kamet.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Spartak_Laser.cpp">
+      <Filter>Source Files\Game Window\Boss Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="v_beam.cpp">
+      <Filter>Source Files\Game Window\Boss Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Egg_Bomb.cpp">
+      <Filter>Source Files\Game Window\Boss Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Diamond_shot.cpp">
+      <Filter>Source Files\Game Window\Boss Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Heat_wave.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game Window\Boss Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Single_Twin.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Kamet.cpp">
+      <Filter>Source Files\Game Window\Boss Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Lazer_B.cpp">
+      <Filter>Source Files\Game Window\Boss Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Molten_shot.cpp">
+      <Filter>Source Files\Game Window\Boss Weapon</Filter>
     </ClCompile>
     <ClCompile Include="Enemy_Lazer.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Game Window\enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="boss.cpp">
+      <Filter>Source Files\Game Window\Boss Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools.cpp">
+      <Filter>Source Files\Game Window\Power Ups</Filter>
+    </ClCompile>
+    <ClCompile Include="Tools_manager.cpp">
+      <Filter>Source Files\Game Window\Power Ups</Filter>
+    </ClCompile>
+    <ClCompile Include="Ammo.cpp">
+      <Filter>Source Files\Game Window\Power Ups</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -302,19 +314,7 @@
     <ClInclude Include="Spaceship.h">
       <Filter>Header Files\Game Window\Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Tools_manager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Tools.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Ammo.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Stages.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="boss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Animate.h">
@@ -323,41 +323,53 @@
     <ClInclude Include="mini_boss.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Spartak_ball.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Molten_shot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="v_beam.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Diamond_shot.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Spartak_Laser.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Egg_Bomb.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sonic_Turbulence.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Lazer_B.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Kamet.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Spartak_Laser.h">
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Heat_wave.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Spartak_ball.h">
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Molten_shot.h">
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Single_Twin.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Sonic_Turbulence.h">
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Egg_Bomb.h">
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Heat_wave.h">
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Kamet.h">
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="v_beam.h">
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="boss.h">
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
     </ClInclude>
     <ClInclude Include="Enemy_Lazer.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Game Window\Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools.h">
+      <Filter>Header Files\Game Window\Power Ups</Filter>
+    </ClInclude>
+    <ClInclude Include="Tools_manager.h">
+      <Filter>Header Files\Game Window\Power Ups</Filter>
+    </ClInclude>
+    <ClInclude Include="Ammo.h">
+      <Filter>Header Files\Game Window\Power Ups</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

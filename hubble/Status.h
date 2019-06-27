@@ -28,6 +28,10 @@ public:
 	void setweapon(int weapon);
 	void setscore(int score, ALLEGRO_FONT *font);
 
+	void setscore(int score, ALLEGRO_FONT * font, int x, int y);
+	void setscore(int score, ALLEGRO_FONT * font, std::string sctype, int x, int y);
+
+
 	void set_health_bar(int x, int y, int x2, int y2);
 	void Status_box(int x, int y, int x2, int y2);
 	void prime_Weapon_box(ALLEGRO_BITMAP *weapon, ALLEGRO_FONT *f);

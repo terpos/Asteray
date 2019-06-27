@@ -2,10 +2,12 @@
 
 
 
-Tools::Tools()
+Tools::Tools(int x, int y, int ID)
 {
+	set_x(x);
+	set_y(y);
+	set_tool_ID(ID);
 }
-
 
 Tools::~Tools()
 {

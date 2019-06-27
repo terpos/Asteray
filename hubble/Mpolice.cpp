@@ -49,6 +49,11 @@ int Mpolice::get_damage()
 	return 5;
 }
 
+int Mpolice::get_score()
+{
+	return 100;
+}
+
 void Mpolice::set_x(int x)
 {
 	this->x = x;
@@ -128,6 +133,8 @@ void Mpolice::movedown()
 	set_y(this->y);
 }
 
-void Mpolice::ability(player & p, ALLEGRO_EVENT e)
+void Mpolice::ability(player* & p, ALLEGRO_EVENT e)
 {
+	p->set_duration(100);
+	p->set_special_condition(true);
 }

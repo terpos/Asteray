@@ -16,7 +16,6 @@ Enemy_Manager::~Enemy_Manager()
 
 }
 
-
 void Enemy_Manager::load_enemy_img()
 {
 	Enemy.push_back(al_load_bitmap("blobby.png"));
@@ -31,6 +30,19 @@ void Enemy_Manager::load_enemy_img()
 	Enemy.push_back(al_load_bitmap("volcanon.png"));
 	Enemy.push_back(al_load_bitmap("Xybtofy.png"));
 	Enemy.push_back(al_load_bitmap("wyrm.png"));
+
+	Enemy_damaged.push_back(al_load_bitmap("blobby_damaged.png"));
+	Enemy_damaged.push_back(al_load_bitmap("Asterix_damaged.png"));
+	Enemy_damaged.push_back(al_load_bitmap("E_police_damaged.png"));
+	Enemy_damaged.push_back(al_load_bitmap("jupiball_damaged.png"));
+	Enemy_damaged.push_back(al_load_bitmap("Kamekoset_damaged.png"));
+	Enemy_damaged.push_back(al_load_bitmap("M_police_damaged.png"));
+	Enemy_damaged.push_back(al_load_bitmap("satusphere_damaged.png"));
+	Enemy_damaged.push_back(al_load_bitmap("spyder_damaged.png"));
+	Enemy_damaged.push_back(al_load_bitmap("spaceship_damaged.png"));
+	Enemy_damaged.push_back(al_load_bitmap("volcanon_damaged.png"));
+	Enemy_damaged.push_back(al_load_bitmap("Xybtofy_damaged.png"));
+	Enemy_damaged.push_back(al_load_bitmap("wyrm_damaged.png"));
 
 	Spartak[0] = al_load_bitmap("Spartak.png");
 	Spartak[1] = al_load_bitmap("Spartak_energized.png");
@@ -69,7 +81,13 @@ void Enemy_Manager::load_enemy_img()
 	Xorgana_weapon = al_load_bitmap("final_boss_weapon.png");
 
 	earth_gate = al_load_bitmap("E_defense_gate.png");
+	
 	mars_gate = al_load_bitmap("M_defense_gate.png");
+	
+	enemy_destroyed[0] = al_load_bitmap("Destroy_1.png");
+	enemy_destroyed[1] = al_load_bitmap("Destroy_2.png");
+	enemy_destroyed[2] = al_load_bitmap("Destroy_3.png");
+	
 	electricity[0] = al_load_bitmap("electricity.png");
 	electricity[1] = al_load_bitmap("electricity2.png");
 
@@ -86,6 +104,8 @@ void Enemy_Manager::load_enemy_img()
 
 	al_set_sample_instance_gain(release, 2);
 	al_set_sample_instance_gain(energized, .5);
+
+	
 }
 
 void Enemy_Manager::spawn_boss(std::vector <boss*> &b, int bossID)
@@ -121,9 +141,17 @@ void Enemy_Manager::spawn_boss(std::vector <boss*> &b, int bossID)
 
 void Enemy_Manager::spawn_minboss(std::vector <mini_boss*> &mb, int minibossID)
 {
+	if (minibossID == E)
+	{
+		mb.push_back(new mini_boss(winx - get_E_w(), 0, NULL, minibossID));
+		mb.push_back(new mini_boss(0, 0, ALLEGRO_FLIP_HORIZONTAL, minibossID));
+	}
 	
-	mb.push_back(new mini_boss(winx - get_E_w(), 0, NULL, minibossID));	
-	mb.push_back(new mini_boss(0, 0, ALLEGRO_FLIP_HORIZONTAL, minibossID));
+	else if (minibossID == M)
+	{
+		mb.push_back(new mini_boss(winx - get_M_w(), 0, NULL, minibossID));
+		mb.push_back(new mini_boss(0, 0, ALLEGRO_FLIP_HORIZONTAL, minibossID));
+	}
 }
 
 void Enemy_Manager::spawn_enemy(std::vector <enemies*> &e, int enemy_health[12], int CID, int lim, int enemyID)
@@ -133,63 +161,75 @@ void Enemy_Manager::spawn_enemy(std::vector <enemies*> &e, int enemy_health[12],
 		switch (enemyID)
 		{
 		case BLOBBY:
-			e.push_back(new blobby(rand() % 450, rand() % 50, 1, CID));
+			e.push_back(new blobby(rand() % 450, rand() % 50, 2, CID));
 			e[i]->set_health(enemy_health[BLOBBY]);
+			e[i]->init();
 			break;
 
 		case ASTERIX:
-			e.push_back(new Asterix(rand() % 450, rand() % 50, 1, CID));
+			e.push_back(new Asterix(rand() % 450, rand() % 50, 2, CID));
 			e[i]->set_health(enemy_health[ASTERIX]);
+			e[i]->init();
 			break;
 
 		case EPOLICE:
-			e.push_back(new Epolice(rand() % 450, rand() % 50, 1, CID));
+			e.push_back(new Epolice(rand() % 450, rand() % 50, 2, CID));
 			e[i]->set_health(enemy_health[EPOLICE]);
+			e[i]->init();
 			break;
 
 		case JUPIBALL:
-			e.push_back(new Jupiball(rand() % 450, rand() % 50, 1, CID));
+			e.push_back(new Jupiball(rand() % 450, rand() % 50, 2, CID));
 			e[i]->set_health(enemy_health[JUPIBALL]);
+			e[i]->init();
 			break;
 
 		case KAMEKOSET:
-			e.push_back(new Kamekoset(rand() % 450, rand() % 50, 1, CID));
+			e.push_back(new Kamekoset(rand() % 450, rand() % 50, 2, CID));
 			e[i]->set_health(enemy_health[KAMEKOSET]);
+			e[i]->init();
 			break;
 
 		case MPOLICE:
-			e.push_back(new Mpolice(rand() % 450, rand() % 50, 1, CID));
+			e.push_back(new Mpolice(rand() % 450, rand() % 50, 2, CID));
 			e[i]->set_health(enemy_health[MPOLICE]);
+			e[i]->init();
 			break;
 
 		case SATUSPHERE:
-			e.push_back(new Satusphere(rand() % 450, rand() % 50, 1, CID));
+			e.push_back(new Satusphere(rand() % 450, rand() % 50, 2, CID));
 			e[i]->set_health(enemy_health[SATUSPHERE]);
+			e[i]->init();
 			break;
 
 		case SPACESHIP:
-			e.push_back(new Spaceship(rand() % 450, rand() % 50, 1, CID));
+			e.push_back(new Spaceship(rand() % 450, rand() % 50, 2, CID));
 			e[i]->set_health(enemy_health[SPACESHIP]);
+			e[i]->init();
 			break;
 
 		case SPYDER:
-			e.push_back(new Spyder(rand() % 450, rand() % 50, 1, CID));
+			e.push_back(new Spyder(rand() % 450, rand() % 50, 2, CID));
 			e[i]->set_health(enemy_health[SPYDER]);
+			e[i]->init();
 			break;
 
 		case VOLCANON:
-			e.push_back(new Volcanon(rand() % 450, rand() % 50, 1, CID));
+			e.push_back(new Volcanon(rand() % 450, rand() % 50, 2, CID));
 			e[i]->set_health(enemy_health[VOLCANON]);
+			e[i]->init();
 			break;
 
 		case WYRM:
-			e.push_back(new Wyrm(rand() % 450, rand() % 50, 1, CID));
+			e.push_back(new Wyrm(rand() % 450, rand() % 50, 2, CID));
 			e[i]->set_health(enemy_health[WYRM]);
+			e[i]->init();
 			break;
 
 		case XYBTOFY:
-			e.push_back(new Xybtofy(rand() % 450, rand() % 50, 1, CID));
+			e.push_back(new Xybtofy(rand() % 450, rand() % 50, 2, CID));
 			e[i]->set_health(enemy_health[XYBTOFY]);
+			e[i]->init();
 			break;
 		}
 
@@ -206,61 +246,73 @@ void Enemy_Manager::spawn_enemy(std::vector <enemies*> &e, int enemy_health[12],
 		case BLOBBY:
 			e.push_back(new blobby(rand() % 450, rand() % 50, vel, CID));
 			e[i]->set_health(enemy_health[BLOBBY]);
+			e[i]->init();
 			break;
 
 		case ASTERIX:
 			e.push_back(new Asterix(rand() % 450, rand() % 50, vel, CID));
 			e[i]->set_health(enemy_health[ASTERIX]);
+			e[i]->init();
 			break;
 
 		case EPOLICE:
 			e.push_back(new Epolice(rand() % 450, rand() % 50, vel, CID));
 			e[i]->set_health(enemy_health[EPOLICE]);
+			e[i]->init();
 			break;
 
 		case JUPIBALL:
 			e.push_back(new Jupiball(rand() % 450, rand() % 50, vel, CID));
 			e[i]->set_health(enemy_health[JUPIBALL]);
+			e[i]->init();
 			break;
 
 		case KAMEKOSET:
 			e.push_back(new Kamekoset(rand() % 450, rand() % 50, vel, CID));
 			e[i]->set_health(enemy_health[KAMEKOSET]);
+			e[i]->init();
 			break;
 
 		case MPOLICE:
 			e.push_back(new Mpolice(rand() % 450, rand() % 50, vel, CID));
 			e[i]->set_health(enemy_health[MPOLICE]);
+			e[i]->init();
 			break;
 
 		case SATUSPHERE:
 			e.push_back(new Satusphere(rand() % 450, rand() % 50, vel, CID));
 			e[i]->set_health(enemy_health[SATUSPHERE]);
+			e[i]->init();
 			break;
 
 		case SPACESHIP:
 			e.push_back(new Spaceship(rand() % 450, rand() % 50, vel, CID));
 			e[i]->set_health(enemy_health[SPACESHIP]);
+			e[i]->init();
 			break;
 
 		case SPYDER:
 			e.push_back(new Spyder(rand() % 450, rand() % 50, vel, CID));
 			e[i]->set_health(enemy_health[SPYDER]);
+			e[i]->init();
 			break;
 
 		case VOLCANON:
 			e.push_back(new Volcanon(rand() % 450, rand() % 50, vel, CID));
 			e[i]->set_health(enemy_health[VOLCANON]);
+			e[i]->init();
 			break;
 
 		case WYRM:
 			e.push_back(new Wyrm(rand() % 450, rand() % 50, vel, CID));
 			e[i]->set_health(enemy_health[WYRM]);
+			e[i]->init();
 			break;
 
 		case XYBTOFY:
 			e.push_back(new Xybtofy(rand() % 450, rand() % 50, vel, CID));
 			e[i]->set_health(enemy_health[XYBTOFY]);
+			e[i]->init();
 			break;
 		}
 
@@ -271,25 +323,32 @@ void Enemy_Manager::spawn_enemy(std::vector <enemies*> &e, int enemy_health[12],
 void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std::vector <mini_boss*> &mb, std::vector <Spartak_ball*> &ball, std::vector <Diamond_shot*> &ds, 
 	std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K,
 	std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st,
-	std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, Animate &a)
+	std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, Animate &a, Animate &hit)
 {
 	a.increment_frame();
 
 	for (int i = 0; i < e.size(); i++)
 	{
+
+		e[i]->update();
+		e[i]->countdown_duration();
+		e[i]->release();
+		e[i]->update_animation();
+
 		enemy_shooting_probability = rand() % 100;
-		if (enemy_shooting_probability < 25)
+		if (enemy_shooting_probability < 15 && e[i]->get_coord_ID() < 4)
 		{
-			if (e[i]->get_x()%get_w(e[i]->get_name_ID()) == 0 || e[i]->get_y()% get_h(e[i]->get_name_ID()) == 0 || 
+			if (e[i]->get_x() % get_w(e[i]->get_name_ID()) == 0 || e[i]->get_y()% get_h(e[i]->get_name_ID()) == 0 || 
 				e[i]->get_x() % get_w(e[i]->get_name_ID()) == get_w(e[i]->get_name_ID())/2 ||
 				e[i]->get_y() % get_h(e[i]->get_name_ID()) == get_h(e[i]->get_name_ID())/2)
 			{
 				lazer.push_back(new Enemy_Lazer(e[i]->get_x() + 27, e[i]->get_y(), 10, DOWN));
 			}
+
+			
+
 		}
-		e[i]->update();
-		e[i]->countdown_duration();
-		e[i]->release();
+		
 	}
 
 	for (int laz = 0; laz < lazer.size(); laz++)
@@ -315,22 +374,25 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 		if (b[j]->get_boss() == SPARTAK)
 		{
-		attack_Move = rand() % 3;
-		std::cout << "LAZER FRAME: " << b[j]->get_frame() << std::endl;
+
+			
+			attack_Move = rand() % 2;
+			
+			
+			std::cout << "LAZER FRAME: " << b[j]->get_frame() << std::endl;
 
 			if (ishit())
 			{
-				
 				b[j]->set_action(-1);
 				b[j]->increment_frame();
-				
+
 				if (b[j]->get_frame() == 24)
 				{
 					sethit(false);
 					b[j]->is_energizing(false);
 					b[j]->set_frame(0);
 					b[j]->set_coordID(rand() % 4);
-					b[j]->set_action(rand() % 2);
+					b[j]->set_action(MOVE);
 
 					if (b[j]->get_y() < 0)
 					{
@@ -349,15 +411,20 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					b[j]->increment_frame();
 				}
 
-				if (b[j]->get_frame() == 99)
+				
+				if (attack_Move == BALL)
 				{
-					if (attack_Move == BALL)
+					if (b[j]->get_frame() == 99)
 					{
-						ball.push_back(new Spartak_ball(b[j]->get_x() +20, b[j]->get_y(), 10, DOWN));
+						ball.push_back(new Spartak_ball(b[j]->get_x() + 20, b[j]->get_y(), 10, DOWN));
 					}
+				}
 
-					else if (attack_Move == DIAMONDS)
+				else if (attack_Move == DIAMONDS)
+				{
+					if (b[j]->get_frame() == 99)
 					{
+
 						if (b[j]->get_health() > 3)
 						{
 							ds.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel, RIGHT));
@@ -378,26 +445,11 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 							ds.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel, UPLEFT));
 							ds.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel, DOWNLEFT));
 						}
-						
-					}
-					
-					else if (attack_Move == S_LAZER)
-					{
-						if (b[j]->get_x() == 0 && b[j]->get_y() == 0)
-						{
-							sl.push_back(new Spartak_Laser(b[j]->get_x(), b[j]->get_y() + get_boss_h(SPARTAK), 10, (rand() % 2) + 2));
-						}
-						
-						else if (b[j]->get_x() + get_boss_w(b[j]->get_boss()) == winx && b[j]->get_y() == 0)
-						{
-							sl.push_back(new Spartak_Laser(b[j]->get_x(), b[j]->get_y() + get_boss_h(SPARTAK), 10, (rand() % 2) + 2));
-						}
 					}
 				}
 
 
-
-				if (b[j]->get_frame() == 200 && b[j]->get_energize() && attack_Move == BALL)
+				if (b[j]->get_frame() == 200 && b[j]->get_energize())
 				{
 					al_stop_sample_instance(energized);
 					b[j]->is_energizing(false);
@@ -406,18 +458,10 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					b[j]->set_action(MOVE);
 				}
 
-				if (b[j]->get_frame() == 200 && b[j]->get_energize() && attack_Move == DIAMONDS)
-				{
-					al_stop_sample_instance(energized);
-					b[j]->is_energizing(false);
-					b[j]->set_frame(0);
-					b[j]->set_coordID(rand() % 4);
-					b[j]->set_action(MOVE);
-				}
 
 				for (int l = 0; l < ball.size(); l++)
 				{
-					if (b[j]->get_frame() == 0)
+					if (b[j]->get_frame() == 199)
 					{
 						std::cout << "SHOT" << std::endl;
 						ball[l]->set_shot(true);
@@ -430,7 +474,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 				for (int diam = 0; diam < ds.size(); diam++)
 				{
-					if (b[j]->get_frame() == 0)
+					if (b[j]->get_frame() == 199)
 					{
 						std::cout << "SHOT" << std::endl;
 						ds[diam]->set_shot(true);
@@ -442,57 +486,24 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 				}
 
-				for (int l = 0; l < sl.size(); l++)
-				{
-					sl[l]->shootball();
-					
-					//std::cout << "LAZER SPEED: " << sl[l]->get_vel() << std::endl;
-					//std::cout << "SPARTAK SPEED: " << b[j]->get_vel() << std::endl;
-
-					if (sl[l]->isshot())
-					{
-						b[j]->set_coordID(sl[l]->get_coord_ID());
-						b[j]->set_vel(sl[l]->get_vel() - 5);
-						b[j]->move();
-					}
-					
-					if (b[j]->get_x() + get_boss_w(b[j]->get_boss()) > winx)
-					{
-						b[j]->set_x(b[j]->get_x() - b[j]->get_vel());
-						al_stop_sample_instance(energized);
-						b[j]->is_energizing(false);
-						b[j]->set_frame(0);
-						b[j]->set_vel(1);
-						b[j]->set_action(MOVE);
-					}
-
-					if (b[j]->get_x() < 0)
-					{
-						b[j]->set_x(b[j]->get_x() + b[j]->get_vel());
-						al_stop_sample_instance(energized);
-						b[j]->is_energizing(false);
-						b[j]->set_frame(0);
-						b[j]->set_vel(1);
-						b[j]->set_action(MOVE);
-					}
-				}
+				
 			}
 		}
 
 		else if (b[j]->get_boss() == MARTIANB)
 		{
 
-		std::cout << lazerb_shoot << std::endl;
+			std::cout << lazerb_shoot << std::endl;
 
 			if (ishit())
 			{
 				b[j]->set_coordID(UP);
 				b[j]->set_vel(15);
-				
+
 				b[j]->increment_frame();
 				b[j]->update(Martianb[0], attack_Move, lazerb_shoot);
 				b[j]->move();
-				
+
 
 				if (b[j]->get_frame() == 24)
 				{
@@ -534,6 +545,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 							b[j]->set_coordID(DOWN);
 
 						}
+
 						b[j]->set_vel(15);
 						//b[j]->move();
 						lazerb_action = true;
@@ -542,7 +554,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 					else if (attack_Move == EGG)
 					{
-						EB.push_back(new Egg_Bomb(b[j]->get_x(), b[j]->get_y(), 10, DOWN));	
+						EB.push_back(new Egg_Bomb(b[j]->get_x(), b[j]->get_y(), 10, DOWN));
 						b[j]->set_action(MOVE);
 						lazerb_action = true;
 					}
@@ -559,7 +571,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 						if (lazerb_action && lazerb_shoot > 4)
 						{
-							lazerb_shoot = 0; 
+							lazerb_shoot = 0;
 							lazerb_action = false;
 						}
 
@@ -593,12 +605,12 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 				{
 					EB[m]->shootball();
 				}
-				
+
 				for (int m = 0; m < LB.size(); m++)
 				{
 					LB[m]->set_y(LB[m]->get_y() + LB[m]->get_vel());
 				}
-				
+
 			}
 
 		}
@@ -653,7 +665,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 							hw.erase(hw.end());
 						}
 					}
-								
+
 					b[j]->set_action(MOVE);
 				}
 
@@ -669,9 +681,15 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 				for (int m = 0; m < hw.size(); m++)
 				{
-					
+
 					hw[m]->set_x(hw[m]->get_x() + b[j]->get_vel());
+					std::cout << "RADIUS: " << hw[m]->get_r() << std::endl;
 					std::cout << hw[m]->get_x() << ", " << hw[m]->get_y() << std::endl;
+					std::cout << "BOSS W: " << get_boss_w(KAMETKHAN) << std::endl;
+					
+					std::cout << "X = " << (b[j]->get_x() + get_boss_w(KAMETKHAN)) + (hw[m]->get_r() - get_boss_w(KAMETKHAN)) << std::endl;
+					std::cout << "- X = " << (b[j]->get_x() + get_boss_w(KAMETKHAN) / 2) - (hw[m]->get_r()) << std::endl;
+
 
 					hw[m]->grow_heat(b[j]->get_x() + (get_boss_w(KAMETKHAN) / 2), b[j]->get_y() + (get_boss_h(KAMETKHAN) / 2));
 				}
@@ -712,10 +730,10 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 			else
 			{
 				b[j]->update(Xorgana[0], attack_Move, lazerb_shoot);
-				
+
 				if (b[j]->get_action() == ATTACK || b[j]->get_action() > MOVE)
 				{
-					
+
 					if (attack_Move == V)
 					{
 						v.push_back(new v_beam(b[j]->get_x(), 0, 10, DOWN, true));
@@ -730,10 +748,10 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 							st.push_back(new Single_Twin(b[j]->get_x(), 0, 5, DOWN));
 							st.push_back(new Single_Twin(b[j]->get_x() + get_boss_w(XORGANA) - al_get_bitmap_width(SingleTwin), 0, 5, DOWN));
 						}
-						
+
 						else if (single_twin_probability == 1)
 						{
-							st.push_back(new Single_Twin(b[j]->get_x() + (get_boss_w(XORGANA)/2), 0, 5, DOWN));
+							st.push_back(new Single_Twin(b[j]->get_x() + (get_boss_w(XORGANA) / 2), 0, 5, DOWN));
 						}
 
 					}
@@ -791,21 +809,6 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 		else if (ds[l]->get_y() < 0 || ds[l]->get_x() < 0)
 		{
 			ds.erase(ds.begin() + l);
-		}
-	}
-
-	for (int l = 0; l < sl.size(); l++)
-	{
-		//sl[l]->shootball();
-
-		if (sl[l]->get_x()  > winx)
-		{
-			sl.erase(sl.begin() + l);
-		}
-
-		else if (sl[l]->get_x() + al_get_bitmap_width(S_laser[5]) < 0)
-		{
-			sl.erase(sl.begin() + l);
 		}
 	}
 
@@ -906,9 +909,10 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 		}
 	}
 
+
 }
 
-void Enemy_Manager::update(std::vector<enemies*>& e)
+void Enemy_Manager::update(std::vector<enemies*>& e, Animate &hit)
 {
 	//a.increment_frame();
 
@@ -917,60 +921,32 @@ void Enemy_Manager::update(std::vector<enemies*>& e)
 		e[i]->update();
 		e[i]->countdown_duration();
 		e[i]->release();
+
+		//std::cout << "FRAME: " << hit.get_frame() << std::endl;
+
+		e[i]->update_animation();
 	}
+
 
 }
 
 
-void Enemy_Manager::renderenemy(std::vector<enemies*>& e, std::vector <Enemy_Lazer*> &lazer)
+void Enemy_Manager::renderenemy(std::vector <Enemy_Lazer*> &lazer)
 {
 	for (int laz = 0; laz < lazer.size(); laz++)
 	{
 		al_draw_bitmap(E_Lazer, lazer[laz]->get_x(), lazer[laz]->get_y(), NULL);
 	}
 
+}
+
+void Enemy_Manager::renderenemy(std::vector<enemies*>& e, Animate &hit)
+{
+
 	for (int i = 0; i < e.size(); i++)
 	{
-		switch (e[i]->get_name_ID())
-		{
-		case BLOBBY:
-			al_draw_bitmap(Enemy[BLOBBY], e[i]->get_x(), e[i]->get_y(), NULL);
-			break;
-		case ASTERIX:
-			e[i]->draw(Enemy[ASTERIX]);
-			break;
-		case EPOLICE:
-			al_draw_bitmap(Enemy[EPOLICE], e[i]->get_x(), e[i]->get_y(), NULL);
-			break;
-		case JUPIBALL:
-			al_draw_bitmap(Enemy[JUPIBALL], e[i]->get_x(), e[i]->get_y(), NULL);
-			break;
-		case KAMEKOSET:
-			e[i]->draw(Enemy[KAMEKOSET]);			
-			break;
-		case MPOLICE:
-			al_draw_bitmap(Enemy[MPOLICE], e[i]->get_x(), e[i]->get_y(), NULL);
-			break;
-		case SATUSPHERE:
-			al_draw_bitmap(Enemy[SATUSPHERE], e[i]->get_x(), e[i]->get_y(), NULL);
-			break;
-		case SPACESHIP:
-			al_draw_bitmap(Enemy[SPACESHIP], e[i]->get_x(), e[i]->get_y(), NULL);
-			break;
-		case SPYDER:
-			al_draw_bitmap(Enemy[SPYDER], e[i]->get_x(), e[i]->get_y(), NULL);
-			break;
-		case VOLCANON:
-			al_draw_bitmap(Enemy[VOLCANON], e[i]->get_x(), e[i]->get_y(), NULL);
-			break;
-		case WYRM:
-			al_draw_bitmap(Enemy[WYRM], e[i]->get_x(), e[i]->get_y(), NULL);
-			break;
-		case XYBTOFY:
-			al_draw_bitmap(Enemy[XYBTOFY], e[i]->get_x(), e[i]->get_y(), NULL);
-			break;
-		}
-		
+		e[i]->draw(Enemy[e[i]->get_name_ID()], Enemy_damaged[e[i]->get_name_ID()]);
+		e[i]->draw_destroy(enemy_destroyed[0], enemy_destroyed[1], enemy_destroyed[2]);
 	}
 }
 
@@ -1012,7 +988,6 @@ void Enemy_Manager::renderboss(std::vector <boss*> &b, std::vector <Spartak_ball
 						al_play_sample_instance(energized);
 					}
 
-
 					else if (b[i]->get_frame() >= 100 && b[i]->get_frame() < 200)
 					{
 						a.two_frames_custom(Spartak[0], Spartak[1], b[i]->get_x(), b[i]->get_y(), b[i]->get_frame(), 7, 0, 3);
@@ -1020,56 +995,11 @@ void Enemy_Manager::renderboss(std::vector <boss*> &b, std::vector <Spartak_ball
 						al_set_sample_instance_speed(energized, 3);
 						al_play_sample_instance(energized);
 					}
-
-					
-
-
-					
 				}
 
 				else
 				{
 					al_draw_bitmap(Spartak[0], b[i]->get_x(), b[i]->get_y(), NULL);
-				}
-
-				for (int laz = 0; laz < sl.size(); laz++)
-				{
-					if (b[i]->get_frame() >= 200 && b[i]->get_frame() < 206)
-					{
-						a.two_frames_custom(S_laser[0], S_laser[1], sl[laz]->get_x(), sl[laz]->get_y(), a.get_frame(), 7, 0, 3);
-
-					}
-
-					else if (b[i]->get_frame() >= 206 && b[i]->get_frame() < 212)
-					{
-						a.two_frames_custom(S_laser[1], S_laser[2], sl[laz]->get_x(), sl[laz]->get_y(), a.get_frame(), 7, 0, 3);
-
-					}
-
-					else if (b[i]->get_frame() >= 212 && b[i]->get_frame() < 218)
-					{
-						a.two_frames_custom(S_laser[2], S_laser[3], sl[laz]->get_x(), sl[laz]->get_y(), a.get_frame(), 7, 0, 3);
-
-					}
-
-					else if (b[i]->get_frame() >= 218 && b[i]->get_frame() < 224)
-					{
-						a.two_frames_custom(S_laser[3], S_laser[4], sl[laz]->get_x(), sl[laz]->get_y(), a.get_frame(), 7, 0, 3);
-
-					}
-
-					else if (b[i]->get_frame() >= 224 && b[i]->get_frame() < 230)
-					{
-						a.two_frames_custom(S_laser[4], S_laser[5], sl[laz]->get_x(), sl[laz]->get_y(), a.get_frame(), 7, 0, 3);
-
-					}
-
-					else if (b[i]->get_frame() >= 230)
-					{
-						b[i]->set_frame(230);
-						al_draw_bitmap(S_laser[5], sl[laz]->get_x(), sl[laz]->get_y(), NULL);
-						sl[laz]->set_shot(true);
-					}
 				}
 
 				for (int j = 0; j < ball.size(); j++)
@@ -1201,6 +1131,7 @@ void Enemy_Manager::renderboss(std::vector <boss*> &b, std::vector <Spartak_ball
 
 void Enemy_Manager::renderminiboss(std::vector<mini_boss*>& mb, Animate a)
 {
+
 	for (int i = 0; i < mb.size(); i++)
 	{
 		if (mb[i]->get_miniboss() == E)
@@ -1208,8 +1139,7 @@ void Enemy_Manager::renderminiboss(std::vector<mini_boss*>& mb, Animate a)
 			al_draw_bitmap(earth_gate, mb[i]->get_x(), mb[i]->get_y(), NULL);
 			a.two_frames_custom(electricity[0], electricity[1], get_E_w(), 0, a.get_frame(), 13, 0, 6);
 			a.two_frames_custom(electricity[0], electricity[1], get_E_w(), al_get_bitmap_height(electricity[0]), a.get_frame(), 13, 0, 6);
-			a.two_frames_custom(electricity[0], electricity[1], get_E_w(), al_get_bitmap_height(electricity[0])*2, a.get_frame(), 13, 0, 6);
-
+			a.two_frames_custom(electricity[0], electricity[1], get_E_w(), al_get_bitmap_height(electricity[0]) * 2, a.get_frame(), 13, 0, 6);
 		}
 
 		else if (mb[i]->get_miniboss() == M)
@@ -1219,6 +1149,7 @@ void Enemy_Manager::renderminiboss(std::vector<mini_boss*>& mb, Animate a)
 
 		}
 	}
+	
 }
 
 void Enemy_Manager::destroy_enemy(std::vector <enemies*>& e, int index)
@@ -1238,6 +1169,15 @@ void Enemy_Manager::destroy_enemy_img()
 	{
 		al_destroy_bitmap(Enemy[i]);
 	}
+
+	for (int i = 0; i < Enemy_damaged.size(); i++)
+	{
+		al_destroy_bitmap(Enemy_damaged[i]);
+	}
+
+	al_destroy_bitmap(enemy_destroyed[0]);
+	al_destroy_bitmap(enemy_destroyed[1]);
+	al_destroy_bitmap(enemy_destroyed[2]);
 
 	al_destroy_bitmap(Spartak[0]);
 	al_destroy_bitmap(Spartak[1]);
@@ -1278,7 +1218,10 @@ void Enemy_Manager::destroy_enemy_img()
 	al_destroy_bitmap(SingleTwin);
 
 	al_destroy_bitmap(earth_gate);
+
 	al_destroy_bitmap(mars_gate);
+
+
 
 	al_destroy_bitmap(E_Lazer);
 	

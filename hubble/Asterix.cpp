@@ -50,6 +50,11 @@ int Asterix::get_damage()
 	return 5;
 }
 
+int Asterix::get_score()
+{
+	return 200;
+}
+
 void Asterix::set_x(int x)
 {
 	this->x = x;
@@ -106,11 +111,6 @@ void Asterix::decrement_health(int damage)
 	set_health(this->health);
 }
 
-void Asterix::draw(ALLEGRO_BITMAP * bmp)
-{
-	al_draw_bitmap(bmp, get_x(), get_y(), NULL);
-}
-
 void Asterix::setlife(bool life)
 {
 	this->life = life;
@@ -142,10 +142,10 @@ void Asterix::update()
 	}
 }
 
-void Asterix::ability(player & p, ALLEGRO_EVENT e)
+void Asterix::ability(player* & p, ALLEGRO_EVENT e)
 {
-	not_paralyze = false;
-	p.set_enable(not_paralyze);
-	//p.control(e);
+	p->set_duration(100);
+	p->set_ability_to_shoot(false);
+	
 	
 }

@@ -2,7 +2,7 @@
 class Tools
 {
 public:
-	Tools();
+	Tools(int x, int y, int ID);
 	~Tools();
 	
 	int get_tool_ID();

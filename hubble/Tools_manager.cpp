@@ -143,39 +143,39 @@ void Tools_manager::draw(int toolsID, int x, int y)
 
 void Tools_manager::draw(int ammoID, bool weaponammo[6], int x, int y)
 {
-	//set_x(x);
-	//set_y(y);
+	set_x(x);
+	set_y(y);
 
 	switch (ammoID)
 	{
 		case ICE:
-			if (weaponammo[ICET] == true){
-				al_draw_bitmap(ammo[ICET], x, y, NULL);
+			if (weaponammo[ICET]){
+				al_draw_bitmap(ammo[ICET], get_x(), get_y(), NULL);
 				
 			}
 			break;
 
 		case FIRE:
 			if (weaponammo[INFERRED]){
-				al_draw_bitmap(ammo[INFERRED], x, y, NULL);
+				al_draw_bitmap(ammo[INFERRED], get_x(), get_y(), NULL);
 			}
 			break;
 
 		case ZIG:
 			if (weaponammo[ZIGGONET]) {
-				al_draw_bitmap(ammo[ZIGGONET], x, y, NULL);
+				al_draw_bitmap(ammo[ZIGGONET], get_x(), get_y(), NULL);
 			}
 			break;
 
 		case H:
 			if (weaponammo[HAYCH]){
-				al_draw_bitmap(ammo[HAYCH], x, y, NULL);
+				al_draw_bitmap(ammo[HAYCH], get_x(), get_y(), NULL);
 			}
 			break;
 
 		case HBAR:
 			if (weaponammo[HAYCHBA]){
-				al_draw_bitmap(ammo[HAYCHBA], x, y, NULL);
+				al_draw_bitmap(ammo[HAYCHBA], get_x(), get_y(), NULL);
 			}
 			break;
 
@@ -198,6 +198,122 @@ void Tools_manager::destroy()
 	{
 		al_destroy_bitmap(ammo[i]);
 	}
+}
+
+void Tools_manager::update(std::vector<Ammo*>& a, std::vector<Tools*>& t)
+{
+	for (int i = 0; i < a.size(); i++)
+	{
+		a[i]->set_y(a[i]->get_y() + 2);
+		if (a[i]->get_y() > winy)
+		{
+			a.erase(a.begin() + i);
+		}
+	}
+
+	for (int i = 0; i < t.size(); i++)
+	{
+		t[i]->set_y(t[i]->get_y() + 2);
+		if (t[i]->get_y() > winy)
+		{
+			t.erase(t.begin() + i);
+		}
+	}
+
+
+
+}
+
+int Tools_manager::get_ammo_w(int ammo_ID)
+{
+	switch (ammo_ID)
+	{
+	case ICE:
+		al_get_bitmap_width(ammo[ICET]);
+		break;
+
+	case FIRE:
+		al_get_bitmap_width(ammo[INFERRED]);
+		break;
+
+	case ZIG:
+		al_get_bitmap_width(ammo[ZIGGONET]);
+		break;
+
+	case H:
+		al_get_bitmap_width(ammo[HAYCH]);
+		break;
+
+	case HBAR:
+		al_get_bitmap_width(ammo[HAYCHBA]);
+		break;
+
+	case WAVE:
+		al_get_bitmap_width(ammo[SONICWAVE]);
+		break;
+	}
+	return 0;
+}
+
+int Tools_manager::get_tools_w(int tools_ID)
+{
+	switch (tools_ID)
+	{
+	case HEALTH:
+		al_get_bitmap_width(tools[HEALTH]);
+		break;
+
+	case DISFIG:
+		al_get_bitmap_width(ammo[DISFIG]);
+		break;
+	}
+	return 0;
+}
+
+int Tools_manager::get_ammo_h(int ammo_ID)
+{
+	switch (ammo_ID)
+	{
+	case ICE:
+		al_get_bitmap_height(ammo[ICET]);
+		break;
+
+	case FIRE:
+		al_get_bitmap_height(ammo[INFERRED]);
+		break;
+
+	case ZIG:
+		al_get_bitmap_height(ammo[ZIGGONET]);
+		break;
+
+	case H:
+		al_get_bitmap_height(ammo[HAYCH]);
+		break;
+
+	case HBAR:
+		al_get_bitmap_height(ammo[HAYCHBA]);
+		break;
+
+	case WAVE:
+		al_get_bitmap_height(ammo[SONICWAVE]);
+		break;
+	}
+	return 0;
+}
+
+int Tools_manager::get_tools_h(int tools_ID)
+{
+	switch (tools_ID)
+	{
+	case HEALTH:
+		al_get_bitmap_width(tools[HEALTH]);
+		break;
+
+	case DISFIG:
+		al_get_bitmap_width(ammo[DISFIG]);
+		break;
+	}
+	return 0;
 }
 
 void Tools_manager::set_tool_ID(int ID)

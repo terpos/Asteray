@@ -50,6 +50,11 @@ int Spyder::get_damage()
 	return 5;
 }
 
+int Spyder::get_score()
+{
+	return 150;
+}
+
 void Spyder::set_x(int x)
 {
 	this->x = x;
@@ -129,6 +134,9 @@ void Spyder::movedown()
 	set_y(this->y);
 }
 
-void Spyder::ability(player & p, ALLEGRO_EVENT e)
+void Spyder::ability(player* & p, ALLEGRO_EVENT e)
 {
+	p->set_special_condition(true);
+	p->set_duration(100);
+	p->set_ability_to_shoot(false);
 }

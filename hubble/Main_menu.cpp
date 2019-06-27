@@ -9,7 +9,11 @@ Main_menu::Main_menu()
 {
 	fontSize[TITLE] = 32;
 	fontSize[CHOICE] = 24;
+	
 	render = false;
+	mouse = false;
+	sel = false;
+
 	screen = 0;
 }
 
@@ -21,6 +25,16 @@ Main_menu::~Main_menu()
 int Main_menu::getChoice()
 {
 	return this->choice;
+}
+
+bool Main_menu::isselected()
+{
+	return this->sel;
+}
+
+void Main_menu::set_sel_event(bool sel)
+{
+	this->sel = sel;
 }
 
 void Main_menu::setChoice(int choice)
@@ -50,58 +64,129 @@ void Main_menu::load()
 	al_set_sample_instance_playmode(Main_Theme, ALLEGRO_PLAYMODE_LOOP);
 }
 
-void Main_menu::loop(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q)
+void Main_menu::event_listener(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q)
 {
-		if (e.type == ALLEGRO_EVENT_KEY_DOWN && screen == 0)
+	//al_wait_for_event(q, &e);
+	if (e.type == ALLEGRO_EVENT_MOUSE_AXES && screen == 0)
+	{
+		mouse = true;
+		if (e.mouse.x >= 160 && e.mouse.x <= 160 + al_get_text_width(menuSel[CHOICE], "PLAY") 
+			&& e.mouse.y >= 150 && e.mouse.y <= 150 + al_get_font_line_height(menuSel[CHOICE]))
 		{
-			switch (e.keyboard.keycode)
-			{
-			case ALLEGRO_KEY_ESCAPE:
-				destory();
-				exit(EXIT_SUCCESS);
-				break;
-
-			case ALLEGRO_KEY_DOWN:
-				this->choice = (this->choice + 1) % 3;
-				setChoice(this->choice);
-				break;
-
-			case ALLEGRO_KEY_UP:
-				choice = (this->choice - 1) % 3;
-				if (choice < 0)
-				{
-					choice = 2;
-				}
-
-				setChoice(this->choice);
-				break;
-			}
+			setChoice(PLAY);
 		}
 
-		else if (e.type == ALLEGRO_EVENT_KEY_DOWN && screen == 1)
+		else if (e.mouse.x >= 160 && e.mouse.x <= 160 + al_get_text_width(menuSel[CHOICE], "HOW TO PLAY")
+			&& e.mouse.y >= 200 && e.mouse.y <= 200 + al_get_font_line_height(menuSel[CHOICE]))
 		{
-			switch (e.keyboard.keycode)
-			{
-			case ALLEGRO_KEY_SPACE:
-				screen = 0;
-				break;
-			}
+			setChoice(HOWTO);
 		}
+
+		else if (e.mouse.x >= 160 && e.mouse.x <= 160 + al_get_text_width(menuSel[CHOICE], "QUIT")
+			&& e.mouse.y >= 250 && e.mouse.y <= 250 + al_get_font_line_height(menuSel[CHOICE]))
+		{
+			setChoice(QUIT);
+		}
+
+		else
+		{
+			setChoice(-1);
+		}
+
+		std::cout << e.mouse.x << ", " << e.mouse.y << std::endl;
+	}
+
+	if (e.type == ALLEGRO_EVENT_MOUSE_AXES && screen == 1)
+	{
+
+
+		if (e.mouse.x >= 170 && e.mouse.x <= 180 + al_get_text_width(status, "BACK TO MAIN MENU") &&
+			e.mouse.y >= 500 - 2 * al_get_font_line_height(status) && e.mouse.y <= 500)
+		{
+			sel = false;
+			setChoice(4);
+		}
+
+		else
+		{
+			setChoice(-1);
+		}
+
+	}
+
+	if (e.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN && screen == 0)
+	{
+		if (e.mouse.button == 1 && getChoice() > -1)
+		{
+			this->sel = true;
+		}
+	}
+
+	else if (e.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN && screen == 1)
+	{
+		if (e.mouse.button == 1 && getChoice() > -1)
+		{
+			this->sel = true;
+		}
+	}
+
+	if (e.type == ALLEGRO_EVENT_KEY_DOWN && screen == 0)
+	{
+		mouse = false;
+		switch (e.keyboard.keycode)
+		{
+		case ALLEGRO_KEY_ESCAPE:
+			destory();
+			exit(EXIT_SUCCESS);
+			break;
+
+		case ALLEGRO_KEY_DOWN:
+			this->choice = (this->choice + 1) % 3;
+			setChoice(this->choice);
+			break;
+
+		case ALLEGRO_KEY_UP:
+			choice = (this->choice - 1) % 3;
+			if (choice < 0)
+			{
+				choice = 2;
+			}
+			setChoice(this->choice);
+			break;
+
+		case ALLEGRO_KEY_ENTER:
+			this->sel = true;
+			break;
+		}
+
+
+	}
+
+	else if (e.type == ALLEGRO_EVENT_KEY_DOWN && screen == 1)
+	{
+		mouse = false;
+		switch (e.keyboard.keycode)
+		{
+		case ALLEGRO_KEY_SPACE:
+			screen = 0;
+			break;
+		}
+	}
 }
 
-void Main_menu::dochoice(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop g)
+void Main_menu::dochoice(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop g, bool &loop)
 {
 	if (getChoice() == PLAY)
 	{
 		al_stop_sample_instance(Main_Theme);
-		g.loop(e, q);
+		g.loop(e, q, loop);
 	}
 
 	else if (getChoice() == HOWTO)
 	{
 		screen = 1;
+		setChoice(-1);
 	}
-
 
 	else if (getChoice() == QUIT)
 	{
@@ -109,13 +194,23 @@ void Main_menu::dochoice(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop g)
 		destory();
 		exit(EXIT_SUCCESS);
 	}
+
+	else if (getChoice() == 4)
+	{
+		screen = 0;
+		setChoice(-1);
+		this->sel = false;
+	}
 }
 
-void Main_menu::update(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q)
+void Main_menu::update(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop g, bool &loop)
 {
 	if (e.type == ALLEGRO_EVENT_TIMER)
 	{
-		
+		if (this->sel)
+		{
+			dochoice(e, q, g, loop);
+		}
 
 		render = true;
 		draw();
@@ -126,10 +221,9 @@ void Main_menu::draw()
 {
 	if (render && screen == 0)
 	{
-		al_draw_text(menuSel[TITLE], al_map_rgb(255, 255, 255), 150, 50, NULL, "ASTERAY");
-
-
 		
+		al_clear_to_color(al_map_rgb(0, 0, 0));
+		al_draw_text(menuSel[TITLE], al_map_rgb(255, 255, 255), 150, 50, NULL, "ASTERAY");
 
 		al_draw_bitmap(menuBG, 0, 0, NULL);
 
@@ -142,24 +236,50 @@ void Main_menu::draw()
 		switch (getChoice())
 		{
 		case PLAY:
-			al_draw_text(menuSel[CHOICE], al_map_rgb(250, 0, 0), 160, 150, NULL, "PLAY");
+			if (mouse)
+			{
+				al_draw_filled_rectangle(160-5, 150-5, 160 + al_get_text_width(menuSel[CHOICE], "HOW TO PLAY") + 5, 150 + al_get_font_line_height(menuSel[CHOICE]), al_map_rgb(255, 255, 0));
+				al_draw_rectangle(160-5, 150-5, 160 + al_get_text_width(menuSel[CHOICE], "HOW TO PLAY") + 5, 150 + al_get_font_line_height(menuSel[CHOICE]), al_map_rgb(255, 55, 0), 1);
+				al_draw_text(menuSel[CHOICE], al_map_rgb(250, 0, 0), 160, 150, NULL, "PLAY");
+			}
+
+			else
+			{
+				al_draw_text(menuSel[CHOICE], al_map_rgb(250, 0, 0), 160, 150, NULL, "PLAY");
+			}
+			
 			break;
 
 		case HOWTO:
+			if (mouse)
+			{
+				al_draw_filled_rectangle(160-5, 200-5, 160 + al_get_text_width(menuSel[CHOICE], "HOW TO PLAY") + 5, 200 + al_get_font_line_height(menuSel[CHOICE]), al_map_rgb(255, 255, 0));
+				al_draw_rectangle(160-5, 200-5, 160 + al_get_text_width(menuSel[CHOICE], "HOW TO PLAY") + 5, 200 + al_get_font_line_height(menuSel[CHOICE]), al_map_rgb(255, 55, 0), 1);
+				al_draw_text(menuSel[CHOICE], al_map_rgb(250, 0, 0), 160, 200, NULL, "HOW TO PLAY");
+			}
 
-			al_draw_text(menuSel[CHOICE], al_map_rgb(250, 0, 0), 160, 200, NULL, "HOW TO PLAY");
-
-
+			else
+			{
+				al_draw_text(menuSel[CHOICE], al_map_rgb(250, 0, 0), 160, 200, NULL, "HOW TO PLAY");
+			}
 			break;
 
 		case QUIT:
-			al_draw_text(menuSel[CHOICE], al_map_rgb(250, 0, 0), 160, 250, NULL, "QUIT");
-			break;
-		}
+			if (mouse)
+			{
+				al_draw_filled_rectangle(160-5, 250-5, 160 + al_get_text_width(menuSel[CHOICE], "HOW TO PLAY") + 5, 250 + al_get_font_line_height(menuSel[CHOICE]), al_map_rgb(255, 255, 0));
+				al_draw_rectangle(160-5, 250-5, 160 + al_get_text_width(menuSel[CHOICE], "HOW TO PLAY") + 5, 250 + al_get_font_line_height(menuSel[CHOICE]), al_map_rgb(255, 55, 0), 1);
+				al_draw_text(menuSel[CHOICE], al_map_rgb(250, 0, 0), 160, 250, NULL, "QUIT");
+			}
 
-		render = false;
+			else
+			{
+				al_draw_text(menuSel[CHOICE], al_map_rgb(250, 0, 0), 160, 250, NULL, "QUIT");
+			}
+		}
 		al_flip_display();
-		al_clear_to_color(al_map_rgb(0, 0, 0));
+		
+		render = false;
 	}
 
 	else if (render && screen == 1)
@@ -176,7 +296,19 @@ void Main_menu::draw()
 		stat.setnotification("PRESS (X) TO SHOOT SPECIAL WEAPONS", pause_options, 0, 250, al_map_rgb(50, 255, 255));
 		stat.setnotification("PRESS (A) or (S) TO SWITCH SPECIAL WEAPONS", pause_options, 0, 280, al_map_rgb(50, 255, 255));
 
-		stat.setnotification("[PRESS (SPACEBAR) TO GO BACK TO MAIN MENU]", status, 75, 500 - 30, al_map_rgb(255, 255, 255));
+		//stat.setnotification("[PRESS (SPACEBAR) TO GO BACK TO MAIN MENU]", status, 75, 500 - 30, al_map_rgb(255, 255, 255));
+
+		al_draw_filled_rectangle(170, 500 - 2 * al_get_font_line_height(status), 180 + al_get_text_width(status, "BACK TO MAIN MENU"), 500, al_map_rgb(100, 0, 0));
+		stat.setnotification("BACK TO MAIN MENU", status, 175, 500 - 2 * al_get_font_line_height(status), al_map_rgb(255, 255, 255));
+		stat.setnotification("[SPACEBAR]", status, 200, 500 - al_get_font_line_height(status), al_map_rgb(255, 255, 255));
+
+		if (mouse && getChoice() == 4)
+		{
+			al_draw_rectangle(170, 500 - 2 * al_get_font_line_height(status), 180 + al_get_text_width(status, "BACK TO MAIN MENU"), 500, al_map_rgb(100, 0, 0), 1);
+			al_draw_filled_rectangle(170, 500 - 2 * al_get_font_line_height(status), 180 + al_get_text_width(status, "BACK TO MAIN MENU"), 500, al_map_rgb(255, 255, 0));
+			stat.setnotification("BACK TO MAIN MENU", status, 175, 500 - 2 * al_get_font_line_height(status), al_map_rgb(155, 0, 0));
+			stat.setnotification("[SPACEBAR]", status, 200, 500 - al_get_font_line_height(status), al_map_rgb(155, 0, 0));
+		}
 
 		al_flip_display();
 	}

@@ -2,8 +2,11 @@
 
 
 
-Ammo::Ammo()
+Ammo::Ammo(int x, int y, int ID)
 {
+	set_x(x);
+	set_y(y);
+	set_ammo_ID(ID);
 }
 
 

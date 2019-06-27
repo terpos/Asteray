@@ -9,14 +9,6 @@ int main(int argc, char **argv)
 
 	al_init();
 
-	al_install_audio();
-
-	al_install_keyboard();
-
-	al_init_image_addon();
-
-
-
 	hubble.initilize_loop();
 
 	hubble.display_loop();
@@ -25,9 +17,7 @@ int main(int argc, char **argv)
 
 	//system("cls");
 
-	std::cout << "press [ENTER] to close" << std::endl;
-
-	std::cin.get();
+	system("pause");
 
 
 	return 0;

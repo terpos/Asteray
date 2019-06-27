@@ -50,6 +50,11 @@ int Volcanon::get_damage()
 	return 5;
 }
 
+int Volcanon::get_score()
+{
+	return 0;
+}
+
 void Volcanon::set_x(int x)
 {
 	this->x = x;
@@ -129,6 +134,6 @@ void Volcanon::movedown()
 	set_y(this->y);
 }
 
-void Volcanon::ability(player & p, ALLEGRO_EVENT e)
+void Volcanon::ability(player* & p, ALLEGRO_EVENT e)
 {
 }
