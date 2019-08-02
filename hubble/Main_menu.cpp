@@ -184,7 +184,7 @@ void Main_menu::event_listener(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q)
 			choice = (this->choice - 1) % 4;
 			if (choice < 0)
 			{
-				choice = 2;
+				choice = 3;
 			}
 			setChoice(this->choice);
 			this->sel = false;
