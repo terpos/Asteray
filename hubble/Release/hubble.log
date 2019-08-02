@@ -42,9 +42,9 @@ c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2617): warning C401
 c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2676): warning C4018: '<': signed/unsigned mismatch
 c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(3115): warning C4018: '<': signed/unsigned mismatch
   Generating code
-  2 of 2762 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  7 of 2762 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+    9 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 allegro_monolith-static.lib(allegro.obj) : warning LNK4099: PDB 'allegro_monolith.pdb' was not found with 'allegro_monolith-static.lib(allegro.obj)' or at 'C:\Users\gebei\Documents\GitHub\Asteray\Release\allegro_monolith.pdb'; linking object as if no debug info
 allegro_monolith-static.lib(bitmap.obj) : warning LNK4099: PDB 'allegro_monolith.pdb' was not found with 'allegro_monolith-static.lib(bitmap.obj)' or at 'C:\Users\gebei\Documents\GitHub\Asteray\Release\allegro_monolith.pdb'; linking object as if no debug info

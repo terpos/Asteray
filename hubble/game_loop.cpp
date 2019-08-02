@@ -946,7 +946,7 @@ LEVELUP4:
 void game_loop::stage_advance(player *&p)
 {
 	
-	p->set_movement(false);
+//	p->set_movement(false);
 	//winx / 2, winy - 150
 	if (p->get_x() < winx / 2)
 	{
@@ -980,7 +980,7 @@ void game_loop::forward(player *& p)
 
 	if (spaceship[0]->get_x() == winx / 2 && spaceship[0]->get_y() == winy - 150)
 	{
-		p->set_movement(false);
+		//p->set_movement(false);
 		//std::cout << "MOVE" << p->get_movement() << std::endl;
 		al_stop_sample_instance(Earth);
 		//al_set_sample_instance_position(Earth, 0);
@@ -2048,7 +2048,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		for (int i = 0; i < am.size(); i++)
 		{
-			if (!unlockweapon[ICET] || !unlockweapon[INFERRED] || !unlockweapon[ZIGGONET] || !unlockweapon[HAYCH] || !unlockweapon[HAYCHBA] || !unlockweapon[SONICWAVE])
+			if (!unlockweapon) 
 			{
 				am.erase(am.begin() + i);
 			}
@@ -2056,7 +2056,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		for (int i = 0; i < am2.size(); i++)
 		{
-			if (!unlockweapon[ICET] || !unlockweapon[INFERRED] || !unlockweapon[ZIGGONET] || !unlockweapon[HAYCH] || !unlockweapon[HAYCHBA] || !unlockweapon[SONICWAVE])
+			if (!unlockweapon) 
 			{
 				am2.erase(am2.begin() + i);
 			}
@@ -2064,7 +2064,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		for (int i = 0; i < am3.size(); i++)
 		{
-			if (!unlockweapon[ICET] || !unlockweapon[INFERRED] || !unlockweapon[ZIGGONET] || !unlockweapon[HAYCH] || !unlockweapon[HAYCHBA] || !unlockweapon[SONICWAVE])
+			if (!unlockweapon) 
 			{
 				am3.erase(am3.begin() + i);
 			}
@@ -2072,7 +2072,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		for (int i = 0; i < am4.size(); i++)
 		{
-			if (!unlockweapon[ICET] || !unlockweapon[INFERRED] || !unlockweapon[ZIGGONET] || !unlockweapon[HAYCH] || !unlockweapon[HAYCHBA] || !unlockweapon[SONICWAVE])
+			if (!unlockweapon)
 			{
 				am4.erase(am4.begin() + i);
 			}
@@ -2080,7 +2080,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		for (int i = 0; i < am5.size(); i++)
 		{
-			if (!unlockweapon[ICET] || !unlockweapon[INFERRED] || !unlockweapon[ZIGGONET] || !unlockweapon[HAYCH] || !unlockweapon[HAYCHBA] || !unlockweapon[SONICWAVE])
+			if (!unlockweapon)
 			{
 				am5.erase(am5.begin() + i);
 			}
@@ -2088,7 +2088,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		for (int i = 0; i < am6.size(); i++)
 		{
-			if (!unlockweapon[ICET] || !unlockweapon[INFERRED] || !unlockweapon[ZIGGONET] || !unlockweapon[HAYCH] || !unlockweapon[HAYCHBA] || !unlockweapon[SONICWAVE])
+			if (!unlockweapon)
 			{
 				am6.erase(am6.begin() + i);
 			}
