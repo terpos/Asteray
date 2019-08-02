@@ -7,9 +7,11 @@ ENHANCED 5/11/2019
 - weapon object is now polymorphic
 	- all the parameters of the collision and weapon manager class are fixed according to the weapon object
 
-FIXED 5/11/2019
+FIXED 8/1/2019
 
 - No menu - Implemented and works
+
+- First two enemies while scrolling throught the stage do not have accurate health - made several enemy vectors to fix the issue
 
 - No pause - Made a pause screen with info on how to play the game
 
@@ -25,25 +27,23 @@ FIXED 5/11/2019
 
 - some music is a bit distorted - Fixed it by putting all into sound instance and into render function in game_loop class
 
+- No destroy animation for enemies and bosses - Implemented and works
+
+- No game over reset - added it which made the player start the whole level over
+
+- no health refills after bosses - Implemented it
+
+- No close the game capibility with mouse - added it works
+
 KNOWN_ISSUES 5/11/2019
 
 - the level and stage code structure is not perfect - will fix it later
-
-- First two enemies while scrolling throught the stage do not have accurate health - this is a bug and will be looked at later
-
-- No destroy animation for enemies and bosses - will implement it later
-
-- No game over reset - add the reset after game over later
-
-- No close the game capibility with mouse - will add the close with mouse later
 
 - No info bosses and enemies - will do that later
 
 - No info for weapon - will implement it later
 
-- no health refills after bosses - will implement it later
-
-- no cutscenes after the boss and mini bosses are defeated - will implement it later
+- no cutscenes after the boss and mini bosses are defeated - Will not implement it but will be put into future games
 
 - physics is not accurate in the game - Not intended to put it in this game but in the future games I will use an external physics library
 
