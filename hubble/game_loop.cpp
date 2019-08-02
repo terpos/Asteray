@@ -527,24 +527,10 @@ CHANGESTAGE:
 			if (mb.size() == 0 && battle)
 			{
 				minibossdefeated = true;
-				al_stop_sample_instance(Mars);
-				al_set_sample_instance_position(Mars, 0);
+				al_stop_sample_instance(Earth);
+				al_set_sample_instance_position(Earth, 0);
 
-				if (spaceship[0]->get_x() == winx / 2 && spaceship[0]->get_y() == winy - 150)
-				{
-					al_stop_sample_instance(Mars);
-					al_set_sample_instance_position(Mars, 0);
-					spaceship[0]->set_keys(UP, true);
-					spaceship[0]->set_vel(10);
-					battle = false;
-				}
-
-				else
-				{
-					al_stop_sample_instance(Mars);
-					al_set_sample_instance_position(Mars, 0);
-					stage_advance(spaceship[0]);
-				}
+				forward(spaceship[0]);
 			}
 
 			if (spaceship.size() > 0)
