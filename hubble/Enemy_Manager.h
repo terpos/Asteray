@@ -27,6 +27,7 @@
 #include "Heat_wave.h"
 #include "Single_Twin.h"
 #include "Enemy_Lazer.h"
+#include "Turrets.h"
 
 #include "boss.h"
 #include "mini_boss.h"
@@ -46,28 +47,26 @@ public:
 	void load_enemy_img();
 	
 	void spawn_boss(std::vector <boss*> &b, int bossID);
-	void spawn_minboss(std::vector<mini_boss*>& mb, int minibossID);
+	void spawn_minboss(std::vector<mini_boss*>& mb, std::vector <Turrets *> &turrets, Stages &s, int minibossID);
 	void spawn_enemy(std::vector <enemies*> &e, int enemy_health[12], int CID, int lim, int enemyID);
 
 	void spawn_enemy(std::vector<enemies*>& e, int enemy_health[12], int CID, int vel, int lim, int enemyID);
+	void spawn_enemy(std::vector<enemies*>& e, int enemy_health[12], int x, int y, int CID, int vel, int enemyID);
 	
 	void update(std::vector <enemies*> &e, std::vector <boss*> &b, std::vector <mini_boss*> &mb, std::vector <Spartak_ball*> &ball, std::vector <Diamond_shot*> &ds, 
 		std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K, 
 		std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball, 
-		std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, Animate &a, Animate &hit);
-
+		std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, std::vector <Turrets *> &turrets, Animate &a, Stages &s, Animate &hit);
 	void update(std::vector<enemies*>& e, Animate &hit);
 	
 	void renderenemy(std::vector<Enemy_Lazer*>& lazer);
-
 	void renderenemy(std::vector<enemies*>& e, Animate & hit);
-
 	void renderboss(std::vector <boss*> &b, std::vector <Spartak_ball*> &ball, std::vector <Diamond_shot*> &ds,
 		std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K,
 		std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball,
-		std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, Animate a, int &frame);
+		std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, Animate a, ALLEGRO_SAMPLE_INSTANCE *destroy, int &frame);
 
-	void renderminiboss(std::vector <mini_boss*> &mb, Animate a);
+	void renderminiboss(std::vector <mini_boss*> &mb, std::vector<Turrets*>& turrets, Stages s, Animate a);
 	
 	void destroy_enemy(std::vector <enemies*>& e, int index);
 	void clear_enemy(std::vector <enemies*>& e);
@@ -76,6 +75,11 @@ public:
 
 	int get_h(int enemyID);
 	int get_w(int enemyID);
+
+	int get_Eweapon_w(int enemyID);
+
+	int get_turret_w(int enemyID);
+	int get_turretweapon_w(int enemyID);
 
 	int get_E_w();
 	int get_M_w();
@@ -92,11 +96,14 @@ public:
 	int get_elazer_w();
 	int get_K_w();
 
+	int get_turret_h(int enemyID);
+	int get_turretweapon_h(int enemyID);
 
 	int get_E_h();
 	int get_M_h();
 	int get_boss_h(int bossID);
 	int get_ball_h();
+	int get_Eweapon_h(int enemyID);
 	int get_EB_h();
 	int get_Vshot_h();
 	int get_mball_h();
@@ -110,7 +117,10 @@ public:
 	int get_num_of_enemy(std::vector <enemies*> e);
 
 	int ishit();
+	bool isdying();
+
 	void sethit(bool hit);
+	void set_death(bool dying);
 
 private:
 
@@ -121,19 +131,23 @@ private:
 	ALLEGRO_BITMAP *enemy_destroyed[3];
 
 	ALLEGRO_BITMAP *Spartak[3];
+	ALLEGRO_BITMAP *Spartak_blows_up[2];
 	ALLEGRO_BITMAP *Spartakball;
 	ALLEGRO_BITMAP *Diamond;
 	ALLEGRO_BITMAP *S_laser[6];
 
 	ALLEGRO_BITMAP *Martianb[3];
+	ALLEGRO_BITMAP *Martianb_blows_up[2];
 	ALLEGRO_BITMAP *Egg_bomb;
 	ALLEGRO_BITMAP *Sonic_Turbulance;
 	ALLEGRO_BITMAP *LaserB;
 
 	ALLEGRO_BITMAP *Kametkhan[3];
+	ALLEGRO_BITMAP *Kametkhan_blows_up[2];
 	ALLEGRO_BITMAP *kamet;
 
 	ALLEGRO_BITMAP *Xorgana[2];
+	ALLEGRO_BITMAP *Xorgana_blows_up[2];
 	ALLEGRO_BITMAP *SingleTwin;
 
 	ALLEGRO_BITMAP *Kamekhan_weapon;
@@ -143,7 +157,24 @@ private:
 	ALLEGRO_BITMAP *mars_gate;
 	ALLEGRO_BITMAP *electricity[2];
 
+	ALLEGRO_BITMAP *Spyder_w;
+	ALLEGRO_BITMAP *Planet_w;
+	ALLEGRO_BITMAP *Blobby_w;
+	ALLEGRO_BITMAP *Xybtofy_w;
+	ALLEGRO_BITMAP *Mpolice_w;
+	ALLEGRO_BITMAP *Asterix_w;
+	ALLEGRO_BITMAP *Spaceship_w;
+	ALLEGRO_BITMAP *Volcanon_w;
+
 	ALLEGRO_BITMAP *E_Lazer;
+
+	ALLEGRO_BITMAP *E_turret[2];
+	ALLEGRO_BITMAP *M_turret[2];
+
+	ALLEGRO_BITMAP *E_weapon;
+	ALLEGRO_BITMAP *M_weapon;
+
+	
 
 	ALLEGRO_SAMPLE *Energized;
 	ALLEGRO_SAMPLE *Release;
@@ -152,8 +183,11 @@ private:
 	ALLEGRO_SAMPLE_INSTANCE *energized;
 	ALLEGRO_SAMPLE_INSTANCE *release;
 
+	Animate ani;
+
 	bool damaged;
 	bool lazerb_action;
+	bool dying;
 
 	int attack_Move;
 	int diamond_vel;

@@ -12,6 +12,7 @@ boss::boss(int x, int y, int vel, int bossID, int health, int cid)
 	is_energizing(this->energize);
 	vert = horiz = false;
 	action = -1;
+	set_frame(0);
 }
 
 boss::~boss()

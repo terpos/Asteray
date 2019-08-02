@@ -1,3 +1,4 @@
+#include "global.h"
 #pragma once
 class Ammo
 {

@@ -23,6 +23,7 @@ public:
 	void loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop);
 	void stage(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop);
 	void stage_advance(player *&p);
+	void forward(player *&p);
 	void Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE * q, bool &loop);
 	void update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q);
 	void render();
@@ -48,6 +49,7 @@ private:
 	int stagenumber;
 	int num_of_weapon;
 	int disfig_index;
+	int num_of_kills;
 
 	int options;
 
@@ -111,6 +113,7 @@ private:
 	std::vector <Spartak_Laser*> sl;
 	std::vector <Enemy_Lazer*> elazer;
 
+	std::vector <Turrets *> turrets;
 
 	Animate ani;
 	Animate adestroy;
@@ -173,12 +176,16 @@ private:
 	ALLEGRO_SAMPLE *ha;
 	ALLEGRO_SAMPLE *hab;
 	ALLEGRO_SAMPLE *so;
+	ALLEGRO_SAMPLE *eh;
+	ALLEGRO_SAMPLE *scm;
 
 	ALLEGRO_SAMPLE *health_pickup;
 	ALLEGRO_SAMPLE *ammo_pickup;
 	ALLEGRO_SAMPLE *destroy_all;
 	ALLEGRO_SAMPLE *Destroy;
 	ALLEGRO_SAMPLE *Hit;
+	ALLEGRO_SAMPLE *cre;
+	ALLEGRO_SAMPLE *cntdwn;
 
 	ALLEGRO_SAMPLE *PO;
 	ALLEGRO_SAMPLE *POF;
@@ -188,6 +195,7 @@ private:
 	ALLEGRO_SAMPLE *Reflect;
 	ALLEGRO_SAMPLE *Ballreflect;
 	ALLEGRO_SAMPLE *Bosshit;
+	ALLEGRO_SAMPLE *Bossdes;
 	
 	ALLEGRO_SAMPLE_INSTANCE *Earth;
 	ALLEGRO_SAMPLE_INSTANCE *Earth_Factory;
@@ -219,6 +227,11 @@ private:
 	ALLEGRO_SAMPLE_INSTANCE *reflect;
 	ALLEGRO_SAMPLE_INSTANCE *ballreflect;
 	ALLEGRO_SAMPLE_INSTANCE *bosshit;
+	ALLEGRO_SAMPLE_INSTANCE *enemy_hit;
+	ALLEGRO_SAMPLE_INSTANCE *Stage_Completed;
+	ALLEGRO_SAMPLE_INSTANCE *Boss_destroyed;
+	ALLEGRO_SAMPLE_INSTANCE *Credit;
+	ALLEGRO_SAMPLE_INSTANCE *Countdown;
 
 	bool startanimating;
 	bool minibossdefeated;

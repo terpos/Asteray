@@ -13,6 +13,8 @@ public:
 	int get_coord_ID();
 	bool isshot();
 
+	
+
 	void set_x(int x);
 	void set_y(int y);
 	void set_vel(int vel);
@@ -20,8 +22,12 @@ public:
 	void set_shot(bool isshot);
 
 	void shoot();
+	void render_shot(ALLEGRO_BITMAP *bmp, int x, int y);
+
 
 private:
+	
+
 	int x, y, vel, cid;
 	bool shot;
 };

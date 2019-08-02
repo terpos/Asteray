@@ -1,5 +1,5 @@
 #include "global.h"
-
+#include "Animate.h"
 
 #pragma once
 enum {EARTH, MARS, AST, SATURN};
@@ -27,16 +27,24 @@ public:
 
 	bool get_spawn();
 	bool get_pause();
+	bool get_disfig();
 	int get_stage();
 	int get_y();
 
+	void update_animation();
+
 	void set_stage(int stagenum);
+	void set_disfig(bool disfig);
 	void display_stage(std::string Stagename, ALLEGRO_FONT *font);
 
 private:
 	
 	ALLEGRO_BITMAP *stage[4] = { NULL };
+	ALLEGRO_BITMAP *stage_disfig[4] = { NULL };
+
 	int y, stagenum;
-	bool pause, spawn;
+	bool pause, spawn, disfig;
+	
+	Animate a;
 };
 

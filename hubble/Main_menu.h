@@ -3,7 +3,7 @@
 #include "global.h"
 #include "game_loop.h"
 
-enum { PLAY, HOWTO, QUIT };
+enum { PLAY, HOWTO, PLOT, QUIT};
 
 
 class Main_menu

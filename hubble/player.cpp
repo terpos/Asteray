@@ -33,6 +33,8 @@ void player::load()
 
 void player::control(ALLEGRO_EVENT &e)
 {
+
+
 	if (get_movement())
 	{
 		if (e.type == ALLEGRO_EVENT_KEY_DOWN)
@@ -40,19 +42,22 @@ void player::control(ALLEGRO_EVENT &e)
 			switch (e.keyboard.keycode)
 			{
 			case ALLEGRO_KEY_LEFT:
-				keys[LEFT] = true;
+				this->keys[LEFT] = true;
 				this->coord = LEFT;
 				break;
+
 			case ALLEGRO_KEY_RIGHT:
-				keys[RIGHT] = true;
+				this->keys[RIGHT] = true;
 				this->coord = RIGHT;
 				break;
+
 			case ALLEGRO_KEY_UP:
-				keys[UP] = true;
+				this->keys[UP] = true;
 				this->coord = UP;
 				break;
+
 			case ALLEGRO_KEY_DOWN:
-				keys[DOWN] = true;
+				this->keys[DOWN] = true;
 				this->coord = DOWN;
 				break;
 			}
@@ -69,21 +74,21 @@ void player::control(ALLEGRO_EVENT &e)
 			switch (e.keyboard.keycode)
 			{
 			case ALLEGRO_KEY_LEFT:
-				keys[LEFT] = false;
+				this->keys[LEFT] = false;
 				break;
 			case ALLEGRO_KEY_RIGHT:
-				keys[RIGHT] = false;
+				this->keys[RIGHT] = false;
 				break;
 			case ALLEGRO_KEY_UP:
-				keys[UP] = false;
+				this->keys[UP] = false;
 				break;
 			case ALLEGRO_KEY_DOWN:
-				keys[DOWN] = false;
+				this->keys[DOWN] = false;
 				break;
 			}
 		}
 
-		set_coords_ID(this->coord);
+		//set_coords_ID(this->coord);
 
 	}
 
@@ -92,16 +97,16 @@ void player::control(ALLEGRO_EVENT &e)
 		switch (e.keyboard.keycode)
 		{
 		case ALLEGRO_KEY_LEFT:
-			keys[LEFT] = false;
+			this->keys[LEFT] = false;
 			break;
 		case ALLEGRO_KEY_RIGHT:
-			keys[RIGHT] = false;
+			this->keys[RIGHT] = false;
 			break;
 		case ALLEGRO_KEY_UP:
-			keys[UP] = false;
+			this->keys[UP] = false;
 			break;
 		case ALLEGRO_KEY_DOWN:
-			keys[DOWN] = false;
+			this->keys[DOWN] = false;
 			break;
 		}
 	}
@@ -111,16 +116,17 @@ void player::update()
 {
 	if (get_movement())
 	{
-		x += vel * keys[RIGHT];
-		x -= vel * keys[LEFT];
-		y += vel * keys[DOWN];
-		y -= vel * keys[UP];
+		this->x += this->vel * this->keys[RIGHT];
+		this->x -= this->vel * this->keys[LEFT];
+		this->y += this->vel * this->keys[DOWN];
+		this->y -= this->vel * this->keys[UP];
 	}
+	
 	
 	
 }
 
-void player::render(Animate &hit)
+void player::render(Status &s, ALLEGRO_FONT *font, Animate &hit)
 {
 	if (!ishit())
 	{
@@ -132,9 +138,24 @@ void player::render(Animate &hit)
 		hit.two_frames_custom(ship[0], ship[1], this->x, this->y, hit.get_frame(), 7, 0, 3);
 	}
 
+	
+
+	if (!get_movement())
+	{
+		al_draw_bitmap(ship[0], this->x, this->y, NULL);
+		s.setnotification("STND", font, winx - 15 - al_get_text_width(font, "STND"), winy - 2*al_get_font_line_height(font));
+	}
+
+	if (!get_ability_to_shoot())
+	{
+		al_draw_bitmap(ship[0], this->x, this->y, NULL);
+		s.setnotification("WPN DIS", font, winx - 15 - al_get_text_width(font, "WPN DIS"), winy - al_get_font_line_height(font));
+	}
+
 	if (get_special_condition())
 	{
 		al_draw_bitmap(ship[2], this->x, this->y, NULL);
+		s.setnotification("PSND", font, winx - 15 - al_get_text_width(font, "PSND"), winy - 3 * al_get_font_line_height(font));
 	}
 }
 
@@ -145,6 +166,7 @@ void player::countdown_duration()
 		this->duration--;
 		set_duration(this->duration);
 	}
+
 	else
 	{
 		set_ability_to_shoot(true);
@@ -278,7 +300,7 @@ void player::set_duration(int duration)
 
 void player::set_keys(int coord, bool movement)
 {
-	keys[coord] = movement;
+	this->keys[coord] = movement;
 }
 
 void player::ship_hit(bool hit)

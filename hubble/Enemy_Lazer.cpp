@@ -8,6 +8,7 @@ Enemy_Lazer::Enemy_Lazer(int x, int y, int vel, int cid)
 	set_y(y);
 	set_vel(vel);
 	set_coord_ID(cid);
+	set_shot(false);
 }
 
 
@@ -94,3 +95,9 @@ void Enemy_Lazer::shoot()
 		}
 	}
 }
+
+void Enemy_Lazer::render_shot(ALLEGRO_BITMAP *bmp, int x, int y)
+{
+	al_draw_bitmap(bmp, x, y, NULL);
+}
+

@@ -13,12 +13,13 @@ game_loop::game_loop()
 	weaponsel = 0;
 	frame = 0;
 	textframe = 0;
-	num_of_weapon = 1;
+	num_of_weapon = 0;
 	backgroundvol = 1.5;
 	options = -1;
 	scorecounter = 500;
 	//s.set_y(0);
-	increment = 1;
+	increment = 0;
+	num_of_kills = 0;
 	//disfig_index = 0;
 	
 	
@@ -50,7 +51,7 @@ game_loop::game_loop()
 	enemy_health[JUPIBALL] = 8; // DEFAULT:8
 	enemy_health[KAMEKOSET] = 1; // DEFAULT:1
 	enemy_health[MPOLICE] = 6; // DEFAULT:6
-	enemy_health[SATUSPHERE] = 20; // DEFAULT:20
+	enemy_health[SATUSPHERE] = 15; // DEFAULT:15
 	enemy_health[SPACESHIP] = 2; // DEFAULT:2
 	enemy_health[SPYDER] = 3; // DEFAULT:3
 	enemy_health[VOLCANON] = 5; // DEFAULT:5
@@ -94,15 +95,27 @@ void game_loop::replay()
 	al_stop_sample_instance(Saturn);
 	al_stop_sample_instance(Final_Boss);
 
-	
-
 	foes.clear();
 	b.clear();
-	foes_scroll1.clear();	
+	foes_scroll1.clear();
+	foes_scroll2.clear();
+	foes_scroll3.clear();
+	foes_scroll4.clear();
+	foes_scroll5.clear();
 	mb.clear();
 	spaceship.push_back(new player());
 	t.clear();
+	t2.clear();
+	t3.clear();
+	t4.clear();
+	t5.clear();
+	t6.clear();
 	am.clear();
+	am2.clear();
+	am3.clear();
+	am4.clear();
+	am5.clear();
+	am6.clear();
 	elazer.clear();
 	ball.clear();
 	mball.clear();
@@ -116,6 +129,7 @@ void game_loop::replay()
 	st.clear();
 	sl.clear();
 	w.clear();
+	turrets.clear();
 	
 
 	for (int i = 0; i < spaceship.size(); i++)
@@ -194,6 +208,8 @@ void game_loop::load_stuff()
 	li = al_load_sample("lightning-shot.ogg");
 	ha = al_load_sample("haych.ogg");
 	so = al_load_sample("wave_shot.ogg");
+	eh = al_load_sample("Enemy_hit.ogg");
+	scm = al_load_sample("Stage_completed.ogg");
 
 	health_pickup = al_load_sample("Health_pickup.ogg");
 	ammo_pickup = al_load_sample("ammo_pickup.ogg");
@@ -206,10 +222,14 @@ void game_loop::load_stuff()
 	POF = al_load_sample("Pause_transistion_off.ogg");
 
 	Game_over = al_load_sample("Game_over.ogg");
+	Bossdes = al_load_sample("boss_destroyed.ogg");
 
 	Reflect = al_load_sample("214048__taira-komori__reflection.ogg");
 	Ballreflect = al_load_sample("49673__ejfortin__energy-short-sword-2.ogg");
 	Bosshit = al_load_sample("404786__owlstorm__retro-video-game-sfx-reflect.ogg");
+
+	cre = al_load_sample("credit.ogg");
+	cntdwn = al_load_sample("countdown.ogg");
 	
 	Earth = al_create_sample_instance(earth);
 	Earth_Factory = al_create_sample_instance(earth_factory);
@@ -226,6 +246,7 @@ void game_loop::load_stuff()
 	lit = al_create_sample_instance(li);
 	haa = al_create_sample_instance(ha);
 	wavey = al_create_sample_instance(so);
+	Boss_destroyed = al_create_sample_instance(Bossdes);
 
 	pickup[0] = al_create_sample_instance(health_pickup);
 	pickup[1] = al_create_sample_instance(ammo_pickup);
@@ -243,6 +264,10 @@ void game_loop::load_stuff()
 	reflect = al_create_sample_instance(Reflect);
 	ballreflect = al_create_sample_instance(Ballreflect);
 	bosshit = al_create_sample_instance(Bosshit);
+	enemy_hit = al_create_sample_instance(eh);
+	Stage_Completed = al_create_sample_instance(scm);
+	Credit = al_create_sample_instance(cre);
+	Countdown = al_create_sample_instance(cntdwn);
 
 	al_attach_sample_instance_to_mixer(Earth, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(Earth_Factory, al_get_default_mixer());
@@ -269,6 +294,11 @@ void game_loop::load_stuff()
 	al_attach_sample_instance_to_mixer(bosshit, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(Pause_On, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(Pause_Off, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(enemy_hit, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(Stage_Completed, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(Boss_destroyed, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(Credit, al_get_default_mixer());
+	al_attach_sample_instance_to_mixer(Countdown, al_get_default_mixer());
 
 	al_set_sample_instance_playmode(Earth, ALLEGRO_PLAYMODE_LOOP);
 	al_set_sample_instance_playmode(Earth_Factory, ALLEGRO_PLAYMODE_LOOP);
@@ -278,7 +308,10 @@ void game_loop::load_stuff()
 	al_set_sample_instance_playmode(Saturn, ALLEGRO_PLAYMODE_LOOP);
 	al_set_sample_instance_playmode(Boss, ALLEGRO_PLAYMODE_LOOP);
 	al_set_sample_instance_playmode(Final_Boss, ALLEGRO_PLAYMODE_LOOP);
-	
+	al_set_sample_instance_playmode(Stage_Completed, ALLEGRO_PLAYMODE_ONCE);
+	al_set_sample_instance_playmode(Credit, ALLEGRO_PLAYMODE_ONCE);
+
+
 	for (int i = 0; i < 3; i++)
 	{
 		al_set_sample_instance_gain(pickup[i], 2);
@@ -288,6 +321,14 @@ void game_loop::load_stuff()
 	al_set_sample_instance_gain(hit, 2);
 	al_set_sample_instance_gain(Pause_On, 2);
 	al_set_sample_instance_gain(Pause_Off, 2);
+	al_set_sample_instance_gain(Stage_Completed, 2);
+	al_set_sample_instance_gain(Boss_destroyed, 2);
+	al_set_sample_instance_gain(Credit, 2);
+	al_set_sample_instance_gain(Countdown, 2);
+
+	al_set_sample_instance_position(Stage_Completed, 1);
+	al_set_sample_instance_position(Credit, 0);
+
 
 	burned_red = al_load_bitmap("burned_red.png");
 	burned_yellow = al_load_bitmap("burned_yellow.png");
@@ -301,6 +342,8 @@ void game_loop::load_stuff()
 
 	shipWeapon.load_weapon_img();
 	
+	al_set_sample_instance_gain(enemy_hit, 2);
+
 	E.load_enemy_img();
 	E2.load_enemy_img();
 	E3.load_enemy_img();
@@ -332,6 +375,7 @@ CHANGESTAGE:
 
 	while (s.get_stage() == EARTH)
 	{
+	//s.set_y(-2800);
 	LEVELUP:
 
 		lvl++;
@@ -354,37 +398,17 @@ CHANGESTAGE:
 		while (stat.getlvl() == 2)
 		{
 
-			Event_listenter(ev, q, loop);
+			
 
-			update_loop(ev, q);
+			
 			if (mb.size() == 0 && battle)
 			{
-
+				
 				minibossdefeated = true;
 				al_stop_sample_instance(Earth);
 				al_set_sample_instance_position(Earth, 0);
 
-				if (spaceship[0]->get_x() == winx / 2 && spaceship[0]->get_y() == winy - 150)
-				{
-					al_stop_sample_instance(Earth);
-					//al_set_sample_instance_position(Earth, 0);
-					spaceship[0]->set_vel(10);
-					spaceship[0]->set_keys(UP, true);
-					spaceship[0]->set_keys(DOWN, false);
-					spaceship[0]->set_keys(LEFT, false);
-					spaceship[0]->set_keys(RIGHT, false);
-					battle = false;
-					
-					
-				}
-				
-
-				else
-				{
-					al_stop_sample_instance(Earth);
-					al_set_sample_instance_position(Earth, 0);
-					stage_advance(spaceship[0]);
-				}
+				forward(spaceship[0]);
 
 			}
 
@@ -401,6 +425,8 @@ CHANGESTAGE:
 				goto LEVELUP;
 			}
 		
+			Event_listenter(ev, q, loop);
+			update_loop(ev, q);
 		}
 		
 		while (stat.getlvl() == 3)
@@ -438,6 +464,22 @@ CHANGESTAGE:
 				sl.clear();
 				w.clear();
 				pauseCounter = 4;
+
+				/*if (b.size() <= 0 && bossdefeated && s.get_y() == 0)
+				{
+					bossdefeated = false;
+					if (s.get_stage() != SATURN)
+					{
+						pauseCounter = 4;
+					}
+
+					else
+					{
+						pauseCounter = 5;
+					}
+
+				}*/
+
 				al_stop_samples();
 				battle = false;
 				s.scroll_down();
@@ -466,7 +508,7 @@ CHANGESTAGE:
 
 		while (stat.getlvl() == 1)
 		{
-
+			
 			if (E.get_num_of_enemy(foes) == 0 && battle)
 			{
 				battle = false;
@@ -505,16 +547,20 @@ CHANGESTAGE:
 				}
 			}
 
-			if (spaceship[0]->get_y() < 0 && minibossdefeated)
+			if (spaceship.size() > 0)
 			{
-				spaceship[0]->set_keys(UP, false);
-				spaceship[0]->set_vel(5);
-				spaceship[0]->set_coords(winx / 2, winy - 150);
-				s.set_y(s.get_y() + 500);
-				s.scroll_down();
-				minibossdefeated = false;
-				goto LEVELUP;
+				if (spaceship[0]->get_y() < 0 && minibossdefeated)
+				{
+					spaceship[0]->set_keys(UP, false);
+					spaceship[0]->set_vel(5);
+					spaceship[0]->set_coords(winx / 2, winy - 150);
+					s.set_y(s.get_y() + 500);
+					s.scroll_down();
+					minibossdefeated = false;
+					goto LEVELUP;
+				}
 			}
+			
 
 			Event_listenter(ev, q, loop);
 
@@ -575,7 +621,7 @@ CHANGESTAGE:
 				battle = true;
 				s.stop_moving();
 
-				E.spawn_enemy(foes, enemy_health, rand() % 4, 5, BLOBBY);
+				E.spawn_enemy(foes, enemy_health, DOWN, 5, BLOBBY);
 			}
 
 			if (s.get_y() < -2800 || s.get_y() > -2800)
@@ -631,7 +677,7 @@ CHANGESTAGE:
 				battle = true;
 				s.stop_moving();
 
-				E.spawn_enemy(foes, enemy_health, rand() % 4, 5, SPYDER);
+				E.spawn_enemy(foes, enemy_health, DOWN, 5, SPYDER);
 			}
 
 			if (s.get_y() < -2000 || s.get_y() > -2000)
@@ -657,7 +703,7 @@ CHANGESTAGE:
 			if (s.get_y() == -1600 && !battle && lvl == 4)
 			{
 				battle = true;
-				E.spawn_enemy(foes, enemy_health, rand() % 4, 6, ASTERIX);
+				E.spawn_enemy(foes, enemy_health, DOWN, 6, ASTERIX);
 				s.stop_moving();
 			}
 
@@ -685,7 +731,7 @@ CHANGESTAGE:
 			if (s.get_y() == -1200 && !battle && lvl == 5)
 			{
 				battle = true;
-				E.spawn_enemy(foes, enemy_health, rand() % 4, 4, JUPIBALL);
+				E.spawn_enemy(foes, enemy_health, DOWN, 4, JUPIBALL);
 				s.stop_moving();
 			}
 
@@ -741,7 +787,7 @@ CHANGESTAGE:
 			if (s.get_y() == -400 && !battle && lvl == 7)
 			{
 				battle = true;
-				E.spawn_enemy(foes, enemy_health, rand() % 4, 4, JUPIBALL);
+				E.spawn_enemy(foes, enemy_health, DOWN, 4, JUPIBALL);
 				s.stop_moving();
 			}
 
@@ -816,7 +862,7 @@ LEVELUP4:
 			{
 				battle = true;
 				s.stop_moving();
-				E.spawn_enemy(foes, enemy_health, rand() % 4, 5, SATUSPHERE);
+				E.spawn_enemy(foes, enemy_health, DOWN, 5, SATUSPHERE);
 			}
 
 			if (s.get_y() < -800 || s.get_y() > -800)
@@ -842,7 +888,7 @@ LEVELUP4:
 			{
 				battle = true;
 				s.stop_moving();
-				E.spawn_enemy(foes, enemy_health, rand() % 4, 10, SATUSPHERE);
+				E.spawn_enemy(foes, enemy_health, DOWN, 10, SATUSPHERE);
 			}
 
 			if (s.get_y() < -400 || s.get_y() > -400)
@@ -929,6 +975,34 @@ void game_loop::stage_advance(player *&p)
 	
 }
 
+void game_loop::forward(player *& p)
+{
+
+	if (spaceship[0]->get_x() == winx / 2 && spaceship[0]->get_y() == winy - 150)
+	{
+		p->set_movement(false);
+		//std::cout << "MOVE" << p->get_movement() << std::endl;
+		al_stop_sample_instance(Earth);
+		//al_set_sample_instance_position(Earth, 0);
+		p->set_vel(10);
+
+		p->set_keys(UP, true);
+		p->set_keys(DOWN, false);
+		p->set_keys(LEFT, false);
+		p->set_keys(RIGHT, false);
+		battle = false;
+		
+
+	}
+
+	else
+	{
+		al_stop_sample_instance(Earth);
+		al_set_sample_instance_position(Earth, 0);
+		stage_advance(p);
+	}
+}
+
 void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool &loop)
 {
 	al_wait_for_event(q, &ev);
@@ -941,7 +1015,10 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool 
 		
 	if (ev.type == ALLEGRO_EVENT_DISPLAY_SWITCH_OUT)
 	{
-		pauseCounter = 1;
+		if (pauseCounter != 5)
+		{
+			pauseCounter = 1;
+		}
 	}
 
 	else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
@@ -992,7 +1069,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool 
 					{
 						options = 3;
 					}
-					std::cout << options << std::endl;
+					//std::cout << options << std::endl;
 					break;
 
 				case ALLEGRO_KEY_ENTER:
@@ -1070,7 +1147,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool 
 			}
 		}
 
-		else if (spaceship.size() <= 0)
+		else if (spaceship.size() <= 0 && pauseCounter != 5)
 		{
 			switch (ev.keyboard.keycode)
 			{
@@ -1129,9 +1206,14 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool 
 					al_play_sample_instance(Pause_On);
 					break;
 
-				case ALLEGRO_KEY_A:
+				case ALLEGRO_KEY_S:
 					weaponsel++;
-					weaponsel = weaponsel % num_of_weapon;
+					if (num_of_weapon > 0)
+					{
+						weaponsel = weaponsel % num_of_weapon;
+
+					}					
+					
 					if (weaponsel > num_of_weapon + 1)
 					{
 						weaponsel = 1;
@@ -1139,9 +1221,14 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool 
 					//std::cout << weaponsel << std::endl;
 					break;
 
-				case ALLEGRO_KEY_S:
+				case ALLEGRO_KEY_A:
 					weaponsel--;
-					weaponsel = weaponsel % num_of_weapon;
+					if (num_of_weapon > 0)
+					{
+						weaponsel = weaponsel % num_of_weapon;
+
+					}
+					
 					if (weaponsel < 0)
 					{
 						weaponsel = num_of_weapon - 1;
@@ -1163,7 +1250,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool 
 				case ALLEGRO_KEY_X:
 					if (spaceship[j]->get_ability_to_shoot())
 					{
-						switch (weaponsel % num_of_weapon)
+						switch (weaponsel)
 						{
 
 						case ICET:
@@ -1217,7 +1304,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool 
 								al_set_sample_instance_position(haa, 0);
 								al_play_sample_instance(haa);
 								al_set_sample_instance_playmode(haa, ALLEGRO_PLAYMODE_ONCE);
-								shipWeapon.load_ammo(w, HAYCH, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
+								shipWeapon.load_ammo(w, HAYCHBA, spaceship[j]->get_x() + 20, spaceship[j]->get_y(), 5);
 								ammo[HAYCHBA]--;
 							}
 							break;
@@ -1258,7 +1345,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool 
 			}
 		}
 
-		else if (pauseCounter == 5 && spaceship.size() > 0)
+		else if (pauseCounter == 5)
 		{
 			switch (ev.keyboard.keycode)
 			{
@@ -1339,8 +1426,8 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool 
 			else if (pauseCounter == 4)
 			{
 
-				if (ev.mouse.x >= 200 && ev.mouse.x <= 220 + al_get_text_width(status, "CONTINUE") &&
-					ev.mouse.y >= 500 - 2 * al_get_font_line_height(status) && ev.mouse.y <= 500)
+				if (ev.mouse.x >= 200 && ev.mouse.x <= 220 + al_get_text_width(pause_options, "CONTINUE") &&
+					ev.mouse.y >= 500 - 2 * al_get_font_line_height(pause_options) && ev.mouse.y <= 500)
 				{
 					options = 0;
 				}
@@ -1351,23 +1438,25 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool 
 				}
 			}
 
-			else if (pauseCounter == 5)
+			
+		}
+
+		else if (pauseCounter == 5)
+		{
+
+			if (ev.mouse.x >= 200 && ev.mouse.x <= 220 + al_get_text_width(status, "(ENTER)") &&
+				ev.mouse.y >= 250 && ev.mouse.y <= 270 + 2 * al_get_font_line_height(status))
 			{
+				options = 0;
+			}
 
-				if (ev.mouse.x >= 200 && ev.mouse.x <= 220 + al_get_text_width(status, "(ENTER)") &&
-					ev.mouse.y >= 250 && ev.mouse.y <= 270 + 2 * al_get_font_line_height(status))
-				{
-					options = 0;
-				}
-
-				else
-				{
-					options = -1;
-				}
+			else
+			{
+				options = -1;
 			}
 		}
 
-		else
+		else if (spaceship.size() <= 0 && pauseCounter != 5)
 		{
 			if (ev.mouse.x >= 190 && ev.mouse.x <= 200 + al_get_text_width(status, "PLAY AGAIN") &&
 				ev.mouse.y >= 230 && ev.mouse.y <= 230 + al_get_font_line_height(status))
@@ -1508,28 +1597,25 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool 
 						}
 					}
 
-				}
+				}	
+			}
 
-				else if (pauseCounter == 5)
+			else if (pauseCounter == 5)
+			{
+				switch (options)
 				{
 
+				case 0:
 					for (int j = 0; j < spaceship.size(); j++)
 					{
-						switch (options)
-						{
-
-						case 0:
-							destroy_stuff();
-							exit(EXIT_SUCCESS);
-							break;
-
-						}
+						destroy_stuff();
 					}
-
+					exit(EXIT_SUCCESS);
+					break;
 				}
 			}
 
-			else
+			else if (spaceship.size() <= 0 && pauseCounter != 5)
 			{
 				switch (options)
 				{
@@ -1563,7 +1649,10 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q, bool 
 
 	for (int j = 0; j < spaceship.size(); j++)
 	{
-		spaceship[j]->control(ev);
+		if (!minibossdefeated)
+		{
+			spaceship[j]->control(ev);
+		}
 	}
 
 }
@@ -1585,7 +1674,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 				al_set_sample_instance_position(game_over, 0);
 				al_set_sample_instance_playmode(game_over, ALLEGRO_PLAYMODE_ONCE);
 				al_play_sample_instance(game_over);
-				std::cout << "Ship Size: " << spaceship.size() << std::endl;
+				//std::cout << "Ship Size: " << spaceship.size() << std::endl;
 			}
 		}
 	}
@@ -1620,6 +1709,15 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
+		
+		
+
+		if (b.size() <= 0 && bossdefeated)
+		{
+			bossdefeated = false;
+		}
+		
+
 		if (stagenumber == EARTH)
 		{
 			if (!battle)
@@ -1631,12 +1729,14 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 					{
 						if (s.get_y() == -2800)
 						{
-							E2.spawn_enemy(foes_scroll1, enemy_health, DOWN, 10, 5, SPACESHIP);
+							E2.spawn_enemy(foes_scroll1, enemy_health, DOWN, 2, 5, XYBTOFY);
+							col2.check_position(E2, foes_scroll1);
 						}
 
 						if (s.get_y() == -2600)
 						{
-							E3.spawn_enemy(foes_scroll2, enemy_health, DOWN, 10, 5, KAMEKOSET);
+							E3.spawn_enemy(foes_scroll2, enemy_health, DOWN, 2, 5, KAMEKOSET);
+							col3.check_position(E3, foes_scroll2);
 						}
 
 						s.scroll_down();
@@ -1649,7 +1749,8 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 					{
 						if (s.get_y() == -2300)
 						{
-							E3.spawn_enemy(foes_scroll3, enemy_health, DOWN, 5, 5, KAMEKOSET);
+							E3.spawn_enemy(foes_scroll3, enemy_health, DOWN, 2, 5, KAMEKOSET);
+							col2.check_position(E4, foes_scroll3);
 						}
 
 						s.scroll_down();
@@ -1662,7 +1763,8 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 					{
 						if (s.get_y() == -1000)
 						{
-							E4.spawn_enemy(foes_scroll4, enemy_health, DOWN, 5, 5, EPOLICE);
+							E4.spawn_enemy(foes_scroll4, enemy_health, DOWN, 2, 5, EPOLICE);
+							col2.check_position(E5, foes_scroll4);
 						}
 
 						s.scroll_down();
@@ -1675,7 +1777,8 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 					{
 						if (s.get_y() == -600)
 						{
-							E5.spawn_enemy(foes_scroll5, enemy_health, rand() % 4, 5, 5, EPOLICE);
+							E5.spawn_enemy(foes_scroll5, enemy_health, DOWN, 2, 5, EPOLICE);
+							col2.check_position(E6, foes_scroll5);
 						}
 
 						s.scroll_down();
@@ -1695,24 +1798,67 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 				if (spaceship.size() > 0)
 				{
 
+
 					if ((s.get_y() < -2400 || s.get_y() > -2400) && stat.getlvl() == 1)
 					{
+						if (s.get_y() == -2800)
+						{
+							E2.spawn_enemy(foes_scroll1, enemy_health, DOWN, 2, 5, BLOBBY);
+							col2.check_position(E2, foes_scroll1);
+						}
+
+						if (s.get_y() == -2600)
+						{
+							E3.spawn_enemy(foes_scroll2, enemy_health, DOWN, 2, 5, MPOLICE);
+							col3.check_position(E3, foes_scroll2);
+						}
+
 						s.scroll_down();
+						al_set_sample_instance_gain(Mars, backgroundvol);
+						al_set_sample_instance_speed(Mars, 1);
+						al_play_sample_instance(Mars);
 					}
 
 					else if ((s.get_y() < -1600 || s.get_y() > -1600) && stat.getlvl() == 2)
 					{
+						if (s.get_y() == -2300)
+						{
+							E3.spawn_enemy(foes_scroll3, enemy_health, DOWN, 2, 5, WYRM);
+							col2.check_position(E4, foes_scroll3);
+						}
+
 						s.scroll_down();
+						al_set_sample_instance_gain(Mars, backgroundvol);
+						al_set_sample_instance_speed(Mars, 1);
+						al_play_sample_instance(Mars);
 					}
 
 					else if ((s.get_y() < -800 || s.get_y() > -800) && stat.getlvl() == 3)
 					{
+						if (s.get_y() == -1000)
+						{
+							E4.spawn_enemy(foes_scroll4, enemy_health, DOWN, 2, 10, WYRM);
+							col2.check_position(E5, foes_scroll4);
+						}
+
 						s.scroll_down();
+						al_set_sample_instance_gain(Mars_Nest, backgroundvol);
+						al_set_sample_instance_speed(Mars_Nest, 1);
+						al_play_sample_instance(Mars_Nest);
 					}
 
 					else if ((s.get_y() < 0 || s.get_y() > 0) && stat.getlvl() == 4)
 					{
+						if (s.get_y() == -600)
+						{
+							E5.spawn_enemy(foes_scroll5, enemy_health, DOWN, 2, 5, MPOLICE);
+							col2.check_position(E6, foes_scroll5);
+						}
+
 						s.scroll_down();
+						al_set_sample_instance_gain(Mars_Nest, backgroundvol);
+						al_set_sample_instance_speed(Mars_Nest, 1);
+						al_play_sample_instance(Mars_Nest);
 					}
 				}
 			}
@@ -1726,41 +1872,41 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 			if (stagenumber == EARTH)
 			{
-				E.spawn_enemy(foes, enemy_health, rand() % 4, 5, EPOLICE);
+				E.spawn_enemy(foes, enemy_health, DOWN, 5, EPOLICE);
+				col2.check_position(E, foes);
 			}
 
 			else if (stagenumber == MARS)
 			{
-				E.spawn_enemy(foes, enemy_health, rand() % 4, 5, BLOBBY);
+			
+				E.spawn_enemy(foes, enemy_health, 50, 110, 10, 0, VOLCANON);
+				E.spawn_enemy(foes, enemy_health, 250, 150, 10, 0, VOLCANON);
+				E.spawn_enemy(foes, enemy_health, 350, 50, 10, 0, VOLCANON);
+				E.spawn_enemy(foes, enemy_health, 350, 250, 10, 0, VOLCANON);
+				E.spawn_enemy(foes, enemy_health, 50, 300, 10, 0, VOLCANON);
+				//E.spawn_enemy(foes, enemy_health, DOWN, 1, 5, BLOBBY);
+				col2.check_position(E, foes);
 			}
 
 		}
 
-		//std::cout << "y: " << s.get_y() << std::endl;
-
 		else if (s.get_y() == -1562 && !battle && lvl == 2 && !minibossdefeated)
 		{
-			
-
 			if (stagenumber == EARTH)
 			{
 				battle = true;
 				s.stop_moving();
-				E.spawn_minboss(mb, 0);
+				E.spawn_minboss(mb, turrets, s, 0);
 			}
-
-			
 		}
 
 		else if (s.get_y() == -1600 && !battle && lvl == 2 && !minibossdefeated)
 		{
-			
-
 			if (stagenumber == MARS)
 			{
 				battle = true;
 				s.stop_moving();
-				E.spawn_minboss(mb, 1);
+				E.spawn_minboss(mb, turrets, s, 1);
 			}
 		}
 		
@@ -1771,12 +1917,14 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 			if (stagenumber == EARTH)
 			{
-				E.spawn_enemy(foes, enemy_health, rand() % 4, 5, XYBTOFY);
+				E.spawn_enemy(foes, enemy_health, DOWN, 5, SPACESHIP);
+				col2.check_position(E, foes);
 			}
 
 			else if (stagenumber == MARS)
 			{
-				E.spawn_enemy(foes, enemy_health, rand() % 4, 5, SPYDER);
+				E.spawn_enemy(foes, enemy_health, DOWN, 5, SPYDER);
+				col2.check_position(E, foes);
 			}
 		}
 
@@ -1788,7 +1936,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 			if (stagenumber == EARTH)
 			{
-				E.spawn_boss(b, SPARTAK);
+				E.spawn_boss(b, MARTIANB);
 			}
 
 			else if (stagenumber == MARS)
@@ -1800,12 +1948,8 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		shipWeapon.update(w);
 		shipWeapon.destroy_ammo(w);
 
-		E.update(foes, b, mb, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, elazer, ani, enemy_damaged);
-		E2.update(foes_scroll1, enemy_while_scroll_damaged);
-		E3.update(foes_scroll2, enemy_while_scroll_damaged);
-		E4.update(foes_scroll3, enemy_while_scroll_damaged);
-		E5.update(foes_scroll4, enemy_while_scroll_damaged);
-		E6.update(foes_scroll5, enemy_while_scroll_damaged);
+
+	
 
 
 		col.win_collsion(spaceship);
@@ -1820,22 +1964,30 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		col.Boss_boundary_collision(E, b);
 
 		col.boss_gets_damaged(E, shipWeapon, b, ball, w, bosshit, reflect, bossdefeated);
-		col.miniboss_gets_damaged(E, shipWeapon, mb, w, bossdefeated);
+		col.miniboss_gets_damaged(E, s, shipWeapon, mb, turrets, w, bosshit, Boss_destroyed, bossdefeated);
+		
+		col.enemy_gets_damaged(E, shipWeapon, T, am, t, foes, w, stat, destroy, enemy_hit, status, enemy_damaged, sc);
+		col2.enemy_gets_damaged(E2, shipWeapon, T2, am2, t2, foes_scroll1, w, stat, destroy, enemy_hit, status, enemy_while_scroll_damaged, sc);
+		col3.enemy_gets_damaged(E3, shipWeapon, T3, am3, t3, foes_scroll2, w, stat, destroy, enemy_hit, status, enemy_while_scroll_damaged, sc);
+		col4.enemy_gets_damaged(E4, shipWeapon, T4, am4, t4, foes_scroll3, w, stat, destroy, enemy_hit, status, enemy_while_scroll_damaged, sc);
+		col5.enemy_gets_damaged(E5, shipWeapon, T5, am5, t5, foes_scroll4, w, stat, destroy, enemy_hit, status, enemy_while_scroll_damaged, sc);
+		col6.enemy_gets_damaged(E6, shipWeapon, T6, am6, t6, foes_scroll5, w, stat, destroy, enemy_hit, status, enemy_while_scroll_damaged, sc);
 
-		col.enemy_gets_damaged(E, shipWeapon, T, am, t, foes, w, stat, destroy, status, enemy_damaged, sc);
-		col2.enemy_gets_damaged(E2, shipWeapon, T2, am2, t2, foes_scroll1, w, stat, destroy, status, enemy_while_scroll_damaged, sc);
-		col3.enemy_gets_damaged(E3, shipWeapon, T3, am3, t3, foes_scroll2, w, stat, destroy, status, enemy_while_scroll_damaged, sc);
-		col4.enemy_gets_damaged(E4, shipWeapon, T4, am4, t4, foes_scroll3, w, stat, destroy, status, enemy_while_scroll_damaged, sc);
-		col5.enemy_gets_damaged(E5, shipWeapon, T5, am5, t5, foes_scroll4, w, stat, destroy, status, enemy_while_scroll_damaged, sc);
-		col6.enemy_gets_damaged(E6, shipWeapon, T6, am6, t6, foes_scroll5, w, stat, destroy, status, enemy_while_scroll_damaged, sc);
+
+		col.enemy_dies(status, adestroy, stat, num_of_enemies, sc, T, am, t, foes, destroy);
+		col2.enemy_dies(status, adestroy, stat, num_of_enemies, sc, T2, am2, t2, foes_scroll1, destroy);
+		col3.enemy_dies(status, adestroy, stat, num_of_enemies, sc, T3, am3, t3, foes_scroll2, destroy);
+		col4.enemy_dies(status, adestroy, stat, num_of_enemies, sc, T4, am4, t4, foes_scroll3, destroy);
+		col5.enemy_dies(status, adestroy, stat, num_of_enemies, sc, T5, am5, t5, foes_scroll4, destroy);
+		col6.enemy_dies(status, adestroy, stat, num_of_enemies, sc, T6, am6, t6, foes_scroll5, destroy);
 
 
-		col.enemy_dies(status, adestroy, stat, sc, T, am, t, foes, destroy);
-		col2.enemy_dies(status, adestroy, stat, sc, T2, am2, t2, foes_scroll1, destroy);
-		col3.enemy_dies(status, adestroy, stat, sc, T3, am3, t3, foes_scroll2, destroy);
-		col4.enemy_dies(status, adestroy, stat, sc, T4, am4, t4, foes_scroll3, destroy);
-		col5.enemy_dies(status, adestroy, stat, sc, T5, am5, t5, foes_scroll4, destroy);
-		col6.enemy_dies(status, adestroy, stat, sc, T6, am6, t6, foes_scroll5, destroy);
+		E.update(foes, b, mb, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, elazer, turrets, ani, s, enemy_damaged);
+		E2.update(foes_scroll1, enemy_while_scroll_damaged);
+		E3.update(foes_scroll2, enemy_while_scroll_damaged);
+		E4.update(foes_scroll3, enemy_while_scroll_damaged);
+		E5.update(foes_scroll4, enemy_while_scroll_damaged);
+		E6.update(foes_scroll5, enemy_while_scroll_damaged);
 
 		T.update(am, t);
 		T2.update(am2, t2);
@@ -1844,42 +1996,104 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		T5.update(am5, t5);
 		T6.update(am6, t6);
 
-		col.player_gets_tool(spaceship, E, foes, t, am, T, stat, pickup, status, health, ammo, disfig);
-		col2.player_gets_tool(spaceship, E2, foes_scroll1, t2, am2, T2, stat, pickup, status, health, ammo, disfig);
-		col3.player_gets_tool(spaceship, E3, foes_scroll2, t3, am3, T3, stat, pickup, status, health, ammo, disfig);
-		col4.player_gets_tool(spaceship, E4, foes_scroll3, t4, am4, T4, stat, pickup, status, health, ammo, disfig);
-		col5.player_gets_tool(spaceship, E5, foes_scroll4, t5, am5, T5, stat, pickup, status, health, ammo, disfig);
-		col6.player_gets_tool(spaceship, E6, foes_scroll5, t6, am6, T6, stat, pickup, status, health, ammo, disfig);
-
+		col.player_gets_tool(spaceship, E, foes, t, am, T, stat, s, pickup, status, health, ammo, disfig);
+		col2.player_gets_tool(spaceship, E2, foes_scroll1, t2, am2, T, stat, s, pickup, status, health, ammo, disfig);
+		col3.player_gets_tool(spaceship, E3, foes_scroll2, t3, am3, T, stat, s, pickup, status, health, ammo, disfig);
+		col4.player_gets_tool(spaceship, E4, foes_scroll3, t4, am4, T, stat, s, pickup, status, health, ammo, disfig);
+		col5.player_gets_tool(spaceship, E5, foes_scroll4, t5, am5, T, stat, s, pickup, status, health, ammo, disfig);
+		col6.player_gets_tool(spaceship, E6, foes_scroll5, t6, am6, T, stat, s, pickup, status, health, ammo, disfig);
+		s.update_animation();
 
 		if (!spaceship[0]->ishit())
 		{
 			col.player_gets_damaged(E, mb, b, foes, spaceship, stat, hit, status, ev, player_damaged, health);
-			col.player_gets_damaged(E, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, elazer, spaceship, stat, hit, status, ev, player_damaged, health);
+			
+			col.player_gets_damaged(E, s, foes, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, elazer, turrets, spaceship, stat, hit, status, ev, player_damaged, health);
+			col2.player_gets_damaged(E, foes_scroll1, elazer, spaceship, stat, hit, status, ev, player_damaged, health);
+			col2.player_gets_damaged(E, foes_scroll2, elazer, spaceship, stat, hit, status, ev, player_damaged, health);
+			col2.player_gets_damaged(E, foes_scroll3, elazer, spaceship, stat, hit, status, ev, player_damaged, health);
+			col2.player_gets_damaged(E, foes_scroll4, elazer, spaceship, stat, hit, status, ev, player_damaged, health);
+			col2.player_gets_damaged(E, foes_scroll5, elazer, spaceship, stat, hit, status, ev, player_damaged, health);
+
 			col2.player_gets_damaged(E2, mb, b, foes_scroll1, spaceship, stat, hit, status, ev, player_damaged, health);
 			col3.player_gets_damaged(E3, mb, b, foes_scroll2, spaceship, stat, hit, status, ev, player_damaged, health);
 			col4.player_gets_damaged(E4, mb, b, foes_scroll3, spaceship, stat, hit, status, ev, player_damaged, health);
 			col5.player_gets_damaged(E5, mb, b, foes_scroll4, spaceship, stat, hit, status, ev, player_damaged, health);
 			col6.player_gets_damaged(E6, mb, b, foes_scroll5, spaceship, stat, hit, status, ev, player_damaged, health);
+
+
 		}
 		
 		if (disfig)
 		{
-			E.clear_enemy(foes);
-			E2.clear_enemy(foes_scroll1);
-			E3.clear_enemy(foes_scroll2);
-			E4.clear_enemy(foes_scroll3);
-			E5.clear_enemy(foes_scroll4);
-			E6.clear_enemy(foes_scroll5);
+			col.destroy_foes_inside(E, foes);
+			col2.destroy_foes_inside(E2, foes_scroll1);
+			col3.destroy_foes_inside(E3, foes_scroll2);
+			col4.destroy_foes_inside(E4, foes_scroll3);
+			col5.destroy_foes_inside(E5, foes_scroll4);
+			col6.destroy_foes_inside(E6, foes_scroll5);
+
 			disfig = false;
 		}
 
 		col.Ball_gets_redirected(E, shipWeapon, ball, w, ballreflect, bossdefeated);
 		col.Ball_gets_destroyed(E, shipWeapon, T, mball, w, am, reflect, bossdefeated);
-		col.Boss_weapon_immune_to_weapon(E, shipWeapon, ds, EB, ST, LB, K, hw, st, sl, mball, v, elazer, w, reflect, bossdefeated);
+		col.Boss_weapon_immune_to_weapon(E, s, foes, shipWeapon, ds, EB, ST, LB, K, hw, st, sl, mball, v, elazer, w, turrets, reflect, bossdefeated);
 
-		
+		col2.Boss_weapon_immune_to_weapon(E, shipWeapon, foes_scroll1, w, reflect, bossdefeated);
+		col3.Boss_weapon_immune_to_weapon(E, shipWeapon, foes_scroll2, w, reflect, bossdefeated);
+		col4.Boss_weapon_immune_to_weapon(E, shipWeapon, foes_scroll3, w, reflect, bossdefeated);
+		col5.Boss_weapon_immune_to_weapon(E, shipWeapon, foes_scroll4, w, reflect, bossdefeated);
+		col6.Boss_weapon_immune_to_weapon(E, shipWeapon, foes_scroll5, w, reflect, bossdefeated);
 
+		for (int i = 0; i < am.size(); i++)
+		{
+			if (!unlockweapon[ICET] || !unlockweapon[INFERRED] || !unlockweapon[ZIGGONET] || !unlockweapon[HAYCH] || !unlockweapon[HAYCHBA] || !unlockweapon[SONICWAVE])
+			{
+				am.erase(am.begin() + i);
+			}
+		}
+
+		for (int i = 0; i < am2.size(); i++)
+		{
+			if (!unlockweapon[ICET] || !unlockweapon[INFERRED] || !unlockweapon[ZIGGONET] || !unlockweapon[HAYCH] || !unlockweapon[HAYCHBA] || !unlockweapon[SONICWAVE])
+			{
+				am2.erase(am2.begin() + i);
+			}
+		}
+
+		for (int i = 0; i < am3.size(); i++)
+		{
+			if (!unlockweapon[ICET] || !unlockweapon[INFERRED] || !unlockweapon[ZIGGONET] || !unlockweapon[HAYCH] || !unlockweapon[HAYCHBA] || !unlockweapon[SONICWAVE])
+			{
+				am3.erase(am3.begin() + i);
+			}
+		}
+
+		for (int i = 0; i < am4.size(); i++)
+		{
+			if (!unlockweapon[ICET] || !unlockweapon[INFERRED] || !unlockweapon[ZIGGONET] || !unlockweapon[HAYCH] || !unlockweapon[HAYCHBA] || !unlockweapon[SONICWAVE])
+			{
+				am4.erase(am4.begin() + i);
+			}
+		}
+
+		for (int i = 0; i < am5.size(); i++)
+		{
+			if (!unlockweapon[ICET] || !unlockweapon[INFERRED] || !unlockweapon[ZIGGONET] || !unlockweapon[HAYCH] || !unlockweapon[HAYCHBA] || !unlockweapon[SONICWAVE])
+			{
+				am5.erase(am5.begin() + i);
+			}
+		}
+
+		for (int i = 0; i < am6.size(); i++)
+		{
+			if (!unlockweapon[ICET] || !unlockweapon[INFERRED] || !unlockweapon[ZIGGONET] || !unlockweapon[HAYCH] || !unlockweapon[HAYCHBA] || !unlockweapon[SONICWAVE])
+			{
+				am6.erase(am6.begin() + i);
+			}
+		}
+		//std::cout << "AMMO SIZE: " << am.size() << std::endl;
 		draw = true;
 		render();
 
@@ -1913,7 +2127,24 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		w.clear();
 
-	
+		//std::cout << al_get_sample_instance_position(Stage_Completed) << std::endl;
+		
+		if (al_get_sample_instance_position(Stage_Completed) == 0 && scorecounter > 0)
+		{
+			al_stop_sample_instance(Stage_Completed);
+			increment = 1;
+		}
+
+		else if (al_get_sample_instance_position(Stage_Completed) > 0)
+		{
+			al_play_sample_instance(Stage_Completed);
+
+		}
+
+		if (scorecounter < 0)
+		{
+			increment = 0;
+		}
 
 		al_stop_sample_instance(Earth);
 		al_stop_sample_instance(Earth_Factory);
@@ -1923,7 +2154,6 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		al_stop_sample_instance(Boss);
 		al_stop_sample_instance(Saturn);
 		al_stop_sample_instance(Final_Boss);
-		std::cout << scorecounter << std::endl;
 		
 		draw = true;
 		render();
@@ -1933,7 +2163,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 	}
 
-	else if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 5 && spaceship.size() > 0)
+	else if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 5)
 	{
 		w.clear();
 		spaceship.clear();
@@ -1945,9 +2175,18 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		foes_scroll4.clear();
 		foes_scroll5.clear();
 		mb.clear();
-		spaceship.push_back(new player());
 		t.clear();
+		t2.clear();
+		t3.clear();
+		t4.clear();
+		t5.clear();
+		t6.clear();
 		am.clear();
+		am2.clear();
+		am3.clear();
+		am4.clear();
+		am5.clear();
+		am6.clear();
 		elazer.clear();
 		ball.clear();
 		mball.clear();
@@ -1976,7 +2215,7 @@ void game_loop::update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		render();
 	}
 
-	else if (ev.type == ALLEGRO_EVENT_TIMER && spaceship.size() <= 0)
+	else if (ev.type == ALLEGRO_EVENT_TIMER && spaceship.size() <= 0 && pauseCounter!= 5)
 	{
 
 		al_stop_sample_instance(Earth);
@@ -2110,8 +2349,25 @@ void game_loop::render()
 				al_play_sample_instance(Boss);
 			}
 		}
-	
 		
+		for (int i = 0; i < b.size(); i++)
+		{
+			if (b[i]->get_health() == 0)
+			{
+				al_stop_sample_instance(Mars_Nest);
+				al_stop_sample_instance(Mars);
+				al_stop_sample_instance(Earth);
+				al_stop_sample_instance(Earth_Factory);
+				al_stop_sample_instance(Astroid);
+				al_stop_sample_instance(Saturn);
+				al_stop_sample_instance(Boss);
+				//al_stop_sample_instance(Final_Boss);
+
+			}
+		}
+		
+
+
 		E.renderenemy(foes, enemy_damaged);
 		E.renderenemy(foes_scroll1, enemy_while_scroll_damaged);
 		E.renderenemy(foes_scroll2, enemy_while_scroll_damaged);
@@ -2120,8 +2376,8 @@ void game_loop::render()
 		E.renderenemy(foes_scroll5, enemy_while_scroll_damaged);
 		E.renderenemy(elazer);
 		
-		E.renderboss(b, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, elazer, ani, frame);
-		E.renderminiboss(mb, ani);
+		E.renderboss(b, ball, ds, EB, ST, LB, K, hw, st, sl, mball, v, elazer, ani, Boss_destroyed, frame);
+		E.renderminiboss(mb, turrets, s, ani);
 
 		
 		switch (s.get_stage())
@@ -2140,11 +2396,7 @@ void game_loop::render()
 			break;
 		}
 
-		for (int j = 0; j < spaceship.size(); j++)
-		{
-			spaceship[j]->render(player_damaged);
-		}
-		
+
 
 		for (int i = 0; i < foes.size(); i++)
 		{
@@ -2183,21 +2435,147 @@ void game_loop::render()
 			
 		}
 
+		for (int i = 0; i < foes_scroll2.size(); i++)
+		{
+			if (foes_scroll2[i]->get_duration() > 0)
+			{
+				switch (foes_scroll2[i]->get_coord_ID())
+				{
+				case FROZEN:
+					//al_draw_bitmap(frozen, foes[i]->get_x(), foes[i]->get_y(), NULL);
+					al_draw_scaled_bitmap(frozen, 0, 0, E.get_w(foes_scroll2[i]->get_name_ID()), 
+						E.get_h(foes_scroll2[i]->get_name_ID()), foes_scroll2[i]->get_x(), 
+						foes_scroll2[i]->get_y(), E.get_w(foes_scroll2[i]->get_name_ID()), E.get_h(foes_scroll2[i]->get_name_ID()), NULL);
+					break;
+
+				case BURNED:
+					ani.two_frames_custom(burned_red, burned_yellow, foes_scroll2[i]->get_x(), foes_scroll2[i]->get_y(), foes_scroll2[i]->get_duration(), 15, 0, 7);
+					break;
+				}
+			}
+
+		}
+
+		for (int i = 0; i < foes_scroll3.size(); i++)
+		{
+			if (foes_scroll3[i]->get_duration() > 0)
+			{
+				switch (foes_scroll3[i]->get_coord_ID())
+				{
+				case FROZEN:
+					//al_draw_bitmap(frozen, foes[i]->get_x(), foes[i]->get_y(), NULL);
+					al_draw_scaled_bitmap(frozen, 0, 0, E.get_w(foes_scroll3[i]->get_name_ID()), E.get_h(foes_scroll3[i]->get_name_ID()), 
+						foes_scroll3[i]->get_x(), foes_scroll3[i]->get_y(), E.get_w(foes_scroll3[i]->get_name_ID()), E.get_h(foes_scroll3[i]->get_name_ID()), NULL);
+					break;
+
+				case BURNED:
+					ani.two_frames_custom(burned_red, burned_yellow, foes_scroll3[i]->get_x(), foes_scroll3[i]->get_y(), foes_scroll3[i]->get_duration(), 15, 0, 7);
+					break;
+				}
+			}
+
+		}
+
+		for (int i = 0; i < foes_scroll4.size(); i++)
+		{
+			if (foes_scroll4[i]->get_duration() > 0)
+			{
+				switch (foes_scroll4[i]->get_coord_ID())
+				{
+				case FROZEN:
+					//al_draw_bitmap(frozen, foes[i]->get_x(), foes[i]->get_y(), NULL);
+					al_draw_scaled_bitmap(frozen, 0, 0, E.get_w(foes_scroll4[i]->get_name_ID()), E.get_h(foes_scroll4[i]->get_name_ID()),
+						foes_scroll4[i]->get_x(), foes_scroll4[i]->get_y(), E.get_w(foes_scroll4[i]->get_name_ID()), E.get_h(foes_scroll4[i]->get_name_ID()), NULL);
+					break;
+
+				case BURNED:
+					ani.two_frames_custom(burned_red, burned_yellow, foes_scroll4[i]->get_x(), foes_scroll4[i]->get_y(), foes_scroll4[i]->get_duration(), 15, 0, 7);
+					break;
+				}
+			}
+
+		}
+
+		for (int i = 0; i < foes_scroll5.size(); i++)
+		{
+			if (foes_scroll5[i]->get_duration() > 0)
+			{
+				switch (foes_scroll5[i]->get_coord_ID())
+				{
+				case FROZEN:
+					//al_draw_bitmap(frozen, foes[i]->get_x(), foes[i]->get_y(), NULL);
+					al_draw_scaled_bitmap(frozen, 0, 0, E.get_w(foes_scroll5[i]->get_name_ID()), E.get_h(foes_scroll5[i]->get_name_ID()),
+						foes_scroll5[i]->get_x(), foes_scroll5[i]->get_y(), E.get_w(foes_scroll5[i]->get_name_ID()), E.get_h(foes_scroll5[i]->get_name_ID()), NULL);
+					break;
+
+				case BURNED:
+					ani.two_frames_custom(burned_red, burned_yellow, foes_scroll5[i]->get_x(), foes_scroll5[i]->get_y(), foes_scroll5[i]->get_duration(), 15, 0, 7);
+					break;
+				}
+			}
+
+		}
 		
+		for (int i = 0; i < foes_scroll6.size(); i++)
+		{
+			if (foes_scroll6[i]->get_duration() > 0)
+			{
+				switch (foes_scroll6[i]->get_coord_ID())
+				{
+				case FROZEN:
+					//al_draw_bitmap(frozen, foes[i]->get_x(), foes[i]->get_y(), NULL);
+					al_draw_scaled_bitmap(frozen, 0, 0, E.get_w(foes_scroll6[i]->get_name_ID()), E.get_h(foes_scroll6[i]->get_name_ID()),
+						foes_scroll6[i]->get_x(), foes_scroll6[i]->get_y(), E.get_w(foes_scroll6[i]->get_name_ID()), E.get_h(foes_scroll6[i]->get_name_ID()), NULL);
+					break;
+
+				case BURNED:
+					ani.two_frames_custom(burned_red, burned_yellow, foes_scroll6[i]->get_x(), foes_scroll6[i]->get_y(), foes_scroll6[i]->get_duration(), 15, 0, 7);
+					break;
+				}
+			}
+
+		}
+
+
+
+	
+		
+		
+
 		for (int i = 0; i < am.size(); i++)
 		{
 			T.draw(am[i]->get_ammo_ID(), unlockweapon, am[i]->get_x(), am[i]->get_y());
 		}
 		
-		for (int i = 0; i < t.size(); i++)
-		{
-			T.draw(t[i]->get_tool_ID(), t[i]->get_x(), t[i]->get_y());
-		}
-
-		
 		for (int i = 0; i < am2.size(); i++)
 		{
 			T2.draw(am2[i]->get_ammo_ID(), unlockweapon, am2[i]->get_x(), am2[i]->get_y());
+		}
+
+		for (int i = 0; i < am3.size(); i++)
+		{
+			T3.draw(am3[i]->get_ammo_ID(), unlockweapon, am3[i]->get_x(), am3[i]->get_y());
+		}
+
+		for (int i = 0; i < am4.size(); i++)
+		{
+			T4.draw(am4[i]->get_ammo_ID(), unlockweapon, am4[i]->get_x(), am4[i]->get_y());
+		}
+
+		for (int i = 0; i < am5.size(); i++)
+		{
+			T5.draw(am5[i]->get_ammo_ID(), unlockweapon, am5[i]->get_x(), am5[i]->get_y());
+		}
+
+		for (int i = 0; i < am6.size(); i++)
+		{
+			T6.draw(am6[i]->get_ammo_ID(), unlockweapon, am6[i]->get_x(), am6[i]->get_y());
+		}
+
+
+		for (int i = 0; i < t.size(); i++)
+		{
+			T.draw(t[i]->get_tool_ID(), t[i]->get_x(), t[i]->get_y());
 		}
 
 		for (int i = 0; i < t2.size(); i++)
@@ -2206,45 +2584,21 @@ void game_loop::render()
 			T2.draw(t2[i]->get_tool_ID(), t2[i]->get_x(), t2[i]->get_y());
 		}
 
-		
-		for (int i = 0; i < am3.size(); i++)
-		{
-			T3.draw(am3[i]->get_ammo_ID(), unlockweapon, am3[i]->get_x(), am3[i]->get_y());
-		}
-
 		for (int i = 0; i < t3.size(); i++)
 		{
 
 			T3.draw(t3[i]->get_tool_ID(), t3[i]->get_x(), t3[i]->get_y());
 		}
 		
-		
-		for (int i = 0; i < am4.size(); i++)
-		{
-			T4.draw(am4[i]->get_ammo_ID(), unlockweapon, am4[i]->get_x(), am4[i]->get_y());
-		}
-
 		for (int i = 0; i < t4.size(); i++)
 		{
 
 			T4.draw(t4[i]->get_tool_ID(), t4[i]->get_x(), t4[i]->get_y());
 		}
 
-		
-		for (int i = 0; i < am5.size(); i++)
-		{
-			T5.draw(am5[i]->get_ammo_ID(), unlockweapon, am5[i]->get_x(), am5[i]->get_y());
-		}
-
 		for (int i = 0; i < t5.size(); i++)
 		{
 			T5.draw(t5[i]->get_tool_ID(), t5[i]->get_x(), t5[i]->get_y());
-		}
-		
-		
-		for (int i = 0; i < am6.size(); i++)
-		{
-			T6.draw(am6[i]->get_ammo_ID(), unlockweapon, am6[i]->get_x(), am6[i]->get_y());
 		}
 
 		for (int i = 0; i < t6.size(); i++)
@@ -2253,77 +2607,71 @@ void game_loop::render()
 		}
 		
 		
-		if (col.get_num_of_kills() == 2)
-		{
-			if (textframe < 200)
-			{
-				textframe++;
-				stat.setnotification("YOU GOT NEW WEAPON: ICET", status, 160, 400, textframe);
-				unlockweapon[ICET] = true;
-				num_of_weapon = 1;
-			}
-		}
-
-		if (col.get_num_of_kills() == 3)
-		{
-			if (textframe > 0)
-			{
-				textframe--;
-				stat.setnotification("YOU GOT NEW WEAPON: INFERRED", status, 160, 400, textframe);
-				unlockweapon[INFERRED] = true;
-				num_of_weapon = 2;
-			}
-		}
-
-		if (col.get_num_of_kills() == 4)
-		{
-			if (textframe < 200)
-			{
-				textframe++;
-				stat.setnotification("YOU GOT NEW WEAPON: ZIGGONET", status, 160, 400, textframe);
-				unlockweapon[ZIGGONET] = true;
-				num_of_weapon = 3;
-			}
-		}
-
-		if (col.get_num_of_kills() == 5)
-		{
-			if (textframe > 0)
-			{
-				textframe--;
-				stat.setnotification("YOU GOT NEW WEAPON: HAYCH", status, 160, 400, textframe);
-				unlockweapon[HAYCH] = true;
-				num_of_weapon = 4;
-			}
-		}
-
-		if (col.get_num_of_kills() == 6)
-		{
-			if (textframe < 100)
-			{
-				textframe++;
-				stat.setnotification("YOU GOT NEW WEAPON: HAYCHBA", status, 160, 400, textframe);
-				unlockweapon[HAYCHBA] = true;
-				num_of_weapon = 5;
-			}
-		}
-
-		if (col.get_num_of_kills() == 7)
-		{
-			if (textframe > 0)
-			{
-				textframe--;
-				stat.setnotification("YOU GOT NEW WEAPON: SONIC WAVE", status, 160, 400, textframe);
-				unlockweapon[SONICWAVE] = true;
-				num_of_weapon = 6;
-			}
-		}
 		
 		stat.Status_box(0, winy - 100, winx, winy);
 		stat.sethealth(health, status);
 		stat.set_health_bar(211, 440, 311, 455);
 		stat.setlvl(lvl, status);
 		stat.setscore(sc, status);
+
+		for (int j = 0; j < spaceship.size(); j++)
+		{
+			spaceship[j]->render(stat, status, player_damaged);
+		}
+
+		if (num_of_enemies == 2)
+		{
+
+			stat.setnotification("YOU GOT NEW WEAPON: ICET", status, 160, 400, textframe);
+			unlockweapon[ICET] = true;
+			num_of_weapon = 1;
+
+		}
+
+		if (num_of_enemies == 4)
+		{
+
+			stat.setnotification("YOU GOT NEW WEAPON: INFERRED", status, 160, 400, textframe);
+			unlockweapon[INFERRED] = true;
+			num_of_weapon = 2;
+
+		}
+
+		if (num_of_enemies == 8)
+		{
+
+			stat.setnotification("YOU GOT NEW WEAPON: ZIGGONET", status, 160, 400, textframe);
+			unlockweapon[ZIGGONET] = true;
+			num_of_weapon = 3;
+
+		}
+
+		if (num_of_enemies == 24)
+		{
+
+			stat.setnotification("YOU GOT NEW WEAPON: HAYCH", status, 160, 400, textframe);
+			unlockweapon[HAYCH] = true;
+			num_of_weapon = 4;
+
+		}
+
+		if (num_of_enemies == 48)
+		{
+
+			stat.setnotification("YOU GOT NEW WEAPON: HAYCHBA", status, 160, 400, textframe);
+			unlockweapon[HAYCHBA] = true;
+			num_of_weapon = 5;
+
+		}
+
+		if (num_of_enemies == 60)
+		{
+
+			stat.setnotification("YOU GOT NEW WEAPON: SONIC WAVE", status, 160, 400, textframe);
+			unlockweapon[SONICWAVE] = true;
+			num_of_weapon = 6;
+
+		}
 
 		for (int k = 0; k < w.size(); k++)
 		{
@@ -2445,7 +2793,7 @@ void game_loop::render()
 		al_flip_display();
 	}
 
-	else if (draw && spaceship.size() <= 0)
+	else if (draw && spaceship.size() <= 0 && pauseCounter != 5)
 	{
 		al_clear_to_color(al_map_rgb(200, 0, 0));
 
@@ -2524,8 +2872,14 @@ void game_loop::render()
 	{
 		al_clear_to_color(al_map_rgb(100, 200, 0));
 
-		stat.setnotification("Stage Completed", pause, 150, 0, al_map_rgb(200, 0, 100));
+		stat.setnotification("Stage Completed", pause, 150, 0, al_map_rgb(50, 100, 50));
 		
+		if (increment == 1)
+		{
+			al_set_sample_instance_position(Countdown, 0);
+			al_play_sample_instance(Countdown);
+		}
+
 
 		scorecounter -= increment;
 		stat.setscore(scorecounter, pause_options, "STAGE SCORE: ", 150, 100);
@@ -2533,24 +2887,40 @@ void game_loop::render()
 		sc+=increment;
 		if (scorecounter <= 0)
 		{
+			if (s.get_stage() == EARTH)
+			{
+				stat.setnotification("Now the ship will go on to Mars to destroy more resources", status, 50, 300, al_map_rgb(70, 50, 70));
+			}
+
+			else if (s.get_stage() == MARS)
+			{
+				stat.setnotification("Martian B told who and where the leader is.", status, 50, 300, al_map_rgb(70, 50, 70));
+				stat.setnotification("He goes by the name Xorgana and lives in Saturn's Ring.", status, 50, 320, al_map_rgb(70, 50, 70));
+				stat.setnotification("ONWARDS THRU THE ASTROID BELT!!!", status, 50, 340, al_map_rgb(70, 50, 70));
+			}
+
+			else if (s.get_stage() == AST)
+			{
+				stat.setnotification("This is it! Xorgana is wating at Saturn's ring...", status, 50, 300, al_map_rgb(70, 50, 70));
+			}
 
 			increment = 0;
 
 
 			if (mouse && options == 0)
 			{
-				al_draw_rectangle(200, winy - 2 * al_get_font_line_height(status), 220 + al_get_text_width(status, "CONTINUE"), 500, al_map_rgb(100, 0, 0), 1);
-				al_draw_filled_rectangle(200, winy - 2 * al_get_font_line_height(status), 220 + al_get_text_width(status, "CONTINUE"), 500, al_map_rgb(0, 150, 255));
-				stat.setnotification("CONTINUE", status, 210, winy - 2 * al_get_font_line_height(status), al_map_rgb(200, 0, 200));
-				stat.setnotification("(ENTER)", status, 220, winy - al_get_font_line_height(status), al_map_rgb(200, 0, 200));
+				al_draw_rectangle(200, winy - 2 * al_get_font_line_height(pause_options), 220 + al_get_text_width(pause_options, "CONTINUE"), 500, al_map_rgb(100, 0, 0), 1);
+				al_draw_filled_rectangle(200, winy - 2 * al_get_font_line_height(pause_options), 220 + al_get_text_width(pause_options, "CONTINUE"), 500, al_map_rgb(0, 150, 255));
+				stat.setnotification("CONTINUE", pause_options, 210, winy - 2 * al_get_font_line_height(pause_options), al_map_rgb(200, 0, 200));
+				stat.setnotification("(ENTER)", pause_options, 220, winy - al_get_font_line_height(pause_options), al_map_rgb(200, 0, 200));
 			}
 
 			else
 			{
-				al_draw_rectangle(200, winy - 2 * al_get_font_line_height(status), 220 + al_get_text_width(status, "CONTINUE"), 500, al_map_rgb(100, 0, 0), 1);
-				al_draw_filled_rectangle(200, winy - 2 * al_get_font_line_height(status), 220 + al_get_text_width(status, "CONTINUE"), 500, al_map_rgb(0, 255, 255));
-				stat.setnotification("CONTINUE", status, 210, winy - 2 * al_get_font_line_height(status), al_map_rgb(200, 0, 100));
-				stat.setnotification("(ENTER)", status, 220, winy - al_get_font_line_height(status), al_map_rgb(200, 0, 100));
+				al_draw_rectangle(200, winy - 2 * al_get_font_line_height(pause_options), 220 + al_get_text_width(pause_options, "CONTINUE"), 500, al_map_rgb(100, 0, 0), 1);
+				al_draw_filled_rectangle(200, winy - 2 * al_get_font_line_height(pause_options), 220 + al_get_text_width(pause_options, "CONTINUE"), 500, al_map_rgb(0, 255, 255));
+				stat.setnotification("CONTINUE", pause_options, 210, winy - 2 * al_get_font_line_height(pause_options), al_map_rgb(200, 0, 100));
+				stat.setnotification("(ENTER)", pause_options, 220, winy - al_get_font_line_height(pause_options), al_map_rgb(200, 0, 100));
 			}
 		
 
@@ -2565,8 +2935,11 @@ void game_loop::render()
 
 	}
 
-	else if (draw && pauseCounter == 5 && spaceship.size() > 0)
+	else if (draw && pauseCounter == 5)
 	{
+
+		
+
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 
 		if (credit.get_frame() >= 0 && credit.get_frame() < 100)
@@ -2619,6 +2992,7 @@ void game_loop::render()
 		{
 			stat.setnotification("THE END", pause_options, 200, 200, al_map_rgb(255, 255, 255));
 
+
 			
 
 			if (mouse && options == 0)
@@ -2638,6 +3012,11 @@ void game_loop::render()
 			}
 
 
+		}
+
+		if (credit.get_frame() < 710)
+		{
+			al_play_sample_instance(Credit);
 		}
 
 		al_flip_display();
@@ -2674,6 +3053,11 @@ void game_loop::destroy_stuff()
 	al_destroy_sample(Game_over);
 	al_destroy_sample(PO);
 	al_destroy_sample(POF);
+	al_destroy_sample(eh);
+	al_destroy_sample(scm);
+	al_destroy_sample(Bossdes);
+	al_destroy_sample(cre);
+	al_destroy_sample(cntdwn);
 
 	al_destroy_sample_instance(Earth);
 	al_destroy_sample_instance(Earth_Factory);
@@ -2706,6 +3090,11 @@ void game_loop::destroy_stuff()
 	al_destroy_sample_instance(Pause_Off);
 
 	al_destroy_sample_instance(game_over);
+	al_destroy_sample_instance(enemy_hit);
+	al_destroy_sample_instance(Stage_Completed);
+	al_destroy_sample_instance(Boss_destroyed);
+	al_destroy_sample_instance(Credit);
+	al_destroy_sample_instance(Countdown);
 
 	s.destroy_stages();
 

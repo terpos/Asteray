@@ -125,7 +125,7 @@ void Tools_manager::draw(int toolsID, int x, int y)
 	set_x(x);
 	set_y(y);
 		
-	switch (toolsID % 4)
+	switch (toolsID)
 	{
 		case HEALTH:
 			al_draw_bitmap(tools[HEALTH], get_x(), get_y(), NULL);

@@ -2,13 +2,19 @@
 
 
 
-enemies::enemies(int x, int y, int vel, int coord)
+enemies::enemies(int x, int y, int vel, int health, int coord)
 {
 	this->x = x;
 	this->y = y;
 	this->vel = vel;
+	//std::cout << this->vel << std::endl;
+	this->coordID = coord;
+	this->health = health;
 	set_hit(false);
 	init();
+	this->delay = 0;
+	animate.set_frame(0);
+	destroying.set_frame(0);
 }
 
 
@@ -76,18 +82,50 @@ int enemies::get_destroy_frame()
 	return destroying.get_frame();
 }
 
+int enemies::get_delay()
+{
+	return this->delay;
+}
+
+int enemies::get_weaponx(int index)
+{
+	return l[index]->get_x();
+}
+
+int enemies::get_weapony(int index)
+{
+
+	return l[index]->get_y();
+}
+
+int enemies::get_weaponsize()
+{
+	return l.size();
+}
+
+
+
 void enemies::gravity(player* & p)
 {
 }
 
 void enemies::init()
 {
-	animate.set_frame(0);
-	destroying.set_frame(0);
+	
+}
+
+void enemies::killweapon(int index)
+{
+	l.erase(l.begin() + index);
+}
+
+void enemies::weapon_ability(player *& p)
+{
 }
 
 void enemies::decrement_health(int damage)
 {
+
 }
 
 bool enemies::getlife()
@@ -97,28 +135,39 @@ bool enemies::getlife()
 
 void enemies::update()
 {
+	for (int i = 0; i < l.size(); i++)
+	{
+		l[i]->set_shot(true);
+		l[i]->shoot();
+
+		if (l[i]->get_y() > winy)
+		{
+			l.erase(l.begin() + i);
+		}
+	}
+
 	switch (get_coord_ID())
 	{
 	case UP:
-		y--;
+		y-=this->vel;
 		//y = sin((20 * 3.14)*(y - 1));
 		set_y(y);
 		break;
 
 	case DOWN:
-		y++;
+		y+=this->vel;
 		//y = sin((20*3.14)*(y+1));
 		set_y(y);
 		break;
 
 	case LEFT:
-		x--;
+		x-=this->vel;
 		//x = sin((20 * 3.14)*(x + 1));
 		set_x(x);
 		break;
 
 	case RIGHT:
-		x++;
+		x+=this->vel;
 		set_x(x);
 		break;
 	}
@@ -137,6 +186,11 @@ void enemies::set_x(int x)
 void enemies::set_y(int y)
 {
 	this->y = y;
+}
+
+void enemies::set_vel(int vel)
+{
+	this->vel = vel;
 }
 
 void enemies::moveleft()
@@ -163,6 +217,30 @@ void enemies::movedown()
 	set_y(this->y);
 }
 
+void enemies::shoot_probability()
+{
+	this->probability_of_shooting = rand() % 501;
+	//std::cout << this->probability_of_shooting << std::endl;
+}
+
+void enemies::load_ammo(int sing_twin)
+{
+	if (this->probability_of_shooting <= 10 && this->delay == 0 && get_health() > 0 && sing_twin == 1 && this->coordID >= 0 && this->coordID <= 3)
+	{
+		l.push_back(new Enemy_Lazer(get_x(), get_y(), 10, DOWN));
+		set_delay(50);
+	}
+
+	else if (this->probability_of_shooting <= 10 && this->delay == 0 && get_health() > 0 && sing_twin == 2 && this->coordID >= 0 && this->coordID <= 3)
+	{
+		l.push_back(new Enemy_Lazer(get_x(), get_y(), 10, DOWN));
+		l.push_back(new Enemy_Lazer(get_x() + 23, get_y(), 10, DOWN));
+
+		set_delay(50);
+	}
+	
+}
+
 void enemies::randomize_CID()
 {
 }
@@ -187,6 +265,15 @@ void enemies::update_destroy_animation()
 	destroying.increment_frame();
 }
 
+void enemies::decrement_delay()
+{
+	if (get_delay() > 0)
+	{
+		this->delay--;
+		set_delay(this->delay);
+	}
+}
+
 void enemies::set_coord_ID(int coordID)
 {
 	this->coordID = coordID;
@@ -195,6 +282,11 @@ void enemies::set_coord_ID(int coordID)
 void enemies::set_hit(bool hit)
 {
 	this->hit = hit;
+}
+
+void enemies::set_delay(int delay)
+{
+	this->delay = delay;
 }
 
 void enemies::draw(ALLEGRO_BITMAP * bmp, ALLEGRO_BITMAP * bmp2)
@@ -210,12 +302,26 @@ void enemies::draw(ALLEGRO_BITMAP * bmp, ALLEGRO_BITMAP * bmp2)
 	}
 }
 
+void enemies::draw_E_weapon(ALLEGRO_BITMAP * bmp)
+{
+	for (int i = 0; i < l.size(); i++)
+	{
+		al_draw_bitmap(bmp, l[i]->get_x(), l[i]->get_y(), NULL);
+		//std::cout << "render" << std::endl;
+	}
+}
+
 void enemies::draw_destroy(ALLEGRO_BITMAP * bmp, ALLEGRO_BITMAP * bmp2, ALLEGRO_BITMAP * bmp3)
 {
 	if (this->health <= 0)
 	{
 		destroying.three_frames_custom(bmp, bmp2, bmp3, get_x(), get_y(), get_destroy_frame(), 20, 5, 10, 15);
 	}
+}
+
+void enemies::clear_weapon()
+{
+	l.clear();
 }
 
 void enemies::ability(player* & p, ALLEGRO_EVENT e)
@@ -230,7 +336,6 @@ void enemies::countdown_duration()
 		this->duration--;
 		set_duration(this->duration);
 	}
-	
 }
 
 void enemies::release()

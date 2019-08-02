@@ -14,7 +14,7 @@ public:
 	void update();
 	void destroy();
 	void control(ALLEGRO_EVENT &e);
-	void render(Animate &hit);
+	void render(Status &s, ALLEGRO_FONT *font, Animate &hit);
 
 	void countdown_duration();
 	void poisoned(Status &s, int &health, ALLEGRO_FONT *f);
@@ -49,6 +49,7 @@ private:
 	ALLEGRO_BITMAP *ship[3];
 	
 	int x, y, vel, coord, duration;
+	int xauto, yauto;
 	bool movement, special_condition, ability_to_shoot, hit;
 
 	bool keys[4] = { false };

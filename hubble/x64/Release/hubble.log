@@ -1,63 +1,8 @@
-﻿  Ammo.cpp
-  Animate.cpp
-  Asterix.cpp
-  blobby.cpp
-  boss.cpp
-  collision.cpp
-  Diamond_shot.cpp
-  Egg_Bomb.cpp
-  enemies.cpp
-  Enemy_Lazer.cpp
-  Enemy_Manager.cpp
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1530): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
-  Epolice.cpp
-  Event.cpp
-  game_loop.cpp
-  Haych.cpp
-  Haychba.cpp
-  Heat_wave.cpp
-  Icet.cpp
-  Inferred.cpp
-  Jupiball.cpp
-  Compiling...
-  Kamekoset.cpp
-  Kamet.cpp
-  lazer.cpp
-  Lazer_B.cpp
-  Main_menu.cpp
-  Mechanism.cpp
-  mini_boss.cpp
-  Molten_shot.cpp
-  Mpolice.cpp
-  player.cpp
-  Satusphere.cpp
-  screen_manager.cpp
-  screen_state.cpp
-  Single_Twin.cpp
-  Sonic_Turbulence.cpp
-  Sonic_Wave.cpp
-  Source.cpp
-  Spaceship.cpp
-  Spartak_ball.cpp
-  Spartak_Laser.cpp
-  Compiling...
-  Splash_Screen.cpp
-  Spyder.cpp
-  Stages.cpp
-  Status.cpp
-  Tools.cpp
-  Tools_manager.cpp
-  Volcanon.cpp
-  v_beam.cpp
-  Weapon.cpp
-  weaponManager.cpp
-  Wyrm.cpp
-  Xybtofy.cpp
-  Ziggonet.cpp
+﻿  game_loop.cpp
   Generating code
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1417): warning C4715: 'Enemy_Manager::get_boss_w': not all control paths return a value
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1323): warning C4715: 'Enemy_Manager::get_boss_h': not all control paths return a value
-  All 2791 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  1 of 2759 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    4 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 allegro_monolith-static.lib(allegro.obj) : warning LNK4099: PDB 'allegro_monolith.pdb' was not found with 'allegro_monolith-static.lib(allegro.obj)' or at 'C:\Users\gebei\Documents\GitHub\Asteray\x64\Release\allegro_monolith.pdb'; linking object as if no debug info
 allegro_monolith-static.lib(bitmap.obj) : warning LNK4099: PDB 'allegro_monolith.pdb' was not found with 'allegro_monolith-static.lib(bitmap.obj)' or at 'C:\Users\gebei\Documents\GitHub\Asteray\x64\Release\allegro_monolith.pdb'; linking object as if no debug info

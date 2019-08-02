@@ -23,12 +23,12 @@ void collision::win_collsion(std::vector <player*> &p)
 	for (int i = 0; i < p.size(); i++)
 	{
 		
-		if (p[i]->get_x() > winx - 50)
+		if (p[i]->get_x() > winx - 25)
 		{
 			p[i]->set_x(p[i]->get_x() - p[i]->get_vel());
 		}
 
-		if (p[i]->get_x() < 0)
+		if (p[i]->get_x() < -25)
 		{
 			p[i]->set_x(p[i]->get_x() + p[i]->get_vel());
 		}
@@ -99,9 +99,10 @@ void collision::Enemy_boundary_collision(Enemy_Manager EN, std::vector <enemies*
 				break;
 			}
 
-			if (foe[i]->get_y() < -100)
+			if (foe[i]->get_y() < 0)
 			{
-				foe.erase(foe.begin() + i);
+				cid = DOWN;
+				foe[i]->set_coord_ID(cid);
 				break;
 			}
 
@@ -179,189 +180,161 @@ void collision::Boss_boundary_collision(Enemy_Manager EN, std::vector <boss*> &f
 
 void collision::enemy_gets_damaged(Enemy_Manager EN, weaponManager W, Tools_manager & tm, std::vector<Ammo*>& a,
 	std::vector<Tools*>& t, std::vector<enemies*>& f, std::vector<Weapon*>& l, 
-	Status & s, ALLEGRO_SAMPLE_INSTANCE * instance, ALLEGRO_FONT * font, Animate &hit, int & score)
+	Status & s, ALLEGRO_SAMPLE_INSTANCE * instance, ALLEGRO_SAMPLE_INSTANCE *hit_sound, ALLEGRO_FONT * font, Animate &hit, int & score)
 {
 	for (int i = 0; i < f.size(); i++)
 	{
 		for (int j = 0; j < l.size(); j++)
 		{
-			if ((f[i]->get_x() < l[j]->getx() + W.getw(l[j]->getweaponID()) && f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) > l[j]->getx() &&
-				f[i]->get_y() < l[j]->gety() + W.geth(l[j]->getweaponID()) && f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) > l[j]->gety()) && f[i]->get_health() > 0)
+			if (f[i]->get_health() > 0)
 			{
-				switch (l[j]->getweaponID())
+				if ((f[i]->get_x() < l[j]->getx() + W.getw(l[j]->getweaponID()) && f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) > l[j]->getx() &&
+					f[i]->get_y() < l[j]->gety() + W.geth(l[j]->getweaponID()) && f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) > l[j]->gety()))
 				{
-				case LAZER:
-					l[j]->set_damage(1);
-					f[i]->set_hit(true);
-					hit.set_frame(0);
-					f[i]->set_y(f[i]->get_y() - 25);
-					f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
-					break;
-
-				case ICET:
-					l[j]->set_damage(1);
-					f[i]->set_coord_ID(l[j]->effect());
-					f[i]->set_duration(150);
-					f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
-					break;
-
-				case INFERRED:
-					l[j]->set_damage(2);
-					f[i]->set_coord_ID(l[j]->effect());
-					f[i]->set_duration(75);
-					f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
-					break;
-
-				case ZIGGONET:
-					l[j]->set_damage(3);
-					f[i]->set_coord_ID(l[j]->effect());
-					f[i]->set_duration(100);
-					f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
-					break;
-
-				case HAYCH:
-					for (int i = 0; i < f.size(); i++)
+					al_set_sample_instance_playmode(hit_sound, ALLEGRO_PLAYMODE_ONCE);
+					al_set_sample_instance_position(hit_sound, 0);
+					al_play_sample_instance(hit_sound);
+					switch (l[j]->getweaponID())
 					{
-						if ((f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) < winx && f[i]->get_x() > 0 &&
-							f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) < winy && f[i]->get_y() > 0))
-						{
-							l[j]->set_damage(2);
-							f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
-							f[i]->set_coord_ID(l[j]->effect());
-						}
-					}
-					break;
+					case LAZER:
+						l[j]->set_damage(1);
+						f[i]->set_hit(true);
+						hit.set_frame(0);
+						f[i]->set_y(f[i]->get_y() - 25);
+						f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
+						break;
 
-				case HAYCHBA:
-					for (int i = 0; i < f.size(); i++)
-					{
-						if ((f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) < winx && f[i]->get_x() > 0 &&
-							f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) < winy && f[i]->get_y() > 0))
-						{
-							l[j]->set_damage(4);
-							f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
-							f[i]->set_coord_ID(l[j]->effect());
-						}
-					}
-					break;
+					case ICET:
+						l[j]->set_damage(1);
+						f[i]->set_coord_ID(l[j]->effect());
+						f[i]->set_duration(150);
+						f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
+						break;
 
-				case SONICWAVE:
-					for (int i = 0; i < f.size(); i++)
-					{
-						if ((f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) < winx && f[i]->get_x() > 0 &&
-							f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) < winy && f[i]->get_y() > 0))
+					case INFERRED:
+						l[j]->set_damage(2);
+						f[i]->set_coord_ID(l[j]->effect());
+						f[i]->set_duration(75);
+						f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
+						break;
+
+					case ZIGGONET:
+						l[j]->set_damage(3);
+						f[i]->set_coord_ID(l[j]->effect());
+						f[i]->set_duration(100);
+						f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
+						break;
+
+					case HAYCH:
+						for (int i = 0; i < f.size(); i++)
 						{
-							l[j]->set_damage(5);
-							f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
-							f[i]->set_coord_ID(l[j]->effect());
+							if ((f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) <= winx && f[i]->get_x() >= 0 &&
+								f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) <= winy && f[i]->get_y() >= 0))
+							{
+								l[j]->set_damage(2);
+								f[i]->set_hit(true);
+								f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
+								f[i]->set_coord_ID(l[j]->effect());
+							}
 						}
+						break;
+
+					case HAYCHBA:
+						for (int i = 0; i < f.size(); i++)
+						{
+							if ((f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) <= winx && f[i]->get_x() >= 0 &&
+								f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) <= winy && f[i]->get_y() >= 0))
+							{
+								l[j]->set_damage(4);
+								f[i]->set_hit(true);
+								f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
+								f[i]->set_coord_ID(l[j]->effect());
+							}
+						}
+						break;
+
+					case SONICWAVE:
+						for (int i = 0; i < f.size(); i++)
+						{
+							if ((f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) <= winx && f[i]->get_x() >= 0 &&
+								f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) <= winy && f[i]->get_y() >= 0))
+							{
+								l[j]->set_damage(5);
+								f[i]->set_hit(true);
+								f[i]->set_health(f[i]->get_health() - l[j]->get_damage());
+								f[i]->set_coord_ID(l[j]->effect());
+							}
+						}
+						break;
 					}
-					break;
+
+					if (f[i]->get_y() < 0)
+					{
+						f[i]->set_y(0);
+					}
+
+					//enemy_dies(font, NULL, s, score, t, )
+					//std::cout << "Enemy Health " << i << " :" << f[i]->get_health() << std::endl;
+
+
+					l.erase(l.begin() + j);
+
 				}
-
-				if (f[i]->get_y() < 0)
-				{
-					f[i]->set_y(0);
-				}
-				
-				//enemy_dies(font, NULL, s, score, t, )
-				//std::cout << "Enemy Health " << i << " :" << f[i]->get_health() << std::endl;
-
-				delete l[j];
-				l.erase(l.begin() + j);
-
 			}
 		}
 	}
 }
 
-void collision::enemy_dies(ALLEGRO_FONT *font, Animate &d, Status &s, int &score, Tools_manager & tm, std::vector<Ammo*>& a,
+void collision::enemy_dies( ALLEGRO_FONT *font, Animate &d, Status &s, int &numkills, int &score, Tools_manager & tm, std::vector<Ammo*>& a,
 	std::vector<Tools*>& t, std::vector<enemies*>& f, ALLEGRO_SAMPLE_INSTANCE * instance)
 {
 	for (int i = 0; i < f.size(); i++)
 	{
-
-		if (f[i]->get_coord_ID() == FROZEN || f[i]->get_coord_ID() == BURNED || f[i]->get_coord_ID() == STUNNED)
+		if (i > f.size())
 		{
-			if (f[i]->get_health() <= 0)
-			{
-				this->num_of_kill += 1;
-				set_num_of_kills(num_of_kill);
-
-				tm.set_tool_ID(rand() % 30);
-				
-				d.increment_frame();
-				//std::cout << f[i]->get_score() << std::endl;
-				
-				al_set_sample_instance_position(instance, 0);
-				al_play_sample_instance(instance);
-				al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
-
-				if (d.get_frame() >= 12)
-				{
-					
-					d.set_frame(0);
-					if (tm.get_tool_ID() <= 15)
-					{
-						a.push_back(new Ammo(f[i]->get_x(), f[i]->get_y(), rand() % 20));
-						
-					}
-
-					else
-					{
-						t.push_back(new Tools(f[i]->get_x(), f[i]->get_y(), rand() % 4));
-						
-					}
-
-					score = score + f[i]->get_score();
-					s.setscore(score, font);
-					f.erase(f.begin() + i);
-					
-				}
-			}
+			break;
 		}
 
-		else
+		if (f[i]->get_health() <= 0)
 		{
-			if (f[i]->get_health() <= 0)
+
+			std::cout << numkills << std::endl;
+
+			f[i]->update_destroy_animation();
+			f[i]->set_coord_ID(10);
+
+			al_set_sample_instance_position(instance, 0);
+			al_play_sample_instance(instance);
+			al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
+
+			if (f[i]->get_destroy_frame() >= 20)
 			{
-				this->num_of_kill += 1;
-				set_num_of_kills(num_of_kill);
+				tm.set_tool_ID(rand() % 51);
+				//tm.set_tool_ID(11);
+				f[i]->init();
+				f[i]->set_hit(false);
 
-				//f[i]->set_hit(true);
-				
-
-				f[i]->update_destroy_animation();
-				f[i]->set_coord_ID(10);
-				al_set_sample_instance_position(instance, 0);
-				al_play_sample_instance(instance);
-				al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
-
-				if (f[i]->get_destroy_frame() == 20)
+				if (tm.get_tool_ID() < 12)
 				{
-					tm.set_tool_ID(rand() % 30);
-					f[i]->init();
-					f[i]->set_hit(false);
-
-					if (tm.get_tool_ID() >= 12)
-					{
-						a.push_back(new Ammo(f[i]->get_x(), f[i]->get_y(), rand() % 20));
-
-					}
-
-					else
-					{
-						t.push_back(new Tools(f[i]->get_x(), f[i]->get_y(), rand() % 4));
-						
-					}
-					score = score + f[i]->get_score();
-
-					f.erase(f.begin() + i);
-					s.setscore(score, font);
+					std::cout << "AMMO: " << (2 * (rand() % 6) + 5) << std::endl;
+					a.push_back(new Ammo(f[i]->get_x(), f[i]->get_y(), (2 * (rand() % 5)) + 5));
 				}
 
-				break;
+				else if (tm.get_tool_ID() > 25)
+				{
+					t.push_back(new Tools(f[i]->get_x(), f[i]->get_y(), rand() % 2));
+				}
+
+				
+
+
+				score = score + f[i]->get_score();
+
+				f.erase(f.begin() + i);
+				s.setscore(score, font);
+				numkills++;
 			}
+			
 		}
 
 	}
@@ -405,18 +378,12 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vecto
 				b[i]->get_y() < ball[l]->get_y() + EN.get_ball_h() && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > ball[l]->get_x()) && ball[l]->isreflected())
 			{
 				//std::cout << "HIT" << std::endl;
-				if (b[i]->get_health() == 0)
+				
+				if (b[i]->get_health() > 0)
 				{
-					ball.erase(ball.begin() + l);
-					b.erase(b.begin() + i);
-					bossdefeated = true;
-					EN.sethit(true);
 
-					break;
-				}
 
-				else
-				{
+
 					b[i]->set_frame(0);
 					b[i]->set_y(b[i]->get_y() - 50);
 					b[i]->set_health(b[i]->get_health() - 1);
@@ -431,14 +398,18 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vecto
 					}
 					al_set_sample_instance_gain(instance, 1.5);
 					al_play_sample_instance(instance);
-					break;
+					
+
+
 				}
-
-
-				//bossdefeated = true;
-				break;
+				
 			}
+			
+			
+		
 		}
+
+		
 
 		for (int j = 0; j < f.size(); j++)
 		{
@@ -451,31 +422,68 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vecto
 			{
 			case SPARTAK:
 				if ((b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
-					b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx()) && f[j]->getweaponID() == LAZER)
+					b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx()))
 				{
-					al_set_sample_instance_position(instance2, 0);
+					if (f[j]->getweaponID() == LAZER)
+					{
+						al_set_sample_instance_position(instance2, 0);
 
-					al_set_sample_instance_gain(instance2, 1);
-					al_set_sample_instance_playmode(instance2, ALLEGRO_PLAYMODE_ONCE);
-					al_play_sample_instance(instance2);
-					f.erase(f.begin() + j);
+						al_set_sample_instance_gain(instance2, 1);
+						al_set_sample_instance_playmode(instance2, ALLEGRO_PLAYMODE_ONCE);
+						al_play_sample_instance(instance2);
+						f.erase(f.begin() + j);
+					}
 
+					else if (f[j]->getweaponID() == HAYCH)
+					{
+						if (b[i]->get_health() > 0)
+						{
+							b[i]->set_frame(0);
+							b[i]->set_y(b[i]->get_y() - 50);
+							b[i]->set_health(b[i]->get_health() - 1);
+							al_set_sample_instance_position(instance, 0);
+							EN.sethit(true);
+							b[i]->set_vel(b[i]->get_vel() + 1);
+							b[i]->set_action(rand() % 4);
+							if (b[i]->get_vel() > 3)
+							{
+								b[i]->set_vel(3);
+							}
+							al_set_sample_instance_gain(instance, 1.5);
+							al_play_sample_instance(instance);
+							f.erase(f.begin() + j);
+						}
+					}
+					
+					else if (f[j]->getweaponID() == HAYCHBA)
+					{
+						if (b[i]->get_health() > 0)
+						{
+							b[i]->set_frame(0);
+							b[i]->set_y(b[i]->get_y() - 50);
+							b[i]->set_health(b[i]->get_health() - 2);
+							al_set_sample_instance_position(instance, 0);
+							EN.sethit(true);
+							b[i]->set_vel(b[i]->get_vel() + 1);
+							b[i]->set_action(rand() % 4);
+							if (b[i]->get_vel() > 3)
+							{
+								b[i]->set_vel(3);
+							}
+							al_set_sample_instance_gain(instance, 1.5);
+							al_play_sample_instance(instance);
+							f.erase(f.begin() + j);
+						}
+					}
 				}
 				break;
 
 			case MARTIANB:
-				if ((b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
-					b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx()) && f[j]->getweaponID() == LAZER)
+				if (b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
+					b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx())
 				{
 
-					if (b[i]->get_health() == 0)
-					{
-						b.erase(b.begin() + i);
-						f.erase(f.begin() + j);
-						bossdefeated = true;
-					}
-
-					else
+					if (f[j]->getweaponID() == LAZER)
 					{
 						if (b[i]->get_coordID() == UP || b[i]->get_coordID() == DOWN)
 						{
@@ -491,6 +499,7 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vecto
 							b[i]->set_frame(0);
 							al_set_sample_instance_gain(instance, 1.5);
 							al_play_sample_instance(instance);
+							f.erase(f.begin() + j);
 
 						}
 
@@ -505,7 +514,53 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vecto
 
 						}
 					}
-					break;
+
+					else if (f[j]->getweaponID() == HAYCH)
+					{
+						if (b[i]->get_health() > 0)
+						{
+							b[i]->set_frame(0);
+							b[i]->set_y(b[i]->get_y() - 50);
+							b[i]->set_health(b[i]->get_health() - 1);
+							al_set_sample_instance_position(instance, 0);
+							EN.sethit(true);
+							b[i]->set_vel(b[i]->get_vel() + 1);
+							b[i]->set_action(rand() % 4);
+							if (b[i]->get_vel() > 3)
+							{
+								b[i]->set_vel(3);
+							}
+							al_set_sample_instance_gain(instance, 1.5);
+							al_play_sample_instance(instance);
+							f.erase(f.begin() + j);
+
+						}
+
+						
+					}
+
+					else if (f[j]->getweaponID() == HAYCHBA)
+					{
+						if (b[i]->get_health() > 0)
+						{
+							b[i]->set_frame(0);
+							b[i]->set_y(b[i]->get_y() - 50);
+							b[i]->set_health(b[i]->get_health() - 2);
+							al_set_sample_instance_position(instance, 0);
+							EN.sethit(true);
+							b[i]->set_vel(b[i]->get_vel() + 1);
+							b[i]->set_action(rand() % 4);
+							if (b[i]->get_vel() > 3)
+							{
+								b[i]->set_vel(3);
+							}
+							al_set_sample_instance_gain(instance, 1.5);
+							al_play_sample_instance(instance);
+							f.erase(f.begin() + j);
+						}
+					}
+
+
 				}
 				break;
 
@@ -526,36 +581,25 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vecto
 				if (b[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[j]->gety() &&
 					b[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[j]->getx())
 				{
-					if (b[i]->get_health() == 0)
-					{
-						b.erase(b.begin() + i);
-						f.erase(f.begin() + j);
 
-						bossdefeated = true;
+					b[i]->set_health(b[i]->get_health() - 1);
+					f.erase(f.begin() + j);
+					al_set_sample_instance_position(instance, 0);
+					EN.sethit(true);
+					b[i]->set_frame(0);
+					al_set_sample_instance_gain(instance, 1.5);
+					al_play_sample_instance(instance);
+
+					if (b[i]->get_health() % 2 == 0)
+					{
+						b[i]->set_vel(b[i]->get_vel() + 1);
+						if (b[i]->get_vel() > 3)
+						{
+							b[i]->set_vel(3);
+						}
 					}
 
-					else
-					{
-							b[i]->set_health(b[i]->get_health() - 1);
-							f.erase(f.begin() + j);
-							al_set_sample_instance_position(instance, 0);
-							EN.sethit(true);
-							b[i]->set_frame(0);
-							al_set_sample_instance_gain(instance, 1.5);
-							al_play_sample_instance(instance);
-						
-							if (b[i]->get_health() % 2 == 0)
-							{
-								b[i]->set_vel(b[i]->get_vel() + 1);
-								if (b[i]->get_vel() > 3)
-								{
-									b[i]->set_vel(3);
-								}
-							}
-					}
-					break;
 				}
-
 				break;
 			}
 
@@ -573,38 +617,49 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vecto
 			{
 
 				if ((b[i]->get_y() < f[k]->gety() + W.geth(f[k]->getweaponID()) && b[i]->get_y() + EN.get_boss_h(b[i]->get_boss()) > f[k]->gety() &&
-					b[i]->get_x() < f[k]->getx() + W.getw(f[k]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[k]->getx()) && f[k]->getweaponID()==ICET)
+					b[i]->get_x() < f[k]->getx() + W.getw(f[k]->getweaponID()) && b[i]->get_x() + EN.get_boss_w(b[i]->get_boss()) > f[k]->getx()) && f[k]->getweaponID() == ICET)
 				{
-					if (b[i]->get_health() == 0)
+
+					b[i]->set_health(b[i]->get_health() - 1);
+					f.erase(f.begin() + k);
+					al_set_sample_instance_position(instance, 0);
+					EN.sethit(true);
+					b[i]->set_frame(0);
+					al_set_sample_instance_gain(instance, 1.5);
+					al_play_sample_instance(instance);
+
+					if (b[i]->get_health() % 2 == 0)
 					{
-						b.erase(b.begin() + i);
-						f.erase(f.begin() + k);
-						bossdefeated = true;
+						b[i]->set_vel(b[i]->get_vel() + 1);
+						if (b[i]->get_vel() > 3)
+						{
+							b[i]->set_vel(3);
+						}
 					}
 
-					else
-					{
-						b[i]->set_health(b[i]->get_health() - 1);
-						f.erase(f.begin() + k);
-						al_set_sample_instance_position(instance, 0);
-						EN.sethit(true);
-						b[i]->set_frame(0);
-						al_set_sample_instance_gain(instance, 1.5);
-						al_play_sample_instance(instance);
-						
-						if (b[i]->get_health() % 2 == 0)
-						{
-							b[i]->set_vel(b[i]->get_vel() + 1);
-							if (b[i]->get_vel() > 3)
-							{
-								b[i]->set_vel(3);
-							}
-						}						
-					}
-					break;
 				}
 
+				
 				break;
+			}
+
+
+		}
+
+		if (b[i]->get_health() <= 0)
+		{
+
+			bossdefeated = true;
+			EN.set_death(true);
+			EN.sethit(false);
+
+			if (b[i]->get_frame() > 205)
+			{
+				//ball.erase(ball.begin() + l);
+				b.erase(b.begin() + i);
+				EN.set_death(false);
+				//EN.set_death(false);
+
 			}
 
 
@@ -668,10 +723,11 @@ void collision::Ball_gets_destroyed(Enemy_Manager &EN, weaponManager W, Tools_ma
 	}
 }
 
-void collision::Boss_weapon_immune_to_weapon(Enemy_Manager &EN, weaponManager W, std::vector <Diamond_shot*> &ds,
+void collision::Boss_weapon_immune_to_weapon(Enemy_Manager &EN, Stages s, std::vector <enemies*> e, weaponManager W, std::vector <Diamond_shot*> &ds,
 	std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K,
 	std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl,
-	std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, std::vector <Weapon*> &f, ALLEGRO_SAMPLE_INSTANCE *instance, bool &bossdefeated)
+	std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, std::vector <Weapon*> &f, std::vector <Turrets *> turrets,
+	ALLEGRO_SAMPLE_INSTANCE *instance, bool &bossdefeated)
 {
 	for (int i = 0; i < v.size(); i++)
 	{
@@ -841,25 +897,41 @@ void collision::Boss_weapon_immune_to_weapon(Enemy_Manager &EN, weaponManager W,
 		}
 	}
 
-	for (int n = 0; n < lazer.size(); n++)
+	for (int n = 0; n < e.size(); n++)
 	{
-		for (int j = 0; j < f.size(); j++)
+		for (int i = 0; i < e[n]->get_weaponsize(); i++)
 		{
-
-			if (lazer[n]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && lazer[n]->get_y() + EN.get_elazer_h() > f[j]->gety() &&
-				lazer[n]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && lazer[n]->get_x() + EN.get_elazer_w() > f[j]->getx())
+			for (int j = 0; j < f.size(); j++)
 			{
-				al_set_sample_instance_position(instance, 0);
-				al_set_sample_instance_gain(instance, 1);
-				al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
-				al_play_sample_instance(instance);
+				if (e[n]->get_weapony(i) < f[j]->gety() + W.geth(f[j]->getweaponID()) && e[n]->get_weapony(i) + EN.get_Eweapon_h(e[n]->get_name_ID()) > f[j]->gety() &&
+					e[n]->get_weaponx(i) < f[j]->getx() + W.getw(f[j]->getweaponID()) && e[n]->get_weaponx(i) + EN.get_Eweapon_w(e[n]->get_name_ID()) > f[j]->getx())
+				{
+					if (f[j]->getweaponID() == LAZER)
+					{
+						al_set_sample_instance_position(instance, 0);
+						al_set_sample_instance_gain(instance, 1);
+						al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
+						al_play_sample_instance(instance);
 
-				lazer.erase(lazer.begin() + n);
-				f.erase(f.begin() + j);
+						e[n]->killweapon(i);
+						f.erase(f.begin() + j);
+					}
 
-				break;
+
+					else
+					{
+						al_set_sample_instance_position(instance, 0);
+						al_set_sample_instance_gain(instance, 1);
+						al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
+						al_play_sample_instance(instance);
+
+						e[n]->killweapon(i);
+					}
+
+					break;
+				}
+
 			}
-
 		}
 	}
 
@@ -883,81 +955,150 @@ void collision::Boss_weapon_immune_to_weapon(Enemy_Manager &EN, weaponManager W,
 
 		}
 	}
+
+	
 }
 
-void collision::miniboss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vector <mini_boss*> &mb, std::vector <Weapon*> &f, bool &bossdefeated)
+void collision::Boss_weapon_immune_to_weapon(Enemy_Manager & EN, weaponManager W, std::vector<enemies*> e, std::vector<Weapon*>& f, ALLEGRO_SAMPLE_INSTANCE * instance, bool & bossdefeated)
 {
-	for (int i = 0; i < mb.size(); i++)
+	for (int n = 0; n < e.size(); n++)
 	{
-		for (int j = 0; j < f.size(); j++)
+		for (int i = 0; i < e[n]->get_weaponsize(); i++)
 		{
-			if ((mb[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && mb[i]->get_y() + EN.get_E_h() > f[j]->gety() &&
-				mb[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && mb[i]->get_x() + EN.get_E_w() > f[j]->getx()) && f[j]->getweaponID() == LAZER)
+			for (int j = 0; j < f.size(); j++)
 			{
-				//::cout << "You Win" << std::endl;
-				mb.erase(mb.begin()+i);
-				//bossdefeated = true;
-				break;
+				if (e[n]->get_weapony(i) < f[j]->gety() + W.geth(f[j]->getweaponID()) && e[n]->get_weapony(i) + EN.get_Eweapon_h(e[n]->get_name_ID()) > f[j]->gety() &&
+					e[n]->get_weaponx(i) < f[j]->getx() + W.getw(f[j]->getweaponID()) && e[n]->get_weaponx(i) + EN.get_Eweapon_w(e[n]->get_name_ID()) > f[j]->getx())
+				{
+					if (f[j]->getweaponID() == LAZER)
+					{
+						al_set_sample_instance_position(instance, 0);
+						al_set_sample_instance_gain(instance, 1);
+						al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
+						al_play_sample_instance(instance);
+
+						e[n]->killweapon(i);
+						f.erase(f.begin() + j);
+					}
+
+
+					else
+					{
+						al_set_sample_instance_position(instance, 0);
+						al_set_sample_instance_gain(instance, 1);
+						al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
+						al_play_sample_instance(instance);
+
+						e[n]->killweapon(i);
+					}
+
+					break;
+				}
+
 			}
 		}
-
 	}
 }
 
-void collision::player_gets_damaged(Enemy_Manager &EN, std::vector <mini_boss*> &mb, std::vector <boss*> &b, std::vector <enemies*> &f, std::vector <player*> &p, Status s,
-	ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_FONT *font, ALLEGRO_EVENT e, Animate &hit, int &health)
+void collision::miniboss_gets_damaged(Enemy_Manager &EN, Stages s, weaponManager W, std::vector <mini_boss*> &mb, std::vector <Turrets *> &turrets, 
+	std::vector <Weapon*> &f, ALLEGRO_SAMPLE_INSTANCE * hit, ALLEGRO_SAMPLE_INSTANCE *die, bool &bossdefeated)
+{
+	
+	for (int i = 0; i < turrets.size(); i++)
+	{
+		for (int j = 0; j < f.size(); j++)
+		{
+			if ((turrets[i]->get_y() < f[j]->gety() + W.geth(f[j]->getweaponID()) && turrets[i]->get_y() + EN.get_turret_h(s.get_stage()) > f[j]->gety() &&
+				turrets[i]->get_x() < f[j]->getx() + W.getw(f[j]->getweaponID()) && turrets[i]->get_x() + EN.get_turret_w(s.get_stage()) > f[j]->getx()) && f[j]->getweaponID() == LAZER)
+			{
+				//std::cout << turrets[i]->get_health() << std::endl;
+				if (turrets[i]->get_health() > 0)
+				{
+					al_play_sample_instance(hit);
+					turrets[i]->decrement_health();
+					turrets[i]->set_hit(true);
+					f.erase(f.begin() + j);
+
+				}
+
+				else
+				{
+					al_play_sample_instance(die);
+					turrets.erase(turrets.begin() + i);
+					if (i == 0)
+					{
+						mb.erase(mb.begin() + 0);
+					}
+
+					if (i == 1)
+					{
+						mb.erase(mb.begin() + 1);
+					}
+				}
+
+				break;
+			}
+		}
+	}
+}
+
+void collision::player_gets_damaged(Enemy_Manager &EN, std::vector <mini_boss*> &mb, std::vector <boss*> &b, std::vector <enemies*> &f, std::vector <player*> &p, 
+	Status s, ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_FONT *font, ALLEGRO_EVENT e, Animate &hit, int &health)
 {
 	// If player collides with enemies
 	for (int i = 0; i < f.size(); i++)
 	{
 		for (int j = 0; j < p.size(); j++)
 		{
-			if (p[j]->get_y() < f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) && p[j]->get_y() + p[j]->get_h() > f[i]->get_y() &&
-				p[j]->get_x() < f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) && p[j]->get_x() + p[j]->get_w() > f[i]->get_x())
+			if (f[i]->get_health() > 0)
 			{
-				if (s.gethealth() > 0)
+				if (p[j]->get_y() < f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) && p[j]->get_y() + p[j]->get_h() > f[i]->get_y() &&
+					p[j]->get_x() < f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) && p[j]->get_x() + p[j]->get_w() > f[i]->get_x())
 				{
-					health = health - f[i]->get_damage();
-					p[j]->set_y(p[j]->get_y() + 25);
-
-					if (p[j]->get_y() + p[j]->get_h() > 400)
+					if (s.gethealth() > 0)
 					{
-						p[j]->set_y(400 - p[j]->get_h());
+						health = health - f[i]->get_damage();
+						p[j]->set_y(p[j]->get_y() + 25);
+
+						if (p[j]->get_y() + p[j]->get_h() > 400)
+						{
+							p[j]->set_y(400 - p[j]->get_h());
+						}
+
+						s.sethealth(health, font);
+						p[j]->ship_hit(true);
+						hit.set_frame(0);
+
+						if (f[i]->get_name_ID() != SATUSPHERE || f[i]->get_name_ID() != JUPIBALL)
+						{
+							f[i]->ability(p[j], e);
+						}
+
+						if (f[i]->get_name_ID() == KAMEKOSET)
+						{
+							f[i]->set_health(0);
+						}
+
+						al_set_sample_instance_position(instance, 0);
+						al_play_sample_instance(instance);
+						al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
 					}
-
-					s.sethealth(health, font);
-					p[j]->ship_hit(true);
-					hit.set_frame(0);
-
-					if (f[i]->get_name_ID() != SATUSPHERE || f[i]->get_name_ID() != JUPIBALL)
-					{
-						f[i]->ability(p[j], e);
-					}
-
-					if (f[i]->get_name_ID() == KAMEKOSET)
-					{
-						f[i]->set_health(0);
-					}
-
-					al_set_sample_instance_position(instance, 0);
-					al_play_sample_instance(instance);
-					al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
 				}
-			}
 
-			else if (p[j]->get_y() < f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) + 50 && p[j]->get_y() + p[j]->get_h() > f[i]->get_y() - 50 &&
-				p[j]->get_x() < f[i]->get_x() + 50 + EN.get_w(f[i]->get_name_ID()) && p[j]->get_x() + p[j]->get_w() > f[i]->get_x() - 50)
-			{
-				if (f[i]->get_name_ID() == SATUSPHERE || f[i]->get_name_ID() == JUPIBALL)
+				else if (p[j]->get_y() < f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) + 50 && p[j]->get_y() + p[j]->get_h() > f[i]->get_y() - 50 &&
+					p[j]->get_x() < f[i]->get_x() + 50 + EN.get_w(f[i]->get_name_ID()) && p[j]->get_x() + p[j]->get_w() > f[i]->get_x() - 50)
 				{
-					f[i]->gravity(p[j]);
-					p[j]->set_keys(p[j]->get_coords_ID(), false);
+					if (f[i]->get_name_ID() == SATUSPHERE || f[i]->get_name_ID() == JUPIBALL)
+					{
+						f[i]->gravity(p[j]);
+						p[j]->set_keys(p[j]->get_coords_ID(), false);
+					}
 				}
-			}
 
-			else
-			{
-				p[j]->set_vel(5);
+				else
+				{
+					p[j]->set_vel(5);
+				}
 			}
 		}
 	}
@@ -1034,10 +1175,58 @@ void collision::player_gets_damaged(Enemy_Manager &EN, std::vector <mini_boss*> 
 	
 }
 
-void collision::player_gets_damaged(Enemy_Manager &EN, std::vector <Spartak_ball*> &b, std::vector <Diamond_shot*> &ds,
+void collision::player_gets_damaged(Enemy_Manager & EN, std::vector<enemies*>& foes, std::vector<Enemy_Lazer*>& lazer, std::vector<player*>& p, Status s, ALLEGRO_SAMPLE_INSTANCE * instance, ALLEGRO_FONT * font, ALLEGRO_EVENT e, Animate & hit, int & health)
+{
+	for (int n = 0; n < foes.size(); n++)
+	{
+		for (int i = 0; i < foes[n]->get_weaponsize(); i++)
+		{
+			for (int j = 0; j < p.size(); j++)
+			{
+				if (foes[n]->get_weapony(i) < p[j]->get_y() + p[j]->get_h() && foes[n]->get_weapony(i) + EN.get_Eweapon_h(foes[n]->get_name_ID()) > p[j]->get_y() &&
+					foes[n]->get_weaponx(i) < p[j]->get_x() + p[j]->get_w() && foes[n]->get_weaponx(i) + EN.get_Eweapon_w(foes[n]->get_name_ID()) > p[j]->get_x())
+				{
+					if (s.gethealth() > 0)
+					{
+
+						p[j]->set_y(p[j]->get_y() + 50);
+						s.sethealth(health, font);
+						p[j]->ship_hit(true);
+						hit.set_frame(0);
+						foes[n]->weapon_ability(p[0]);
+						foes[n]->killweapon(i);
+						health = health - foes[n]->get_damage();
+
+						al_set_sample_instance_position(instance, 0);
+						al_play_sample_instance(instance);
+						al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
+
+					}
+
+				}
+			}
+		}
+	}
+}
+
+void collision::check_position(Enemy_Manager E, std::vector<enemies*>& f)
+{
+	for (int i = 0; i < f.size(); i++)
+	{
+		for (int j = 0; j < f.size(); j++)
+		{
+			if (j != i && f[i]->get_x() + E.get_w(f[i]->get_name_ID()) < f[j]->get_x())
+			{
+				f[i]->set_y(f[i]->get_y() - E.get_w(f[i]->get_name_ID()));
+			}
+		}
+	}
+}
+
+void collision::player_gets_damaged(Enemy_Manager &EN, Stages stage, std::vector <enemies*> &foes, std::vector <Spartak_ball*> &b, std::vector <Diamond_shot*> &ds,
 	std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K,
 	std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl,
-	std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, std::vector <player*> &p, Status s,
+	std::vector <Molten_shot*> &mball, std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, std::vector <Turrets *> turrets, std::vector <player*> &p, Status s,
 	ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_FONT *font, ALLEGRO_EVENT e, Animate &hit, int &health)
 {
 	for (int i = 0; i < b.size(); i++)
@@ -1323,30 +1512,33 @@ void collision::player_gets_damaged(Enemy_Manager &EN, std::vector <Spartak_ball
 		}
 	}
 
-	for (int n = 0; n < lazer.size(); n++)
+	for (int n = 0; n < foes.size(); n++)
 	{
-		for (int j = 0; j < p.size(); j++)
+		for (int i = 0; i < foes[n]->get_weaponsize(); i++)
 		{
-			if (p[j]->get_y() < lazer[n]->get_y() + EN.get_elazer_h() && p[j]->get_y() + p[j]->get_h() > lazer[n]->get_y() &&
-				p[j]->get_x() < lazer[n]->get_x() + EN.get_elazer_w() && p[j]->get_x() + p[j]->get_w() > lazer[n]->get_x())
+			for (int j = 0; j < p.size(); j++)
 			{
-				if (s.gethealth() > 0)
+				if (foes[n]->get_weapony(i) < p[j]->get_y() + p[j]->get_h() && foes[n]->get_weapony(i) + EN.get_Eweapon_h(foes[n]->get_name_ID()) > p[j]->get_y() &&
+					foes[n]->get_weaponx(i) < p[j]->get_x() + p[j]->get_w() && foes[n]->get_weaponx(i) + EN.get_Eweapon_w(foes[n]->get_name_ID()) > p[j]->get_x())
 				{
+					if (s.gethealth() > 0)
+					{
 
-					p[j]->set_y(p[j]->get_y() + 50);
-					s.sethealth(health, font);
-					p[j]->ship_hit(true);
-					hit.set_frame(0);
+						p[j]->set_y(p[j]->get_y() + 50);
+						s.sethealth(health, font);
+						p[j]->ship_hit(true);
+						hit.set_frame(0);
+						foes[n]->weapon_ability(p[0]);
+						foes[n]->killweapon(i);
+						health = health - foes[n]->get_damage();
 
-					lazer.erase(lazer.begin() + n);
-					health = health - 5;
+						al_set_sample_instance_position(instance, 0);
+						al_play_sample_instance(instance);
+						al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
 
-					al_set_sample_instance_position(instance, 0);
-					al_play_sample_instance(instance);
-					al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
+					}
 
 				}
-
 			}
 		}
 	}
@@ -1376,10 +1568,42 @@ void collision::player_gets_damaged(Enemy_Manager &EN, std::vector <Spartak_ball
 			}
 		}
 	}
+
+	for (int n = 0; n < turrets.size(); n++)
+	{
+		for (int i = 0; i < turrets[n]->weapon_size(); i++)
+		{
+			for (int j = 0; j < p.size(); j++)
+			{
+				if (turrets[n]->get_weapony(i) < p[j]->get_y() + p[j]->get_h() && turrets[n]->get_weapony(i) + EN.get_turretweapon_h(stage.get_stage()) > p[j]->get_y() &&
+					turrets[n]->get_weaponx(i) < p[j]->get_x() + p[j]->get_w() && turrets[n]->get_weaponx(i) + EN.get_turretweapon_w(stage.get_stage()) > p[j]->get_x())
+				{
+					if (s.gethealth() > 0)
+					{
+
+						p[j]->set_y(p[j]->get_y() + 50);
+						s.sethealth(health, font);
+						p[j]->ship_hit(true);
+						hit.set_frame(0);
+
+						turrets[n]->killweapon(i);
+						health = health - 10;
+
+						al_set_sample_instance_position(instance, 0);
+						al_play_sample_instance(instance);
+						al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
+
+					}
+
+				}
+			}
+		}
+	}
 }
 
 void collision::player_gets_tool(std::vector <player*> &p, Enemy_Manager EN, std::vector <enemies*> &fo,
-	std::vector <Tools*> &t, std::vector <Ammo*> &a, Tools_manager tm, Status s, ALLEGRO_SAMPLE_INSTANCE *instance[3], ALLEGRO_FONT *f, int &health, int (& ammo)[6], bool &kill_all)
+	std::vector <Tools*> &t, std::vector <Ammo*> &a, Tools_manager tm, Status s, Stages &stage, ALLEGRO_SAMPLE_INSTANCE *instance[3], 
+	ALLEGRO_FONT *f, int &health, int (& ammo)[6], bool &killonce)
 {
 	for (int i = 0; i < t.size(); i++)
 	{
@@ -1392,96 +1616,94 @@ void collision::player_gets_tool(std::vector <player*> &p, Enemy_Manager EN, std
 				{
 				case HEALTH:
 					al_set_sample_instance_position(instance[0], 0);
-					al_play_sample_instance(instance[0]);
 					al_set_sample_instance_playmode(instance[0], ALLEGRO_PLAYMODE_ONCE);
+					al_play_sample_instance(instance[0]);
 
 					health += 10;
 					s.sethealth(health, f);
-					t.erase(t.begin() + i);
 					break;
 
 				case DISFIG:
 					al_set_sample_instance_position(instance[2], 0);
-					al_play_sample_instance(instance[2]);
 					al_set_sample_instance_playmode(instance[2], ALLEGRO_PLAYMODE_ONCE);
-					
-					kill_all = true;
-					t.erase(t.begin() + i);
+					al_play_sample_instance(instance[2]);
+
+					killonce = true;
+					stage.set_disfig(true);
 
 					break;
 				}
+
+				t.erase(t.begin() + i);
+
 			}
 		}
-
-		
 	}
-		
-	for (int i = 0; i < a.size(); i++)
+	
+
+	//std::cout << "AMMO: " << a.size() << std::endl;
+
+	for (int k = 0; k < a.size(); k++)
 	{
 		for (int j = 0; j < p.size(); j++)
 		{
-			if (p[j]->get_x() + p[j]->get_w() > a[i]->get_x() && p[j]->get_x() < a[i]->get_x() + tm.get_ammo_w(a[i]->get_ammo_ID()) && 
-				p[j]->get_y() + p[j]->get_h() > a[i]->get_y() && p[j]->get_y() < a[i]->get_y() + tm.get_ammo_h(a[i]->get_ammo_ID()))
+			if (p[j]->get_x() + p[j]->get_w() > a[k]->get_x() && p[j]->get_x() < a[k]->get_x() + tm.get_ammo_w(a[k]->get_ammo_ID()) && 
+				p[j]->get_y() + p[j]->get_h() > a[k]->get_y() && p[j]->get_y() < a[k]->get_y() + tm.get_ammo_h(a[k]->get_ammo_ID()))
 			{
-				switch (a[i]->get_ammo_ID())
+			
+				al_set_sample_instance_position(instance[1], 0);
+				al_set_sample_instance_playmode(instance[1], ALLEGRO_PLAYMODE_ONCE);
+				al_play_sample_instance(instance[1]);
+				
+				
+				switch (a[k]->get_ammo_ID())
 				{
 				case ICE:
-					al_set_sample_instance_position(instance[1], 0);
-					al_play_sample_instance(instance[1]);
-					al_set_sample_instance_playmode(instance[1], ALLEGRO_PLAYMODE_ONCE);
-
 					ammo[ICET] ++;
-					a.erase(a.begin() + i);
 					break;
 
 				case FIRE:
-					al_set_sample_instance_position(instance[1], 0);
-					al_play_sample_instance(instance[1]);
-					al_set_sample_instance_playmode(instance[1], ALLEGRO_PLAYMODE_ONCE);
-
 					ammo[INFERRED] ++;
-					a.erase(a.begin() + i);
 					break;
 
 				case ZIG:
-					al_set_sample_instance_position(instance[1], 0);
-					al_play_sample_instance(instance[1]);
-					al_set_sample_instance_playmode(instance[1], ALLEGRO_PLAYMODE_ONCE);
-
 					ammo[ZIGGONET] ++;
-					a.erase(a.begin() + i);
 					break;
 
 				case H:
-					al_set_sample_instance_position(instance[1], 0);
-					al_play_sample_instance(instance[1]);
-					al_set_sample_instance_playmode(instance[1], ALLEGRO_PLAYMODE_ONCE);
-
 					ammo[HAYCH] ++;
-					a.erase(a.begin() + i);
 					break;
 
 				case HBAR:
-					al_set_sample_instance_position(instance[1], 0);
-					al_play_sample_instance(instance[1]);
-					al_set_sample_instance_playmode(instance[1], ALLEGRO_PLAYMODE_ONCE);
-
 					ammo[HAYCHBA] ++;
-					a.erase(a.begin() + i);
 					break;
 
 				case WAVE:
-					al_set_sample_instance_position(instance[1], 0);
-					al_play_sample_instance(instance[1]);
-					al_set_sample_instance_playmode(instance[1], ALLEGRO_PLAYMODE_ONCE);
-
 					ammo[SONICWAVE] ++;
-					a.erase(a.begin() + i);
 					break;
 				}
+
+				a.erase(a.begin() + k);
 			}
 		}
 	}
+}
+
+void collision::destroy_foes_inside(Enemy_Manager EN, std::vector<enemies*>& f)
+{
+	for (int i = 0; i < f.size(); i++)
+	{
+		std::cout << i << std::endl;
+		if (f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) <= winx && f[i]->get_x() >= 0 &&
+			f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) <= winy && f[i]->get_y() >= 0)
+		{
+			f[i]->set_health(0);
+		}
+
+		
+	}
+
+	
 }
 
 int collision::get_num_of_kills()

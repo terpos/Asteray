@@ -93,7 +93,7 @@
     <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonColor>false</Allegro_AddonColor>
-    <Allegro_LibraryType>DynamicRelease</Allegro_LibraryType>
+    <Allegro_LibraryType>StaticMonolithRelease</Allegro_LibraryType>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Allegro_AddonImage>true</Allegro_AddonImage>
@@ -209,6 +209,7 @@
     <ClCompile Include="Status.cpp" />
     <ClCompile Include="Tools.cpp" />
     <ClCompile Include="Tools_manager.cpp" />
+    <ClCompile Include="Turrets.cpp" />
     <ClCompile Include="Volcanon.cpp" />
     <ClCompile Include="v_beam.cpp" />
     <ClCompile Include="Weapon.cpp" />
@@ -264,6 +265,7 @@
     <ClInclude Include="Status.h" />
     <ClInclude Include="Tools.h" />
     <ClInclude Include="Tools_manager.h" />
+    <ClInclude Include="Turrets.h" />
     <ClInclude Include="Volcanon.h" />
     <ClInclude Include="v_beam.h" />
     <ClInclude Include="Weapon.h" />
