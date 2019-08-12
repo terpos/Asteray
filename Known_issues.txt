@@ -1,13 +1,17 @@
 [MORE KNOWN ISSUES WILL BE IN GITHUB ISSUES SECTION IN SOURCE CODE BRANCH AS IT WILL BE UTILIZED EVERYDAY]
 
-ENHANCED 5/11/2019
+ENHANCED 8/12/2019
 
 - Satusphere and Jupiball sprites are redrawn
 
 - weapon object is now polymorphic
 	- all the parameters of the collision and weapon manager class are fixed according to the weapon object
 
-FIXED 8/1/2019
+- boss weapon object is now polymorphic
+	- all of the parameters and if statements in the collision class are optimized
+	- made a get h and w for the boss weapon png image in enemy manager class
+
+FIXED 8/12/2019
 
 - No menu - Implemented and works
 
@@ -34,6 +38,8 @@ FIXED 8/1/2019
 - no health refills after bosses - Implemented it
 
 - No close the game capibility with mouse - added it works
+
+- the level and stage code structure is not perfect - Fixed it and made the whole code structure easier
 
 KNOWN_ISSUES 5/11/2019
 
