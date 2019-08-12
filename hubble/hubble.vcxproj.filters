@@ -171,9 +171,6 @@
     <ClCompile Include="Spartak_ball.cpp">
       <Filter>Source Files\Game Window\Boss Weapon</Filter>
     </ClCompile>
-    <ClCompile Include="Spartak_Laser.cpp">
-      <Filter>Source Files\Game Window\Boss Weapon</Filter>
-    </ClCompile>
     <ClCompile Include="v_beam.cpp">
       <Filter>Source Files\Game Window\Boss Weapon</Filter>
     </ClCompile>
@@ -211,6 +208,9 @@
       <Filter>Source Files\Game Window\Power Ups</Filter>
     </ClCompile>
     <ClCompile Include="Turrets.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss_weapon.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -332,9 +332,6 @@
     <ClInclude Include="Lazer_B.h">
       <Filter>Header Files\Game Window\Boss Weapon</Filter>
     </ClInclude>
-    <ClInclude Include="Spartak_Laser.h">
-      <Filter>Header Files\Game Window\Boss Weapon</Filter>
-    </ClInclude>
     <ClInclude Include="Spartak_ball.h">
       <Filter>Header Files\Game Window\Boss Weapon</Filter>
     </ClInclude>
@@ -376,6 +373,9 @@
     </ClInclude>
     <ClInclude Include="Turrets.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss_weapon.h">
+      <Filter>Header Files\Game Window\Boss Weapon</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -97,7 +97,6 @@ void Volcanon::draw_E_weapon(ALLEGRO_BITMAP * bmp)
 	for (int i = 0; i < l.size(); i++)
 	{
 		al_draw_bitmap(bmp, l[i]->get_x(), l[i]->get_y(), NULL);
-		//std::cout << "render" << std::endl;
 	}
 }
 

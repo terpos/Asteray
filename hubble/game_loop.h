@@ -18,14 +18,14 @@ public:
 	~game_loop();
 
 	void replay();
+	void init();
 
 	void load_stuff();
 	void loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop);
-	void stage(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop);
 	void stage_advance(player *&p);
 	void forward(player *&p);
-	void Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE * q, bool &loop);
-	void update_loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q);
+	void Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE * q);
+	void update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q);
 	void render();
 	void destroy_stuff();
 
@@ -33,7 +33,6 @@ private:
 	
 	bool done = false;
 	bool draw;
-	bool update;
 	bool battle;
 	bool bossdefeated;
 	bool gameover;
@@ -110,8 +109,8 @@ private:
 	std::vector <Kamet*> K;
 	std::vector <Heat_Wave*> hw;
 	std::vector <Single_Twin*> st;
-	std::vector <Spartak_Laser*> sl;
 	std::vector <Enemy_Lazer*> elazer;
+	std::vector <Boss_weapon*> bw;
 
 	std::vector <Turrets *> turrets;
 
@@ -235,6 +234,9 @@ private:
 
 	bool startanimating;
 	bool minibossdefeated;
+	bool miniboss_battle;
+	bool advance;
+	bool boss_battle;
 
 	int weaponsel;
 	int frame;

@@ -1,6 +1,6 @@
 #include "Heat_Wave.h"
 
-Heat_Wave::Heat_Wave(int x, int y, int vel, int cid)
+Heat_Wave::Heat_Wave(int x, int y, int vel, int cid) : Boss_weapon(x, y, vel, cid)
 {
 	set_x(x);
 	set_y(y);
@@ -42,6 +42,11 @@ int Heat_Wave::get_coord_ID()
 bool Heat_Wave::isshot()
 {
 	return this->shot;
+}
+
+int Heat_Wave::get_kinds_of_weapon()
+{
+	return HEAT;
 }
 
 void Heat_Wave::set_x(int x)

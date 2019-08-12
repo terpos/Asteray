@@ -20,13 +20,11 @@ int Tools::get_tool_ID()
 
 int Tools::get_x()
 {
-	//std::cout << this->x << std::endl;
 	return this->x;
 }
 
 int Tools::get_y()
 {
-	//std::cout << this->y << std::endl;
 	return this->y;
 }
 

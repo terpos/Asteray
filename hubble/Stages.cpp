@@ -142,6 +142,29 @@ int Stages::get_y()
 	return this->y;
 }
 
+int Stages::get_h()
+{
+	switch (get_stage())
+	{
+	case EARTH:
+		return -al_get_bitmap_height(stage[EARTH]) + 400;
+		break;
+
+	case MARS:
+		return -al_get_bitmap_height(stage[MARS]) + 400;
+		break;
+
+	case AST:
+		return -al_get_bitmap_height(stage[AST]) + 400;
+		break;
+
+	case SATURN:
+		return -al_get_bitmap_height(stage[SATURN]) + 400;
+		break;
+	}
+	return 0;
+}
+
 void Stages::update_animation()
 {
 	if (get_disfig())

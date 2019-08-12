@@ -62,13 +62,13 @@ enum { E, M };
 enum {ATTACK, MOVE};
 
 //Spartak's Attack Moves
-enum {BALL, DIAMONDS, S_LAZER};
+enum {BALL, DIAMONDS, S_LAZER, CHARGE, EGG, TURBULENCE, B_LAZER, MOLTEN, KAMET, HEAT, SINGTW, V};
 
 //MartianB's Attack Moves
-enum {CHARGE, EGG, TURBULENCE, B_LAZER};
+//enum {CHARGE, EGG, TURBULENCE, B_LAZER};
 
 //KametKhan's Attack Moves
-enum {MOLTEN, KAMET, HEAT};
+//enum {MOLTEN, KAMET, HEAT};
 
 //Xorgana's Attack Moves
-enum {SINGTW, V};
+//enum {SINGTW, V};

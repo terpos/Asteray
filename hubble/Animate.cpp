@@ -47,7 +47,6 @@ void Animate::two_frames_custom(ALLEGRO_BITMAP * bmp1, ALLEGRO_BITMAP * bmp2, in
 	
 	if (frame % custom_frame >= framenoone && frame % custom_frame < framenotwo)
 	{
-		//std::cout << frame % custom_frame << std::endl;
 		al_draw_bitmap(bmp1, x, y, NULL);
 	}
 	else if (frame % custom_frame >= framenotwo && frame % custom_frame <= custom_frame-1)
@@ -64,13 +63,11 @@ void Animate::three_frames_custom(ALLEGRO_BITMAP * bmp1, ALLEGRO_BITMAP * bmp2, 
 
 	if (frame % custom_frame >= framenoone && frame % custom_frame < framenotwo)
 	{
-		//std::cout << frame % custom_frame << std::endl;
 		al_draw_bitmap(bmp1, x, y, NULL);
 	}
 
 	else if (frame % custom_frame >= framenotwo && frame % custom_frame < framenothree)
 	{
-		//std::cout << frame % custom_frame << std::endl;
 		al_draw_bitmap(bmp1, x, y, NULL);
 	}
 

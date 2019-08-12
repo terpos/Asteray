@@ -2,7 +2,7 @@
 
 
 
-Diamond_shot::Diamond_shot(int x, int y, int vel, int cid)
+Diamond_shot::Diamond_shot(int x, int y, int vel, int cid): Boss_weapon(x, y, vel, cid)
 {
 	set_x(x);
 	set_y(y);
@@ -39,6 +39,11 @@ int Diamond_shot::get_coord_ID()
 bool Diamond_shot::isshot()
 {
 	return this->shot;
+}
+
+int Diamond_shot::get_kinds_of_weapon()
+{
+	return DIAMONDS;
 }
 
 void Diamond_shot::set_x(int x)

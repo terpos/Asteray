@@ -19,7 +19,6 @@
 #include "Molten_shot.h"
 #include "v_beam.h"
 #include "Diamond_shot.h"
-#include "Spartak_Laser.h"
 #include "Egg_Bomb.h"
 #include "Sonic_Turbulence.h"
 #include "Lazer_B.h"
@@ -53,18 +52,13 @@ public:
 	void spawn_enemy(std::vector<enemies*>& e, int enemy_health[12], int CID, int vel, int lim, int enemyID);
 	void spawn_enemy(std::vector<enemies*>& e, int enemy_health[12], int x, int y, int CID, int vel, int enemyID);
 	
-	void update(std::vector <enemies*> &e, std::vector <boss*> &b, std::vector <mini_boss*> &mb, std::vector <Spartak_ball*> &ball, std::vector <Diamond_shot*> &ds, 
-		std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K, 
-		std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball, 
-		std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, std::vector <Turrets *> &turrets, Animate &a, Stages &s, Animate &hit);
+	void update(std::vector <enemies*> &e, std::vector <boss*> &b, std::vector <mini_boss*> &mb, std::vector <Enemy_Lazer*> &lazer, std::vector <Turrets *> &turrets,
+		std::vector <Boss_weapon*> &bw, Animate &a, Stages &s, Animate &hit);
+	
 	void update(std::vector<enemies*>& e, Animate &hit);
 	
-	void renderenemy(std::vector<Enemy_Lazer*>& lazer);
 	void renderenemy(std::vector<enemies*>& e, Animate & hit);
-	void renderboss(std::vector <boss*> &b, std::vector <Spartak_ball*> &ball, std::vector <Diamond_shot*> &ds,
-		std::vector <Egg_Bomb*> &EB, std::vector <Sonic_Turbulence*> &ST, std::vector <Lazer_B*> &LB, std::vector <Kamet*> &K,
-		std::vector <Heat_Wave*> &hw, std::vector <Single_Twin*> &st, std::vector <Spartak_Laser*> &sl, std::vector <Molten_shot*> &mball,
-		std::vector <v_beam*> &v, std::vector <Enemy_Lazer*> &lazer, Animate a, ALLEGRO_SAMPLE_INSTANCE *destroy, int &frame);
+	void renderboss(std::vector <boss*> &b, std::vector <Enemy_Lazer*> &lazer, std::vector <Boss_weapon*> &bw, Animate a, ALLEGRO_SAMPLE_INSTANCE *destroy, int &frame);
 
 	void renderminiboss(std::vector <mini_boss*> &mb, std::vector<Turrets*>& turrets, Stages s, Animate a);
 	
@@ -73,46 +67,28 @@ public:
 	
 	void destroy_enemy_img();
 
-	int get_h(int enemyID);
+	
 	int get_w(int enemyID);
 
 	int get_Eweapon_w(int enemyID);
-
 	int get_turret_w(int enemyID);
 	int get_turretweapon_w(int enemyID);
-
 	int get_E_w();
 	int get_M_w();
 	int get_boss_w(int bossID);
-	
-	int get_ball_w();
-	int get_EB_w();
-	int get_Vshot_w();
-	int get_mball_w();
-	int get_ds_w();
-	int get_lazerb_w();
-	int get_lazers_w();
-	int get_st_w();
+	int boss_weapon_w(int bossweaponID);
 	int get_elazer_w();
-	int get_K_w();
-
+	
+	int get_Eweapon_h(int enemyID);
 	int get_turret_h(int enemyID);
 	int get_turretweapon_h(int enemyID);
-
+	int get_h(int enemyID);
 	int get_E_h();
 	int get_M_h();
 	int get_boss_h(int bossID);
-	int get_ball_h();
-	int get_Eweapon_h(int enemyID);
-	int get_EB_h();
-	int get_Vshot_h();
-	int get_mball_h();
-	int get_ds_h();
-	int get_lazerb_h();
-	int get_lazers_h();
-	int get_st_h();
-	int get_elazer_h();
-	int get_K_h();
+	int boss_weapon_h(int bossweaponID);
+	
+	
 
 	int get_num_of_enemy(std::vector <enemies*> e);
 

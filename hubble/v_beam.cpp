@@ -2,7 +2,7 @@
 
 
 
-v_beam::v_beam(int x, int y, int vel, int cid, bool shoot)
+v_beam::v_beam(int x, int y, int vel, int cid, bool shoot) : Boss_weapon(x, y, vel, cid)
 {
 	this->x = x;
 	this->y = y;
@@ -44,6 +44,11 @@ int v_beam::get_coord_ID()
 bool v_beam::isshot()
 {
 	return this->shot;
+}
+
+int v_beam::get_kinds_of_weapon()
+{
+	return V;
 }
 
 void v_beam::set_x(int x)

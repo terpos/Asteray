@@ -63,8 +63,7 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 
 		if (get_coordID() == UP || get_coordID() == DOWN)
 		{
-			std::cout << get_energize() << std::endl;
-			std::cout << get_coordID() << std::endl;
+
 
 			if (get_y() % al_get_bitmap_height(bmp) == 0)
 			{
@@ -76,11 +75,11 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 				{
 					this->cid = 10;
 					set_coordID(this->cid);
-					
+
 					this->energize = true;
 					is_energizing(this->energize);
 				}
-				
+
 				else if (get_action() >= MOVE)
 				{
 					this->cid = rand() % 4;
@@ -92,13 +91,9 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 
 			}
 		}
-		
+
 		else if (get_coordID() == LEFT || get_coordID() == RIGHT)
 		{
-			std::cout << get_energize() << std::endl;
-
-			std::cout << get_coordID() << std::endl;
-
 
 			if (get_x() % al_get_bitmap_width(bmp) == 0)
 			{
@@ -110,7 +105,7 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 				{
 					this->cid = 10;
 					set_coordID(this->cid);
-					
+
 					this->energize = true;
 					is_energizing(this->energize);
 				}
@@ -133,12 +128,13 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 
 	case MARTIANB:
 		//move();
+
 		if (get_coordID() == DOWN || get_coordID() == UP)
 		{
 
 			if (get_y() + al_get_bitmap_height(bmp) > winy - 100)
 			{
-				std::cout << get_y() << std::endl;
+
 				this->cid = UP;
 				set_coordID(this->cid);
 				this->vel = 10;
@@ -159,10 +155,10 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 
 		else if (get_coordID() == LEFT || get_coordID() == RIGHT)
 		{
-			
+
 			if (get_x() % al_get_bitmap_width(bmp) == 0)
 			{
-				
+
 
 				if (lazerb_shoot <= 4)
 				{
@@ -183,10 +179,10 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 
 					else
 					{
-						attackmove = rand() % 4;
+						attackmove = (rand() % 4) + 3;
 						move();
 					}
-					
+
 				}
 
 				else if (this->action >= MOVE)
@@ -197,7 +193,7 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 						this->cid = (rand() % 2) + 2;
 						set_coordID(this->cid);
 					}
-					
+
 					move();
 				}
 			}
@@ -208,7 +204,6 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 	case KAMETKHAN:
 		this->frame++;
 		set_frame(this->frame);
-
 		move();
 
 
@@ -222,7 +217,7 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 				if (this->action == ATTACK || this->action > MOVE)
 				{
 					is_energizing(true);
-					attackmove = rand() % 3;
+					attackmove = (rand() % 3) + 7;
 					move();
 				}
 
@@ -238,12 +233,10 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 			}
 		}
 
-		
-
 		break;
 
 	case XORGANA:
-		
+
 		move();
 
 
@@ -258,7 +251,7 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 
 				if (get_action() == ATTACK || get_action() > MOVE)
 				{
-					attackmove = rand() % 2;
+					attackmove = (rand() % 2) + 10;
 
 					move();
 				}

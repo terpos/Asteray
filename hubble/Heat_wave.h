@@ -1,7 +1,8 @@
 #include "global.h"
+#include "Boss_weapon.h"
 
 #pragma once
-class Heat_Wave
+class Heat_Wave: public Boss_weapon
 {
 public:
 	Heat_Wave(int x, int y, int vel, int cid);
@@ -13,6 +14,8 @@ public:
 	int get_vel();
 	int get_coord_ID();
 	bool isshot();
+	int get_kinds_of_weapon();
+
 
 	void set_x(int x);
 	void set_y(int y);

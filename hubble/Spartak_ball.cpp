@@ -2,7 +2,7 @@
 
 
 
-Spartak_ball::Spartak_ball(int x, int y, int vel, int cid)
+Spartak_ball::Spartak_ball(int x, int y, int vel, int cid) : Boss_weapon(x, y, vel, cid)
 {
 	set_x(x);
 	set_y(y);
@@ -49,6 +49,11 @@ bool Spartak_ball::isshot()
 	return this->shot;
 }
 
+int Spartak_ball::get_kinds_of_weapon()
+{
+	return BALL;
+}
+
 void Spartak_ball::set_x(int x)
 {
 	this->x = x;
@@ -81,29 +86,33 @@ void Spartak_ball::set_shot(bool isshot)
 
 void Spartak_ball::shootball()
 {
-	if (get_coord_ID() == DOWN)
+	if (isshot())
 	{
-		this->y+=get_vel();
-		set_y(this->y);
-	}
-		
-	if (get_coord_ID() == UP)
-	{
-		this->y-=get_vel();
-		set_y(this->y);
-	}
+		if (get_coord_ID() == DOWN)
+		{
+			this->y += get_vel();
+			set_y(this->y);
+		}
 
-	if (get_coord_ID() == LEFT)
-	{
-		this->x-=get_vel();
-		set_y(this->x);
-	}
+		if (get_coord_ID() == UP)
+		{
+			this->y -= get_vel();
+			set_y(this->y);
+		}
 
-	if (get_coord_ID() == RIGHT)
-	{
-		this->x+=get_vel();
-		set_y(this->x);
+		if (get_coord_ID() == LEFT)
+		{
+			this->x -= get_vel();
+			set_y(this->x);
+		}
+
+		if (get_coord_ID() == RIGHT)
+		{
+			this->x += get_vel();
+			set_y(this->x);
+		}
 	}
+	
 }
 
 void Spartak_ball::reflect()

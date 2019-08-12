@@ -1,6 +1,6 @@
 #include "Kamet.h"
 
-Kamet::Kamet(int x, int y, int vel, int cid)
+Kamet::Kamet(int x, int y, int vel, int cid) : Boss_weapon(x, y, vel, cid)
 {
 	set_x(x);
 	set_y(y);
@@ -36,6 +36,11 @@ int Kamet::get_coord_ID()
 bool Kamet::isshot()
 {
 	return this->shot;
+}
+
+int Kamet::get_kinds_of_weapon()
+{
+	return KAMET;
 }
 
 void Kamet::set_x(int x)

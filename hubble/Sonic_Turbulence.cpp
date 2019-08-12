@@ -2,7 +2,7 @@
 
 
 
-Sonic_Turbulence::Sonic_Turbulence(int x, int y, int vel, int cid)
+Sonic_Turbulence::Sonic_Turbulence(int x, int y, int vel, int cid) : Boss_weapon(x, y, vel, cid)
 {
 	set_x(x);
 	set_y(y);
@@ -39,6 +39,11 @@ int Sonic_Turbulence::get_coord_ID()
 bool Sonic_Turbulence::isshot()
 {
 	return this->shot;
+}
+
+int Sonic_Turbulence::get_kinds_of_weapon()
+{
+	return TURBULENCE;
 }
 
 void Sonic_Turbulence::set_x(int x)

@@ -1,6 +1,6 @@
 #include "Single_Twin.h"
 
-Single_Twin::Single_Twin(int x, int y, int vel, int cid)
+Single_Twin::Single_Twin(int x, int y, int vel, int cid) : Boss_weapon(x, y, vel, cid)
 {
 	set_x(x);
 	set_y(y);
@@ -36,6 +36,11 @@ int Single_Twin::get_coord_ID()
 bool Single_Twin::isshot()
 {
 	return this->shot;
+}
+
+int Single_Twin::get_kinds_of_weapon()
+{
+	return SINGTW;
 }
 
 void Single_Twin::set_x(int x)

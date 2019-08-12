@@ -1,7 +1,9 @@
 #include "global.h"
+#include "Boss_weapon.h"
+
 
 #pragma once
-class Kamet
+class Kamet: public Boss_weapon
 {
 public:
 	Kamet(int x, int y, int vel, int cid);
@@ -12,6 +14,8 @@ public:
 	int get_vel();
 	int get_coord_ID();
 	bool isshot();
+	int get_kinds_of_weapon();
+
 
 	void set_x(int x);
 	void set_y(int y);

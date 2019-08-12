@@ -1,7 +1,8 @@
 #include "global.h"
+#include "Boss_weapon.h"
 
 #pragma once
-class Diamond_shot
+class Diamond_shot: public Boss_weapon
 {
 public:
 	Diamond_shot(int x, int y, int vel, int cid);
@@ -12,6 +13,7 @@ public:
 	int get_vel();
 	int get_coord_ID();
 	bool isshot();
+	int get_kinds_of_weapon();
 
 	void set_x(int x);
 	void set_y(int y);

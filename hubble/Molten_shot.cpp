@@ -3,7 +3,7 @@
 
 
 
-Molten_shot::Molten_shot(int x, int y, int vel, int cid, bool shot)
+Molten_shot::Molten_shot(int x, int y, int vel, int cid, bool shot) : Boss_weapon(x, y, vel, cid)
 {
 	set_x(x);
 	set_y(y);
@@ -41,6 +41,11 @@ int Molten_shot::get_coord_ID()
 bool Molten_shot::isshot()
 {
 	return this->shot;
+}
+
+int Molten_shot::get_kinds_of_weapon()
+{
+	return MOLTEN;
 }
 
 void Molten_shot::set_x(int x)

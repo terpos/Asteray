@@ -7,7 +7,6 @@ enemies::enemies(int x, int y, int vel, int health, int coord)
 	this->x = x;
 	this->y = y;
 	this->vel = vel;
-	//std::cout << this->vel << std::endl;
 	this->coordID = coord;
 	this->health = health;
 	set_hit(false);
@@ -220,7 +219,6 @@ void enemies::movedown()
 void enemies::shoot_probability()
 {
 	this->probability_of_shooting = rand() % 501;
-	//std::cout << this->probability_of_shooting << std::endl;
 }
 
 void enemies::load_ammo(int sing_twin)
@@ -307,7 +305,6 @@ void enemies::draw_E_weapon(ALLEGRO_BITMAP * bmp)
 	for (int i = 0; i < l.size(); i++)
 	{
 		al_draw_bitmap(bmp, l[i]->get_x(), l[i]->get_y(), NULL);
-		//std::cout << "render" << std::endl;
 	}
 }
 

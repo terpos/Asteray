@@ -1,253 +1,43 @@
-﻿  Ammo.cpp
-  Animate.cpp
-  Asterix.cpp
-  Diamond_shot.cpp
-  Egg_Bomb.cpp
-  Enemy_Lazer.cpp
-  Enemy_Manager.cpp
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(169): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(191): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(383): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(396): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(418): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(434): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(523): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(536): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(586): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(591): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(596): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(670): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(675): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(680): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(752): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(757): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(762): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(813): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(851): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(856): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(876): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(882): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(898): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(915): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(930): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(945): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(960): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(968): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(982): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(996): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1013): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1047): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1098): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1218): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1223): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1238): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1243): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1253): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1258): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1263): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1274): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1279): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1289): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1294): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1299): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1312): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1317): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1327): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1332): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1349): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1370): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1402): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1407): warning C4018: '<': signed/unsigned mismatch
-  Epolice.cpp
-  Event.cpp
-  Haych.cpp
-  Haychba.cpp
-  Heat_wave.cpp
-  Icet.cpp
-  Inferred.cpp
-  Jupiball.cpp
-  Kamekoset.cpp
-  Kamet.cpp
-  Lazer_B.cpp
-  Main_menu.cpp
-  Molten_shot.cpp
-  Compiling...
-  Mpolice.cpp
-  Satusphere.cpp
-  Single_Twin.cpp
-  Sonic_Turbulence.cpp
-  Sonic_Wave.cpp
-  Source.cpp
-  Spaceship.cpp
-  Spartak_Laser.cpp
-  Spartak_ball.cpp
-  Splash_Screen.cpp
-  Spyder.cpp
-  Stages.cpp
-  Status.cpp
-  Tools.cpp
-  Tools_manager.cpp
-c:\users\gebei\documents\github\asteray\hubble\tools_manager.cpp(205): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\tools_manager.cpp(214): warning C4018: '<': signed/unsigned mismatch
-  Turrets.cpp
-c:\users\gebei\documents\github\asteray\hubble\turrets.cpp(139): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\turrets.cpp(160): warning C4018: '<': signed/unsigned mismatch
-  Volcanon.cpp
-c:\users\gebei\documents\github\asteray\hubble\volcanon.cpp(83): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\volcanon.cpp(97): warning C4018: '<': signed/unsigned mismatch
-  Weapon.cpp
-  Wyrm.cpp
-  Xybtofy.cpp
-  Compiling...
-  Ziggonet.cpp
-  blobby.cpp
-  boss.cpp
-  collision.cpp
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(23): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(52): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(123): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(185): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(187): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(229): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(243): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(257): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(291): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(293): warning C4018: '>': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(345): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(347): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(373): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(375): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(414): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(609): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(673): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(675): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(702): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(704): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(732): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(734): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(753): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(755): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(774): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(776): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(795): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(797): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(816): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(818): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(837): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(839): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(858): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(860): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(879): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(881): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(900): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(904): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(938): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(940): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(964): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(968): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1007): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1009): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1049): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1051): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1107): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1109): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1148): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1150): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1180): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1184): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1214): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1216): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1232): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1234): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1263): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1265): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1291): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1293): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1319): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1321): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1347): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1349): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1375): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1377): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1403): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1405): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1431): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1433): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1459): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1461): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1487): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1489): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1515): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1519): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1546): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1548): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1572): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1576): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1608): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1610): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1646): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1648): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\collision.cpp(1694): warning C4018: '<': signed/unsigned mismatch
-  enemies.cpp
-c:\users\gebei\documents\github\asteray\hubble\enemies.cpp(138): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\enemies.cpp(307): warning C4018: '<': signed/unsigned mismatch
-  game_loop.cpp
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(135): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(336): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(357): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1029): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1120): warning C4018: '<': signed/unsigned mismatch
+﻿  game_loop.cpp
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(137): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(338): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(362): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1101): warning C4018: '<': signed/unsigned mismatch
 c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1193): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1502): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1553): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1574): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1609): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1650): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1665): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1694): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2049): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2057): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2065): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2073): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2081): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2089): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2353): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2401): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2419): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2438): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2459): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2479): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2499): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2519): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2545): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2550): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2555): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2560): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2565): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2570): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2576): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2581): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2587): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2593): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2599): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2604): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2617): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2676): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(3115): warning C4018: '<': signed/unsigned mismatch
-  lazer.cpp
-  mini_boss.cpp
-  player.cpp
-  screen_manager.cpp
-  screen_state.cpp
-  v_beam.cpp
-  weaponManager.cpp
-c:\users\gebei\documents\github\asteray\hubble\weaponmanager.cpp(157): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\weaponmanager.cpp(166): warning C4018: '<': signed/unsigned mismatch
-c:\users\gebei\documents\github\asteray\hubble\weaponmanager.cpp(227): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1272): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1572): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1622): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1643): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1721): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1735): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(1762): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2546): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2594): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2612): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2631): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2652): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2672): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2692): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2712): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2734): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2739): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2744): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2749): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2754): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2759): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2765): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2770): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2776): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2782): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2788): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2793): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2806): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(2865): warning C4018: '<': signed/unsigned mismatch
+c:\users\gebei\documents\github\asteray\hubble\game_loop.cpp(3293): warning C4018: '<': signed/unsigned mismatch
   Generating code
-  2 of 2762 functions (<0.1%) were compiled, the rest were copied from previous compilation.
+  1 of 2754 functions (<0.1%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    4 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
 allegro_monolith-static.lib(allegro.obj) : warning LNK4099: PDB 'allegro_monolith.pdb' was not found with 'allegro_monolith-static.lib(allegro.obj)' or at 'C:\Users\gebei\Documents\GitHub\Asteray\Release\allegro_monolith.pdb'; linking object as if no debug info
 allegro_monolith-static.lib(bitmap.obj) : warning LNK4099: PDB 'allegro_monolith.pdb' was not found with 'allegro_monolith-static.lib(bitmap.obj)' or at 'C:\Users\gebei\Documents\GitHub\Asteray\Release\allegro_monolith.pdb'; linking object as if no debug info

@@ -99,7 +99,6 @@ void Main_menu::event_listener(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q)
 			setChoice(-1);
 		}
 
-		std::cout << e.mouse.x << ", " << e.mouse.y << std::endl;
 	}
 
 	else if (e.type == ALLEGRO_EVENT_MOUSE_AXES && screen == 1)
@@ -239,6 +238,7 @@ void Main_menu::dochoice(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop g, b
 	if (getChoice() == PLAY)
 	{
 		al_stop_sample_instance(Main_Theme);
+		//g.init();
 		g.loop(e, q, loop);
 		this->sel = false;
 

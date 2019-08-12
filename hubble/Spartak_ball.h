@@ -1,7 +1,8 @@
 #include "global.h"
+#include "Boss_weapon.h"
 
 #pragma once
-class Spartak_ball
+class Spartak_ball: public Boss_weapon
 {
 public:
 	Spartak_ball(int x, int y, int vel, int cid);
@@ -13,6 +14,7 @@ public:
 	int get_coord_ID();
 	bool isreflected();
 	bool isshot();
+	int get_kinds_of_weapon();
 
 	void set_x(int x);
 	void set_y(int y);

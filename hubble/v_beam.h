@@ -1,7 +1,8 @@
 #include "global.h"
+#include "Boss_weapon.h"
 
 #pragma once
-class v_beam
+class v_beam: public Boss_weapon
 {
 public:
 	v_beam(int x, int y, int vel, int cid, bool shoot);
@@ -12,6 +13,8 @@ public:
 	int get_vel();
 	int get_coord_ID();
 	bool isshot();
+	int get_kinds_of_weapon();
+
 
 	void set_x(int x);
 	void set_y(int y);

@@ -2,7 +2,7 @@
 
 
 
-Egg_Bomb::Egg_Bomb(int x, int y, int vel, int cid)
+Egg_Bomb::Egg_Bomb(int x, int y, int vel, int cid) : Boss_weapon(x, y, vel, cid)
 {
 	set_x(x);
 	set_y(y);
@@ -39,6 +39,11 @@ int Egg_Bomb::get_coord_ID()
 bool Egg_Bomb::isshot()
 {
 	return this->shot;
+}
+
+int Egg_Bomb::get_kinds_of_weapon()
+{
+	return EGG;
 }
 
 void Egg_Bomb::set_x(int x)

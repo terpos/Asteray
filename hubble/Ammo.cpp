@@ -21,13 +21,11 @@ int Ammo::get_ammo_ID()
 
 int Ammo::get_x()
 {
-	//std::cout << this->x << std::endl;
 	return this->x;
 }
 
 int Ammo::get_y()
 {
-	//std::cout << this->y << std::endl;
 	return this->y;
 }
 

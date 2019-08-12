@@ -30,6 +30,7 @@ public:
 	bool get_disfig();
 	int get_stage();
 	int get_y();
+	int get_h();
 
 	void update_animation();
 

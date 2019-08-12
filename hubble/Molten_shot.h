@@ -1,6 +1,8 @@
 #include "global.h"
+#include "Boss_weapon.h"
+
 #pragma once
-class Molten_shot
+class Molten_shot: public Boss_weapon
 {
 public:
 	Molten_shot(int x, int y, int vel, int cid, bool shot);
@@ -11,6 +13,8 @@ public:
 	int get_vel();
 	int get_coord_ID();
 	bool isshot();
+	int get_kinds_of_weapon();
+
 
 	void set_x(int x);
 	void set_y(int y);
