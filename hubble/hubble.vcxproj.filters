@@ -19,14 +19,8 @@
     <Filter Include="Source Files\Game Window\enemy">
       <UniqueIdentifier>{efe3aa25-9fed-481b-a758-c8e2dcd4b5a0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Game Window\weapon">
-      <UniqueIdentifier>{c12e09cb-9023-410d-852a-b1a96abc6f5d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\Game Window">
       <UniqueIdentifier>{3446c562-2a72-4f2d-a79a-3a459b1192c1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Game Window\weapon">
-      <UniqueIdentifier>{b07d1c11-8640-488b-9b00-e45bbae75426}</UniqueIdentifier>
     </Filter>
     <Filter Include="Header Files\Game Window\Enemy">
       <UniqueIdentifier>{4d4dfe6a-b449-4bd8-b701-49f4891820f9}</UniqueIdentifier>
@@ -49,6 +43,12 @@
     <Filter Include="Source Files\Game Window\Power Ups">
       <UniqueIdentifier>{fa83461a-0069-42f1-9511-ebe5aff72ce0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Game Window\Player Weapons">
+      <UniqueIdentifier>{c12e09cb-9023-410d-852a-b1a96abc6f5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Game Window\Player Weapons">
+      <UniqueIdentifier>{b07d1c11-8640-488b-9b00-e45bbae75426}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Source.cpp">
@@ -64,7 +64,7 @@
       <Filter>Source Files\Game Window\screen_state</Filter>
     </ClCompile>
     <ClCompile Include="lazer.cpp">
-      <Filter>Source Files\Game Window\weapon</Filter>
+      <Filter>Source Files\Game Window\Player Weapons</Filter>
     </ClCompile>
     <ClCompile Include="enemies.cpp">
       <Filter>Source Files\Game Window\enemy</Filter>
@@ -88,10 +88,10 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="weaponManager.cpp">
-      <Filter>Source Files\Game Window\weapon</Filter>
+      <Filter>Source Files\Game Window\Player Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Weapon.cpp">
-      <Filter>Source Files\Game Window\weapon</Filter>
+      <Filter>Source Files\Game Window\Player Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Status.cpp">
       <Filter>Source Files</Filter>
@@ -106,16 +106,16 @@
       <Filter>Source Files\Game Window\enemy</Filter>
     </ClCompile>
     <ClCompile Include="Haych.cpp">
-      <Filter>Source Files\Game Window\weapon</Filter>
+      <Filter>Source Files\Game Window\Player Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Haychba.cpp">
-      <Filter>Source Files\Game Window\weapon</Filter>
+      <Filter>Source Files\Game Window\Player Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Icet.cpp">
-      <Filter>Source Files\Game Window\weapon</Filter>
+      <Filter>Source Files\Game Window\Player Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Inferred.cpp">
-      <Filter>Source Files\Game Window\weapon</Filter>
+      <Filter>Source Files\Game Window\Player Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Jupiball.cpp">
       <Filter>Source Files\Game Window\enemy</Filter>
@@ -130,7 +130,7 @@
       <Filter>Source Files\Game Window\enemy</Filter>
     </ClCompile>
     <ClCompile Include="Sonic_Wave.cpp">
-      <Filter>Source Files\Game Window\weapon</Filter>
+      <Filter>Source Files\Game Window\Player Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Spaceship.cpp">
       <Filter>Source Files\Game Window\enemy</Filter>
@@ -151,7 +151,7 @@
       <Filter>Source Files\Game Window\enemy</Filter>
     </ClCompile>
     <ClCompile Include="Ziggonet.cpp">
-      <Filter>Source Files\Game Window\weapon</Filter>
+      <Filter>Source Files\Game Window\Player Weapons</Filter>
     </ClCompile>
     <ClCompile Include="Stages.cpp">
       <Filter>Source Files</Filter>
@@ -231,7 +231,7 @@
       <Filter>Header Files\Game Window\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="lazer.h">
-      <Filter>Header Files\Game Window\weapon</Filter>
+      <Filter>Header Files\Game Window\Player Weapons</Filter>
     </ClInclude>
     <ClInclude Include="collision.h">
       <Filter>Header Files\Game Window</Filter>
@@ -252,10 +252,10 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="weaponManager.h">
-      <Filter>Header Files\Game Window\weapon</Filter>
+      <Filter>Header Files\Game Window\Player Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Weapon.h">
-      <Filter>Header Files\Game Window\weapon</Filter>
+      <Filter>Header Files\Game Window\Player Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Status.h">
       <Filter>Header Files</Filter>
@@ -270,16 +270,16 @@
       <Filter>Header Files\Game Window\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Haych.h">
-      <Filter>Header Files\Game Window\weapon</Filter>
+      <Filter>Header Files\Game Window\Player Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Haychba.h">
-      <Filter>Header Files\Game Window\weapon</Filter>
+      <Filter>Header Files\Game Window\Player Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Icet.h">
-      <Filter>Header Files\Game Window\weapon</Filter>
+      <Filter>Header Files\Game Window\Player Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Inferred.h">
-      <Filter>Header Files\Game Window\weapon</Filter>
+      <Filter>Header Files\Game Window\Player Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Jupiball.h">
       <Filter>Header Files\Game Window\Enemy</Filter>
@@ -294,7 +294,7 @@
       <Filter>Header Files\Game Window\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Sonic_Wave.h">
-      <Filter>Header Files\Game Window\weapon</Filter>
+      <Filter>Header Files\Game Window\Player Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Splash_Screen.h">
       <Filter>Header Files\Game Window\screen_state</Filter>
@@ -312,7 +312,7 @@
       <Filter>Header Files\Game Window\Enemy</Filter>
     </ClInclude>
     <ClInclude Include="Ziggonet.h">
-      <Filter>Header Files\Game Window\weapon</Filter>
+      <Filter>Header Files\Game Window\Player Weapons</Filter>
     </ClInclude>
     <ClInclude Include="Spaceship.h">
       <Filter>Header Files\Game Window\Enemy</Filter>
@@ -376,6 +376,12 @@
     </ClInclude>
     <ClInclude Include="Boss_weapon.h">
       <Filter>Header Files\Game Window\Boss Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="resource1.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -534,9 +540,11 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="Programming Log.txt" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <ResourceCompile Include="Resource.rc">
+      <Filter>Resource Files</Filter>
+    </ResourceCompile>
   </ItemGroup>
 </Project>

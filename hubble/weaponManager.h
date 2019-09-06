@@ -25,7 +25,7 @@ public:
 	void update(std::vector <Weapon*> &w);
 
 	void renderweapon(std::vector <Weapon*> &w, int ID, Status s, int ammo);
-	void renderweaponinbox(int ID, Status s, int ammo);
+	void renderweaponinbox(int ID, Status s, int ammo[7]);
 	void destroy_ammo(std::vector <Weapon*> &w);
 
 	

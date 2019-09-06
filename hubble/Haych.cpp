@@ -38,7 +38,7 @@ int Haych::getweaponID()
 
 int Haych::effect()
 {
-	return (rand()%3)+3;
+	return STUNNED;
 }
 
 int Haych::get_damage()

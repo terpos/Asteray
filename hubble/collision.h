@@ -42,7 +42,7 @@ public:
 		ALLEGRO_FONT *font, Animate &hit, int &score);
 
 	void enemy_dies( ALLEGRO_FONT *font, Animate &d, Status &s, int &numkills, int &score, Tools_manager & tm, std::vector<Ammo*>& a, std::vector<Tools*>& t,
-		std::vector<enemies*>& f, bool weaponunlock[6], ALLEGRO_SAMPLE_INSTANCE * instance);
+		std::vector<enemies*>& f, bool weaponunlock[7], ALLEGRO_SAMPLE_INSTANCE * instance);
 
 	void enemy_gets_damaged(Enemy_Manager EN, std::vector <Tools*> &t, std::vector <enemies*> &f, Status &s, ALLEGRO_FONT *font);
 
@@ -77,7 +77,7 @@ public:
 		Animate &hit, int & health);
 	
 	void player_gets_tool(std::vector <player*> &p, Enemy_Manager EN, std::vector <enemies*> &fo, std::vector <Tools*> &t, std::vector <Ammo*> &a, Tools_manager tm,
-		Status s, Stages &stage, ALLEGRO_SAMPLE_INSTANCE *instance[3], ALLEGRO_FONT *f, int &health, int(&ammo)[6], bool &killonce);
+		Status s, Stages &stage, ALLEGRO_SAMPLE_INSTANCE *instance[3], ALLEGRO_FONT *f, int &health, int(&ammo)[7], bool &killonce);
 
 	void destroy_foes_inside(Enemy_Manager EN, std::vector <enemies*> &f);
 

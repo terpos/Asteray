@@ -38,6 +38,8 @@ public:
 
 	void secondary_Weapon_box(ALLEGRO_BITMAP * weapon, ALLEGRO_FONT * f, int ammo);
 
+	void empty_Weapon_box(ALLEGRO_FONT * f, int ammo);
+
 	void Notify(int kill_goal, int enemies_killed, std::string notification);
 	void level_up(int num_of_enemies, int level);
 

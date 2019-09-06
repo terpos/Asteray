@@ -65,7 +65,7 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 		{
 
 
-			if (get_y() % al_get_bitmap_height(bmp) == 0)
+			if (get_y() % al_get_bitmap_height(bmp) <= 5 && get_y() % al_get_bitmap_height(bmp) >= 0)
 			{
 
 				this->action = rand() % 4;
@@ -95,9 +95,9 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 		else if (get_coordID() == LEFT || get_coordID() == RIGHT)
 		{
 
-			if (get_x() % al_get_bitmap_width(bmp) == 0)
+			if (get_x() % al_get_bitmap_height(bmp) <= 5 && get_x() % al_get_bitmap_height(bmp) >= 0)
 			{
-				action = rand() % 4;
+				action = rand() % 8;
 				set_action(this->action);
 
 
@@ -156,9 +156,8 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 		else if (get_coordID() == LEFT || get_coordID() == RIGHT)
 		{
 
-			if (get_x() % al_get_bitmap_width(bmp) == 0)
+			if (get_x() % al_get_bitmap_height(bmp) <= 5 && get_x() % al_get_bitmap_height(bmp) >= 0)
 			{
-
 
 				if (lazerb_shoot <= 4)
 				{
@@ -210,7 +209,7 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 		if (get_coordID() == LEFT || get_coordID() == RIGHT)
 		{
 
-			if (get_x() % al_get_bitmap_width(bmp) == 0)
+			if (get_x() % al_get_bitmap_height(bmp) <= 5 && get_x() % al_get_bitmap_height(bmp) >= 0)
 			{
 				this->action = rand() % 10;
 
@@ -243,7 +242,7 @@ void boss::update(ALLEGRO_BITMAP * bmp, int &attackmove, int &lazerb_shoot)
 		if (get_coordID() == LEFT || get_coordID() == RIGHT)
 		{
 
-			if (get_x() % al_get_bitmap_width(bmp) == 0)
+			if (get_x() % al_get_bitmap_height(bmp) <= 10 && get_x() % al_get_bitmap_height(bmp) >= 0)
 			{
 				this->action = rand() % 50;
 				set_action(this->action);

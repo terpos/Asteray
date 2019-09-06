@@ -42,7 +42,7 @@ public:
 
 private:
 	ALLEGRO_BITMAP *tools[2];
-	ALLEGRO_BITMAP *ammo[6];
+	ALLEGRO_BITMAP *ammo[7];
 	
 	int toolsID;
 	int x, y, x2, y2;

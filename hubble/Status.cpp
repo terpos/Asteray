@@ -174,6 +174,12 @@ void Status::secondary_Weapon_box(ALLEGRO_BITMAP *weapon, ALLEGRO_FONT *f, int a
 	al_draw_textf(f, al_map_rgb(0, 0, 0), 390, 480, NULL, "%i", ammo);
 }
 
+void Status::empty_Weapon_box(ALLEGRO_FONT *f, int ammo)
+{
+	al_draw_filled_rectangle(380, 415, 410, 490, al_map_rgb(255, 10, 0));
+	al_draw_text(f, al_map_rgb(0, 0, 0), 390, 415, NULL, "X");
+	//al_draw_textf(f, al_map_rgb(0, 0, 0), 390, 480, NULL, "%i", ammo);
+}
 
 
 

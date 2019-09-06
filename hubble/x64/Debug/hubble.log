@@ -1,4 +1,5 @@
-﻿  Main_menu.cpp
-  game_loop.cpp
-  Generating Code...
+﻿  Enemy_Manager.cpp
+c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1808): warning C4267: 'return': conversion from 'size_t' to 'int', possible loss of data
+c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1504): warning C4715: 'Enemy_Manager::get_boss_h': not all control paths return a value
+c:\users\gebei\documents\github\asteray\hubble\enemy_manager.cpp(1673): warning C4715: 'Enemy_Manager::get_boss_w': not all control paths return a value
   hubble.vcxproj -> C:\Users\gebei\Documents\GitHub\Asteray\x64\Debug\hubble.exe

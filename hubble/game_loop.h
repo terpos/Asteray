@@ -9,7 +9,6 @@
 
 #include "boss.h"
 #include "mini_boss.h"
-//#include "blobby.h"
 
 class game_loop
 {
@@ -39,7 +38,6 @@ private:
 	bool mouse;
 	bool disfig;
 
-	int key;
 	int health;
 	int lvl;
 	int sc;
@@ -50,11 +48,12 @@ private:
 	int disfig_index;
 	int num_of_kills;
 
+	int advance_increment;
+
 	int options;
 
-	bool unlockweapon[6];
-	int ammo[6];
-	int maxammo[6];
+	bool unlockweapon[7];
+	int ammo[7];
 	int enemy_health[12];
 
 	std::vector <lazer*> laser;

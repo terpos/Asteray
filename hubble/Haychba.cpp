@@ -33,7 +33,7 @@ int Haychba::gety()
 
 int Haychba::effect()
 {
-	return (rand()%3) + 3;
+	return STUNNED;
 }
 
 int Haychba::getweaponID()

@@ -51,12 +51,13 @@ void Tools_manager::load()
 	tools[0] = al_load_bitmap("health.png");
 	tools[1] = al_load_bitmap("disfigurement.png");
 
-	ammo[0] = al_load_bitmap("iceammo.png");
-	ammo[1] = al_load_bitmap("fireammo.png");
-	ammo[2] = al_load_bitmap("ziggonetammo.png");
-	ammo[3] = al_load_bitmap("haych.png");
-	ammo[4] = al_load_bitmap("haychbarammo.png");
-	ammo[5] = al_load_bitmap("Sonic_wave_ammo.png");
+	ammo[0] = NULL;
+	ammo[1] = al_load_bitmap("iceammo.png");
+	ammo[2] = al_load_bitmap("fireammo.png");
+	ammo[3] = al_load_bitmap("ziggonetammo.png");
+	ammo[4] = al_load_bitmap("haych.png");
+	ammo[5] = al_load_bitmap("haychbarammo.png");
+	ammo[6] = al_load_bitmap("Sonic_wave_ammo.png");
 }
 
 void Tools_manager::draw(int ID, int toolsID, int ammoID, bool weaponammo[6], int x, int y, int x2, int y2)

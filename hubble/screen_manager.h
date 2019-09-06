@@ -28,11 +28,11 @@ private:
 	game_loop play;
 	Main_menu menu;
 	Splash_Screen ss;
+
+	ALLEGRO_BITMAP *icon;
 	
 	ALLEGRO_EVENT_QUEUE *queue = NULL;
-	
 	ALLEGRO_DISPLAY *display = NULL;
-	
 	ALLEGRO_TIMER *timer = NULL;
 	
 	double fps = 60.0;

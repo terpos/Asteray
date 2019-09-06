@@ -29,6 +29,7 @@ void player::load()
 	ship[0] = al_load_bitmap("ship.png");
 	ship[1] = al_load_bitmap("ship_damaged.png");
 	ship[2] = al_load_bitmap("ship_poisoned.png");
+	
 }
 
 void player::control(ALLEGRO_EVENT &e)
@@ -63,7 +64,7 @@ void player::control(ALLEGRO_EVENT &e)
 			}
 		}
 		
-		set_coords_ID(this->coord);
+		//set_coords_ID(this->coord);
 
 	}
 
@@ -189,7 +190,6 @@ void player::destroy()
 	al_destroy_bitmap(ship[0]);
 	al_destroy_bitmap(ship[1]);
 	al_destroy_bitmap(ship[2]);
-	
 }
 
 int player::get_x()

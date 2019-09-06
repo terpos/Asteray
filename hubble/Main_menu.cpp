@@ -47,21 +47,24 @@ void Main_menu::setscreen(int screen)
 	this->screen = screen;
 }
 
-void Main_menu::load()
+void Main_menu::load(game_loop &g)
 {
+	g.load_stuff();
+
 	menuSel[TITLE] = al_load_font("ariblk.ttf", fontSize[TITLE], NULL);
 	menuSel[CHOICE] = al_load_font("pixellari.ttf", fontSize[CHOICE], NULL);
 	menuBG = al_load_bitmap("Menu.png");
 	mt = al_load_sample("Asteray_Main_Theme.ogg");
 	Main_Theme = al_create_sample_instance(mt);
 
-	pause = al_load_ttf_font("bahnschrift.ttf", 30, NULL);
-	pause_options = al_load_ttf_font("bahnschrift.ttf", 20, NULL);
-	status = al_load_ttf_font("bahnschrift.ttf", 15, NULL);
+	Screen_title = al_load_ttf_font("bahnschrift.ttf", 30, NULL);
+	How_to = al_load_ttf_font("bahnschrift.ttf", 20, NULL);
+	plot = al_load_ttf_font("bahnschrift.ttf", 15, NULL);
 
 
 	al_attach_sample_instance_to_mixer(Main_Theme, al_get_default_mixer());
 	al_set_sample_instance_playmode(Main_Theme, ALLEGRO_PLAYMODE_LOOP);
+
 }
 
 void Main_menu::event_listener(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q)
@@ -105,8 +108,8 @@ void Main_menu::event_listener(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q)
 	{
 
 		mouse = true;
-		if (e.mouse.x >= 170 && e.mouse.x <= 180 + al_get_text_width(status, "BACK TO MAIN MENU") &&
-			e.mouse.y >= 500 - 2 * al_get_font_line_height(status) && e.mouse.y <= 500)
+		if (e.mouse.x >= 170 && e.mouse.x <= 180 + al_get_text_width(plot, "BACK TO MAIN MENU") &&
+			e.mouse.y >= 500 - 2 * al_get_font_line_height(plot) && e.mouse.y <= 500)
 		{
 			sel = false;
 			setChoice(4);
@@ -123,8 +126,8 @@ void Main_menu::event_listener(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q)
 	{
 
 		mouse = true;
-		if (e.mouse.x >= 170 && e.mouse.x <= 180 + al_get_text_width(status, "BACK TO MAIN MENU") &&
-			e.mouse.y >= 500 - 2 * al_get_font_line_height(status) && e.mouse.y <= 500)
+		if (e.mouse.x >= 170 && e.mouse.x <= 180 + al_get_text_width(plot, "BACK TO MAIN MENU") &&
+			e.mouse.y >= 500 - 2 * al_get_font_line_height(plot) && e.mouse.y <= 500)
 		{
 			sel = false;
 			setChoice(4);
@@ -233,12 +236,12 @@ void Main_menu::event_listener(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q)
 	}
 }
 
-void Main_menu::dochoice(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop g, bool &loop)
+void Main_menu::dochoice(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop &g, bool &loop)
 {
 	if (getChoice() == PLAY)
 	{
 		al_stop_sample_instance(Main_Theme);
-		//g.init();
+		g.init();
 		g.loop(e, q, loop);
 		this->sel = false;
 
@@ -276,7 +279,7 @@ void Main_menu::dochoice(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop g, b
 	}
 }
 
-void Main_menu::update(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop g, bool &loop)
+void Main_menu::update(ALLEGRO_EVENT e, ALLEGRO_EVENT_QUEUE *q, game_loop &g, bool &loop)
 {
 	if (e.type == ALLEGRO_EVENT_TIMER)
 	{
@@ -376,28 +379,28 @@ void Main_menu::draw()
 	{
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 
-		stat.setnotification("HOW TO PLAY", pause, 150, 0, al_map_rgb(200, 0, 100));
+		stat.setnotification("HOW TO PLAY", Screen_title, 150, 0, al_map_rgb(200, 0, 100));
 
-		stat.setnotification("PRESS (ESC) IF YOU WANT TO QUIT", pause_options, 0, 100, al_map_rgb(50, 255, 255));
-		stat.setnotification("PRESS (P) IF YOU WANT TO CONTINUE OR PAUSE", pause_options, 0, 130, al_map_rgb(50, 255, 255));
-		stat.setnotification("PRESS (R) TO RESET THE GAME (ONLY IN PAUSE MENU)", pause_options, 0, 160, al_map_rgb(50, 255, 255));
-		stat.setnotification("PRESS (DIRECTIONAL KEY) TO MOVE THE PLAYER", pause_options, 0, 190, al_map_rgb(50, 255, 255));
-		stat.setnotification("PRESS (Z) TO SHOOT LAZERS", pause_options, 0, 220, al_map_rgb(50, 255, 255));
-		stat.setnotification("PRESS (X) TO SHOOT SPECIAL WEAPONS", pause_options, 0, 250, al_map_rgb(50, 255, 255));
-		stat.setnotification("PRESS (A) or (S) TO SWITCH SPECIAL WEAPONS", pause_options, 0, 280, al_map_rgb(50, 255, 255));
+		stat.setnotification("PRESS (ESC) IF YOU WANT TO QUIT", How_to, 0, 100, al_map_rgb(50, 255, 255));
+		stat.setnotification("PRESS (P) IF YOU WANT TO CONTINUE OR PAUSE", How_to, 0, 130, al_map_rgb(50, 255, 255));
+		stat.setnotification("PRESS (R) TO RESET THE GAME (ONLY IN PAUSE MENU)", How_to, 0, 160, al_map_rgb(50, 255, 255));
+		stat.setnotification("PRESS (DIRECTIONAL KEY) TO MOVE THE PLAYER", How_to, 0, 190, al_map_rgb(50, 255, 255));
+		stat.setnotification("PRESS (Z) TO SHOOT LAZERS", How_to, 0, 220, al_map_rgb(50, 255, 255));
+		stat.setnotification("PRESS (X) TO SHOOT SPECIAL WEAPONS", How_to, 0, 250, al_map_rgb(50, 255, 255));
+		stat.setnotification("PRESS (A) or (S) TO SWITCH SPECIAL WEAPONS", How_to, 0, 280, al_map_rgb(50, 255, 255));
 
 		//stat.setnotification("[PRESS (SPACEBAR) TO GO BACK TO MAIN MENU]", status, 75, 500 - 30, al_map_rgb(255, 255, 255));
 
-		al_draw_filled_rectangle(170, 500 - 2 * al_get_font_line_height(status), 180 + al_get_text_width(status, "BACK TO MAIN MENU"), 500, al_map_rgb(100, 0, 0));
-		stat.setnotification("BACK TO MAIN MENU", status, 175, 500 - 2 * al_get_font_line_height(status), al_map_rgb(255, 255, 255));
-		stat.setnotification("[SPACEBAR]", status, 200, 500 - al_get_font_line_height(status), al_map_rgb(255, 255, 255));
+		al_draw_filled_rectangle(170, 500 - 2 * al_get_font_line_height(plot), 180 + al_get_text_width(plot, "BACK TO MAIN MENU"), 500, al_map_rgb(100, 0, 0));
+		stat.setnotification("BACK TO MAIN MENU", plot, 175, 500 - 2 * al_get_font_line_height(plot), al_map_rgb(255, 255, 255));
+		stat.setnotification("[SPACEBAR]", plot, 200, 500 - al_get_font_line_height(plot), al_map_rgb(255, 255, 255));
 
 		if (mouse && getChoice() == 4)
 		{
-			al_draw_rectangle(170, 500 - 2 * al_get_font_line_height(status), 180 + al_get_text_width(status, "BACK TO MAIN MENU"), 500, al_map_rgb(100, 0, 0), 1);
-			al_draw_filled_rectangle(170, 500 - 2 * al_get_font_line_height(status), 180 + al_get_text_width(status, "BACK TO MAIN MENU"), 500, al_map_rgb(255, 255, 0));
-			stat.setnotification("BACK TO MAIN MENU", status, 175, 500 - 2 * al_get_font_line_height(status), al_map_rgb(155, 0, 0));
-			stat.setnotification("[SPACEBAR]", status, 200, 500 - al_get_font_line_height(status), al_map_rgb(155, 0, 0));
+			al_draw_rectangle(170, 500 - 2 * al_get_font_line_height(plot), 180 + al_get_text_width(plot, "BACK TO MAIN MENU"), 500, al_map_rgb(100, 0, 0), 1);
+			al_draw_filled_rectangle(170, 500 - 2 * al_get_font_line_height(plot), 180 + al_get_text_width(plot, "BACK TO MAIN MENU"), 500, al_map_rgb(255, 255, 0));
+			stat.setnotification("BACK TO MAIN MENU", plot, 175, 500 - 2 * al_get_font_line_height(plot), al_map_rgb(155, 0, 0));
+			stat.setnotification("[SPACEBAR]", plot, 200, 500 - al_get_font_line_height(plot), al_map_rgb(155, 0, 0));
 		}
 
 		al_flip_display();
@@ -407,32 +410,32 @@ void Main_menu::draw()
 	{
 	al_clear_to_color(al_map_rgb(0, 0, 0));
 
-	stat.setnotification("THE PLOT", pause, 170, 0, al_map_rgb(200, 150, 100));
+	stat.setnotification("THE PLOT", Screen_title, 170, 0, al_map_rgb(200, 150, 100));
 
-	stat.setnotification("In the year 2030, the space industry has been improving continously to the", status, 5, 100, al_map_rgb(150, 255, 255));
-	stat.setnotification("point where all the 8 planets are safe for people to live in. This is all been", status, 5, 130, al_map_rgb(150, 255, 255));
-	stat.setnotification("done by a man who is smart, easy going, and caring on the outside, but evil", status, 5, 160, al_map_rgb(150, 255, 255));
-	stat.setnotification("inside. Most people voted him to be the leader of the galaxy and he became", status, 5, 190, al_map_rgb(150, 255, 255));
-	stat.setnotification("the leader. Many changes happen in a bad way. He passed a law that people", status, 5, 220, al_map_rgb(150, 255, 255));
-	stat.setnotification("who failed will be isolated to death. That is, people will be put in the worst", status, 5, 250, al_map_rgb(150, 255, 255));
-	stat.setnotification("place possible, will not have any contact from society, and will not be given", status, 5, 280, al_map_rgb(150, 255, 255));
-	stat.setnotification("food nor water which they will die from. This continued on for 5 years until", status, 5, 310, al_map_rgb(150, 255, 255));
-	stat.setnotification("someone decided to rebel against the leader. His journey as a one man ", status, 5, 340, al_map_rgb(150, 255, 255));
-	stat.setnotification("rebellion begins with the destruction of goverment's resources on earth.", status, 5, 370, al_map_rgb(150, 255, 255));
+	stat.setnotification("In the year 2030, the space industry has been improving continously to the", plot, 5, 100, al_map_rgb(150, 255, 255));
+	stat.setnotification("point where all the 8 planets are safe for people to live in. This is all been", plot, 5, 130, al_map_rgb(150, 255, 255));
+	stat.setnotification("done by a man who is smart, easy going, and caring on the outside, but evil", plot, 5, 160, al_map_rgb(150, 255, 255));
+	stat.setnotification("inside. Most people voted him to be the leader of the galaxy and he became", plot, 5, 190, al_map_rgb(150, 255, 255));
+	stat.setnotification("the leader. Many changes happen in a bad way. He passed a law that people", plot, 5, 220, al_map_rgb(150, 255, 255));
+	stat.setnotification("who failed will be isolated to death. That is, people will be put in the worst", plot, 5, 250, al_map_rgb(150, 255, 255));
+	stat.setnotification("place possible, will not have any contact from society, and will not be given", plot, 5, 280, al_map_rgb(150, 255, 255));
+	stat.setnotification("food and water. This continued on for 5 years until a certain", plot, 5, 310, al_map_rgb(150, 255, 255));
+	stat.setnotification("someone decided to rebel against the leader. His journey as a one man ", plot, 5, 340, al_map_rgb(150, 255, 255));
+	stat.setnotification("rebellion begins with the destruction of goverment's resources on earth.", plot, 5, 370, al_map_rgb(150, 255, 255));
 
 
 	//stat.setnotification("[PRESS (SPACEBAR) TO GO BACK TO MAIN MENU]", status, 75, 500 - 30, al_map_rgb(255, 255, 255));
 
-	al_draw_filled_rectangle(170, 500 - 2 * al_get_font_line_height(status), 180 + al_get_text_width(status, "BACK TO MAIN MENU"), 500, al_map_rgb(100, 0, 0));
-	stat.setnotification("BACK TO MAIN MENU", status, 175, 500 - 2 * al_get_font_line_height(status), al_map_rgb(255, 255, 255));
-	stat.setnotification("[SPACEBAR]", status, 200, 500 - al_get_font_line_height(status), al_map_rgb(255, 255, 255));
+	al_draw_filled_rectangle(170, 500 - 2 * al_get_font_line_height(plot), 180 + al_get_text_width(plot, "BACK TO MAIN MENU"), 500, al_map_rgb(100, 0, 0));
+	stat.setnotification("BACK TO MAIN MENU", plot, 175, 500 - 2 * al_get_font_line_height(plot), al_map_rgb(255, 255, 255));
+	stat.setnotification("[SPACEBAR]", plot, 200, 500 - al_get_font_line_height(plot), al_map_rgb(255, 255, 255));
 
 	if (mouse && getChoice() == 4)
 	{
-		al_draw_rectangle(170, 500 - 2 * al_get_font_line_height(status), 180 + al_get_text_width(status, "BACK TO MAIN MENU"), 500, al_map_rgb(100, 0, 0), 1);
-		al_draw_filled_rectangle(170, 500 - 2 * al_get_font_line_height(status), 180 + al_get_text_width(status, "BACK TO MAIN MENU"), 500, al_map_rgb(255, 255, 0));
-		stat.setnotification("BACK TO MAIN MENU", status, 175, 500 - 2 * al_get_font_line_height(status), al_map_rgb(155, 0, 0));
-		stat.setnotification("[SPACEBAR]", status, 200, 500 - al_get_font_line_height(status), al_map_rgb(155, 0, 0));
+		al_draw_rectangle(170, 500 - 2 * al_get_font_line_height(plot), 180 + al_get_text_width(plot, "BACK TO MAIN MENU"), 500, al_map_rgb(100, 0, 0), 1);
+		al_draw_filled_rectangle(170, 500 - 2 * al_get_font_line_height(plot), 180 + al_get_text_width(plot, "BACK TO MAIN MENU"), 500, al_map_rgb(255, 255, 0));
+		stat.setnotification("BACK TO MAIN MENU", plot, 175, 500 - 2 * al_get_font_line_height(plot), al_map_rgb(155, 0, 0));
+		stat.setnotification("[SPACEBAR]", plot, 200, 500 - al_get_font_line_height(plot), al_map_rgb(155, 0, 0));
 	}
 
 	al_flip_display();
@@ -443,6 +446,8 @@ void Main_menu::destory()
 {
 	al_destroy_font(menuSel[TITLE]);
 	al_destroy_font(menuSel[CHOICE]);
+	al_destroy_font(How_to);
+	al_destroy_font(plot);
 	al_destroy_bitmap(menuBG);
 	al_destroy_sample(mt);
 	al_destroy_sample_instance(Main_Theme);

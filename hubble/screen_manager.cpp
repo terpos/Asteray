@@ -23,6 +23,7 @@ void screen_manager::initilize_loop()
 	al_init_ttf_addon();
 	al_init_acodec_addon();
 	
+	icon = al_load_bitmap("Asteray_icon.png");
 	//splash screen
 
 	
@@ -33,16 +34,16 @@ void screen_manager::initilize_loop()
 
 	timer = al_create_timer(1 / fps);
 
-	
+	menu.load(play);
+
 	al_register_event_source(queue, al_get_mouse_event_source());
 	al_register_event_source(queue, al_get_keyboard_event_source());
 	al_register_event_source(queue, al_get_timer_event_source(timer));
 	al_register_event_source(queue, al_get_display_event_source(display));
-	
+	al_set_display_icon(display, icon);
 	
 
-	play.load_stuff();
-	menu.load();
+	
 
 	menu.setChoice(PLAY);
 	al_start_timer(timer);

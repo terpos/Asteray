@@ -136,9 +136,10 @@ void enemies::update()
 {
 	for (int i = 0; i < l.size(); i++)
 	{
+		
 		l[i]->set_shot(true);
 		l[i]->shoot();
-
+		
 		if (l[i]->get_y() > winy)
 		{
 			l.erase(l.begin() + i);
@@ -339,7 +340,7 @@ void enemies::release()
 {
 	if (get_duration() == 0 && get_coord_ID() > 3)
 	{
-		this->coordID = rand() % 4;
+		this->coordID = rand() % 2;
 		set_coord_ID(this->coordID);
 	}
 }

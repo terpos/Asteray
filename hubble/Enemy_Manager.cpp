@@ -377,6 +377,8 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 	std::vector <Turrets *> &turrets, std::vector <Boss_weapon*> &bw, Animate &a, Stages &s, Animate &hit)
 {
 	a.increment_frame();
+
+	
 	
 	for (int tur = 0; tur < turrets.size(); tur++)
 	{
@@ -393,18 +395,25 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 	for (int i = 0; i < e.size(); i++)
 	{
-		e[i]->shoot_probability();
-		
-		if (e[i]->get_name_ID() == EPOLICE)
+		if (e[i]->get_coord_ID() < 7)
 		{
-			e[i]->load_ammo(2);
+			e[i]->shoot_probability();
+			if (e[i]->get_name_ID() == EPOLICE)
+			{
+				e[i]->load_ammo(2);
+			}
+
+			else
+			{
+				e[i]->load_ammo(1);
+			}
+		}
+		
+		else if (e[i]->get_coord_ID() > 7)
+		{
+			std::cout << i << ": " << e[i]->get_duration() << std::endl;
 		}
 
-		else
-		{
-			e[i]->load_ammo(1);
-		}
-		
 		e[i]->decrement_delay();
 
 		e[i]->update();
@@ -434,12 +443,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 		if (b[j]->get_boss() == SPARTAK)
 		{
-
-
-			attack_Move = rand() % 2;
-
-
-
+			attack_Move = rand() % 4;
 
 			if (ishit())
 			{
@@ -452,7 +456,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					b[j]->set_y(0);
 				}
 
-				if (b[j]->get_frame() == 24)
+				if (b[j]->get_frame() >= 24)
 				{
 					sethit(false);
 					b[j]->is_energizing(false);
@@ -472,16 +476,30 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					b[j]->increment_frame();
 				}
 
+			
+
+				std::cout << "MOVEMENT: " << b[j]->get_coordID() << std::endl;
+				std::cout << "ACTION: " << b[j]->get_action() << std::endl;
 
 				if (attack_Move == BALL)
 				{
+					
+
 					if (b[j]->get_frame() == 99)
 					{
-						bw.push_back(new Spartak_ball(b[j]->get_x() + 20, b[j]->get_y(), 10, DOWN));
+						if (b[j]->get_health() > 3)
+						{
+							bw.push_back(new Spartak_ball(b[j]->get_x() + 20, b[j]->get_y(), 10, DOWN));
+						}
+
+						else
+						{
+							bw.push_back(new Spartak_ball(b[j]->get_x() + 20, b[j]->get_y(), 25, DOWN));
+						}
 					}
 				}
 
-				else if (attack_Move == DIAMONDS)
+				else if (attack_Move >= DIAMONDS)
 				{
 					if (b[j]->get_frame() == 99)
 					{
@@ -497,14 +515,14 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 						else
 						{
-							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel, RIGHT));
-							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel, LEFT));
-							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel, UP));
-							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel, DOWN));
-							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel, UPRIGHT));
-							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel, DOWNRIGHT));
-							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel, UPLEFT));
-							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel, DOWNLEFT));
+							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel + 10, RIGHT));
+							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel + 10, LEFT));
+							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel + 10, UP));
+							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel + 10, DOWN));
+							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel + 10, UPRIGHT));
+							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel + 10, DOWNRIGHT));
+							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel + 10, UPLEFT));
+							bw.push_back(new Diamond_shot(b[j]->get_x() + 20, b[j]->get_y(), diamond_vel + 10, DOWNLEFT));
 						}
 					}
 				}
@@ -517,37 +535,10 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					b[j]->set_frame(0);
 					b[j]->set_coordID(rand() % 4);
 					b[j]->set_action(MOVE);
-
+					attack_Move = attack_Move % 2;
 				}
 
-				/*
-								for (int l = 0; l < ball.size(); l++)
-								{
-									if (b[j]->get_frame() == 199)
-									{
-
-										ball[l]->set_shot(true);
-										al_stop_sample_instance(energized);
-										al_set_sample_instance_playmode(release, ALLEGRO_PLAYMODE_ONCE);
-										al_play_sample_instance(release);
-									}
-
-								}
-
-								for (int diam = 0; diam < ds.size(); diam++)
-								{
-									if (b[j]->get_frame() == 199)
-									{
-
-										ds[diam]->set_shot(true);
-										al_stop_sample_instance(energized);
-
-										//al_set_sample_instance_playmode(release, ALLEGRO_PLAYMODE_ONCE);
-										//al_play_sample_instance(release);
-									}
-
-								}
-								*/
+			
 
 
 				for (int l = 0; l < bw.size(); l++)
@@ -559,6 +550,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 						al_stop_sample_instance(energized);
 						al_set_sample_instance_playmode(release, ALLEGRO_PLAYMODE_ONCE);
 						al_play_sample_instance(release);
+						b[j]->set_action(MOVE);
 					}
 
 				}
@@ -717,7 +709,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 					else if (attack_Move == KAMET)
 					{
-						bw.push_back(new Kamet(b[j]->get_x(), b[j]->get_y(), 10, DOWN));
+						bw.push_back(new Kamet(b[j]->get_x(), b[j]->get_y(), 15, DOWN));
 					}
 
 					else if (attack_Move == HEAT)
@@ -727,10 +719,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 							bw.push_back(new Heat_Wave((b[j]->get_x() + get_boss_w(KAMETKHAN)) / 2, (b[j]->get_y() + get_boss_h(KAMETKHAN)) / 2, 5, NULL));
 						}
 
-						else if (bw.size() > 1)
-						{
-							bw.erase(bw.end());
-						}
+						
 					}
 
 					b[j]->set_action(MOVE);
@@ -852,21 +841,21 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 	}
 
-	std::cout << "BOSS WEAPON: " << bw.size() << std::endl;
-	std::cout << "ATTACK MOVE: " << attack_Move << std::endl;
+	//std::cout << "BOSS WEAPON: " << bw.size() << std::endl;
+	//std::cout << "ATTACK MOVE: " << attack_Move << std::endl;
 	
 	for (int l = 0; l < bw.size(); l++)
 	{
 
 		bw[l]->shootball();
 
-		if (bw[l]->get_y() > winy || bw[l]->get_x() > winx)
+		if (bw[l]->get_y() > winy + 75 || bw[l]->get_x() > winx + 75)
 		{
 			bw.erase(bw.begin() + l);
 
 		}
 
-		else if (bw[l]->get_y() < 0 || bw[l]->get_x() < 0)
+		else if (bw[l]->get_y() < -75 || bw[l]->get_x() < -75)
 		{
 			bw.erase(bw.begin() + l);
 		}
@@ -879,16 +868,23 @@ void Enemy_Manager::update(std::vector<enemies*>& e, Animate &hit)
 {
 	for (int i = 0; i < e.size(); i++)
 	{
-		e[i]->shoot_probability();
-
-		if (e[i]->get_name_ID() == EPOLICE)
+		if (e[i]->get_coord_ID() < 7)
 		{
-			e[i]->load_ammo(2);
+			e[i]->shoot_probability();
+			if (e[i]->get_name_ID() == EPOLICE)
+			{
+				e[i]->load_ammo(2);
+			}
+
+			else
+			{
+				e[i]->load_ammo(1);
+			}
 		}
 
-		else
+		else if (e[i]->get_coord_ID() > 7)
 		{
-			e[i]->load_ammo(1);
+			std::cout << i << ": " << e[i]->get_duration() << std::endl;
 		}
 
 		e[i]->decrement_delay();
@@ -1292,12 +1288,17 @@ void Enemy_Manager::destroy_enemy_img()
 	for (int i = 0; i < Enemy.size(); i++)
 	{
 		al_destroy_bitmap(Enemy[i]);
+		
 	}
+
+	Enemy.clear();
 
 	for (int i = 0; i < Enemy_damaged.size(); i++)
 	{
 		al_destroy_bitmap(Enemy_damaged[i]);
 	}
+
+	Enemy_damaged.clear();
 
 	al_destroy_bitmap(enemy_destroyed[0]);
 	al_destroy_bitmap(enemy_destroyed[1]);

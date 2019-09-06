@@ -15,10 +15,5 @@ int main(int argc, char **argv)
 
 	hubble.destroy_stuff();
 
-	//system("cls");
-
-	system("pause");
-
-
 	return 0;
 }

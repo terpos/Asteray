@@ -47,13 +47,13 @@ enum {
 };
 
 //weapon
-enum{ICET, INFERRED, ZIGGONET, HAYCH, HAYCHBA, SONICWAVE, LAZER};
+enum{ICET=1, INFERRED, ZIGGONET, HAYCH, HAYCHBA, SONICWAVE, LAZER};
 
 //ammo and tools
 enum {HEALTH, DISFIG, ICE=5, FIRE=7, ZIG=9, H=11, HBAR=13, WAVE = 15};
 
 //status
-enum {FROZEN = 5, BURNED = 6, STUNNED = 7};
+enum {FROZEN = 11, BURNED, STUNNED};
 
 //miniboss
 enum { E, M };

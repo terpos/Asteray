@@ -98,17 +98,6 @@ void Splash_Screen::init()
 		break;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-
-	//stat.setnotification("[PRESS (SPACEBAR) TO GO BACK TO MAIN MENU]", status, 75, 500 - 30, al_map_rgb(255, 255, 255));
-
-
 	al_flip_display();
 	al_rest(delay);
 

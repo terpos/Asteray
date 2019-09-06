@@ -194,7 +194,7 @@ void weaponManager::renderweapon(std::vector<Weapon*>& w, int ID, Status s, int 
 	
 }
 
-void weaponManager::renderweaponinbox(int ID, Status s, int ammo)
+void weaponManager::renderweaponinbox(int ID, Status s, int ammo[7])
 {
 	switch (ID)
 	{
@@ -202,22 +202,25 @@ void weaponManager::renderweaponinbox(int ID, Status s, int ammo)
 		s.prime_Weapon_box(shiplaser[BLUE], font);
 		break;
 	case ICET:
-		s.secondary_Weapon_box(icet[0], font, ammo);
+		s.secondary_Weapon_box(icet[0], font, ammo[ICET]);
 		break;
 	case INFERRED:
-		s.secondary_Weapon_box(inferred[0], font, ammo);
+		s.secondary_Weapon_box(inferred[0], font, ammo[INFERRED]);
 		break;
 	case ZIGGONET:
-		s.secondary_Weapon_box(ziggonet, font, ammo);
+		s.secondary_Weapon_box(ziggonet, font, ammo[ZIGGONET]);
 		break;
 	case HAYCH:
-		s.secondary_Weapon_box(haych[0], font, ammo);
+		s.secondary_Weapon_box(haych[0], font, ammo[HAYCH]);
 		break;
 	case HAYCHBA:
-		s.secondary_Weapon_box(haychba[0], font, ammo);
+		s.secondary_Weapon_box(haychba[0], font, ammo[HAYCHBA]);
 		break;
 	case SONICWAVE:
-		s.secondary_Weapon_box(sonic_wave, font, ammo);
+		s.secondary_Weapon_box(sonic_wave, font, ammo[SONICWAVE]);
+		break;
+	default:
+		s.empty_Weapon_box(font, ammo[0]);
 		break;
 	}
 }
