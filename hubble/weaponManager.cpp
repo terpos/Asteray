@@ -10,6 +10,7 @@ weaponManager::~weaponManager()
 {
 }
 
+//loads assets
 void weaponManager::load_weapon_img()
 {
 	shiplaser[BLUE] = al_load_bitmap("lazer_blue.png");
@@ -36,6 +37,7 @@ void weaponManager::load_weapon_img()
 	//al_reserve_samples(1);
 }
 
+//function not used
 void weaponManager::select_keys(int keys, int p_or_s)
 {
 	if (p_or_s == PRIME)
@@ -55,11 +57,14 @@ void weaponManager::select_keys(int keys, int p_or_s)
 	}
 }
 
+//function not used
 int weaponManager::getweaponID()
 {
 	return HAYCH;
 }
 
+
+//returns the height of the weapon depending on identity
 int weaponManager::geth(int ID)
 {
 	switch (ID)
@@ -89,6 +94,7 @@ int weaponManager::geth(int ID)
 	return NULL;
 }
 
+//returns the width of the weapon depending on identity
 int weaponManager::getw(int ID)
 {
 	switch (ID)
@@ -118,11 +124,13 @@ int weaponManager::getw(int ID)
 	return NULL;
 }
 
+//function not used
 void weaponManager::printout()
 {
 	std::cout << "hello world" << std::endl;
 }
 
+//adds weapon vector to the index
 void weaponManager::load_ammo(std::vector<Weapon*>& w, int ID, int x, int y, int lim)
 {
 	switch (ID)
@@ -152,6 +160,7 @@ void weaponManager::load_ammo(std::vector<Weapon*>& w, int ID, int x, int y, int
 	
 }
 
+//updates weapon coord and animation
 void weaponManager::update(std::vector<Weapon*>& w)
 {
 	for (int i = 0; i < w.size(); i++)
@@ -160,6 +169,7 @@ void weaponManager::update(std::vector<Weapon*>& w)
 	}
 }
 
+//displays weapon when shot
 void weaponManager::renderweapon(std::vector<Weapon*>& w, int ID, Status s, int ammo)
 {
 
@@ -194,6 +204,7 @@ void weaponManager::renderweapon(std::vector<Weapon*>& w, int ID, Status s, int 
 	
 }
 
+//displays primary and secondary weapons in boxes
 void weaponManager::renderweaponinbox(int ID, Status s, int ammo[7])
 {
 	switch (ID)
@@ -225,6 +236,7 @@ void weaponManager::renderweaponinbox(int ID, Status s, int ammo[7])
 	}
 }
 
+//deletes the weapon vector index
 void weaponManager::destroy_ammo(std::vector<Weapon*>& w)
 {
 	for (int i = 0; i < w.size(); i++)
@@ -236,6 +248,7 @@ void weaponManager::destroy_ammo(std::vector<Weapon*>& w)
 	}
 }
 
+//deallocates asset's memory
 void weaponManager::destroy_weapon_img()
 {
 	for (int i = 0; i < 3; i++)	

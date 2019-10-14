@@ -4,6 +4,7 @@
 
 Splash_Screen::Splash_Screen()
 {
+	//initial values
 	splashscrn = NULL;
 	font = NULL;
 	delay = 3;
@@ -15,21 +16,31 @@ Splash_Screen::~Splash_Screen()
 {
 }
 
-void Splash_Screen::init()
+void Splash_Screen::tmp_splash_screen_display()
 {
+	//changes random seed every seconds
 	srand(time(0));
+
+	//loads assets
 	scrn = al_load_bitmap("ss.png");
 	font = al_load_font("ariblk.ttf", 32, NULL);
 	status = al_load_ttf_font("bahnschrift.ttf", 15, NULL);
+	
+	//asigns different random values for different tips
 	randomtips = rand() % 17;
+
+	//creates 500 x 250 display for splash screen
 	splashscrn = al_create_display(500, 250);
 
+	//displays window without borders
 	al_set_display_flag(splashscrn, ALLEGRO_NOFRAME, true);
 
+	//displays bitmap and fonts
 	al_draw_bitmap(scrn, 0, 0, NULL);
 
 	al_draw_text(font, al_map_rgb(255, 255, 255), 170, 100, NULL, "ASTERAY");
 
+	// displays different tips based on the value of random tips
 	switch (randomtips)
 	{
 	case 0:
@@ -53,43 +64,33 @@ void Splash_Screen::init()
 	case 6:
 		stat.setnotification("TIP: PRESS (A) or (S) TO SWITCH SPECIAL WEAPONS", status, 80, 2, al_map_rgb(255, 255, 255));
 		break;
-
 	case 7:
 		stat.setnotification("A TERP GAME", status, 200, 2, al_map_rgb(255, 255, 255));
 		break;
-
 	case 8:
 		stat.setnotification("JUST HAVE FUN", status, 200, 2, al_map_rgb(255, 255, 255));
 		break;
-
 	case 9:
 		stat.setnotification("A SPACE SHOOTING GAME", status, 170, 2, al_map_rgb(255, 255, 255));
 		break;
-
 	case 10:
 		stat.setnotification("TIP: FREEZE YOUR ENEMIES WITH ICET", status, 130, 2, al_map_rgb(255, 255, 255));
 		break;
-
 	case 11:
 		stat.setnotification("TIP: BURN YOUR ENEMIES WITH INFERRED", status, 120, 2, al_map_rgb(255, 255, 255));
 		break;
-
 	case 12:
 		stat.setnotification("TIP: STUN YOUR ENEMIES WITH ZIGGONET", status, 120, 2, al_map_rgb(255, 255, 255));
 		break;
-
 	case 13:
 		stat.setnotification("TIP: THE WRENCH REFILLS YOUR HEALTH", status, 110, 2, al_map_rgb(255, 255, 255));
 		break;
-
 	case 14:
 		stat.setnotification("TIP: THE DIAMOND SHAPE THINGY DESTROYS ALL ENEMIES", status, 60, 2, al_map_rgb(255, 255, 255));
 		break;
-
 	case 15:
 		stat.setnotification("TIP: HEAR THE GUN RELOADS? YEAH, YOU JUST GOT AN AMMO! YAY!", status, 22, 2, al_map_rgb(255, 255, 255));
 		break;
-
 	case 16:
 		stat.setnotification("TIP: HAYCH AND HAYCHBA ARE UNPREDICTIBLE", status, 100, 2, al_map_rgb(255, 255, 255));
 		break;
@@ -98,9 +99,13 @@ void Splash_Screen::init()
 		break;
 	}
 	
+	//shows the assets to the display
 	al_flip_display();
+	
+	//keeps windows open till delay reaches 3
 	al_rest(delay);
 
+	//destroys assets and displays
 	al_destroy_font(font);
 	al_destroy_font(status);
 	al_destroy_bitmap(scrn);

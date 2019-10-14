@@ -4,6 +4,7 @@
 
 Tools_manager::Tools_manager()
 {
+	//initial value
 	tools[0] = NULL;
 	tools[1] = NULL;
 	
@@ -16,36 +17,37 @@ Tools_manager::Tools_manager()
 
 }
 
-
 Tools_manager::~Tools_manager()
 {
 }
 
+//returns tool's identity
 int Tools_manager::get_tool_ID()
 {
 	return this->toolsID;
 }
 
+//returns x coordinate
 int Tools_manager::get_x()
 {
 	return this->x;
 }
-
 int Tools_manager::get_x2()
 {
 	return this->x2;
 }
 
+//returns y coordinate
 int Tools_manager::get_y()
 {
 	return this->y;
 }
-
 int Tools_manager::get_y2()
 {
 	return this->y2;
 }
 
+//loads assets
 void Tools_manager::load()
 {
 	tools[0] = al_load_bitmap("health.png");
@@ -60,6 +62,7 @@ void Tools_manager::load()
 	ammo[6] = al_load_bitmap("Sonic_wave_ammo.png");
 }
 
+//displays and/or plays assets to the screen
 void Tools_manager::draw(int ID, int toolsID, int ammoID, bool weaponammo[6], int x, int y, int x2, int y2)
 {
 	set_x(x);
@@ -120,7 +123,6 @@ void Tools_manager::draw(int ID, int toolsID, int ammoID, bool weaponammo[6], in
 
 	
 }
-
 void Tools_manager::draw(int toolsID, int x, int y)
 {
 	set_x(x);
@@ -140,8 +142,6 @@ void Tools_manager::draw(int toolsID, int x, int y)
 
 
 }
-
-
 void Tools_manager::draw(int ammoID, bool weaponammo[6], int x, int y)
 {
 	set_x(x);
@@ -188,6 +188,7 @@ void Tools_manager::draw(int ammoID, bool weaponammo[6], int x, int y)
 	}
 }
 
+//deallocates assets
 void Tools_manager::destroy()
 {
 	for (int i = 0; i < 2; i++)
@@ -201,6 +202,7 @@ void Tools_manager::destroy()
 	}
 }
 
+//updates coordinates
 void Tools_manager::update(std::vector<Ammo*>& a, std::vector<Tools*>& t)
 {
 	for (int i = 0; i < a.size(); i++)
@@ -225,6 +227,7 @@ void Tools_manager::update(std::vector<Ammo*>& a, std::vector<Tools*>& t)
 
 }
 
+//returns width based on identity
 int Tools_manager::get_ammo_w(int ammo_ID)
 {
 	switch (ammo_ID)
@@ -255,7 +258,6 @@ int Tools_manager::get_ammo_w(int ammo_ID)
 	}
 	return 0;
 }
-
 int Tools_manager::get_tools_w(int tools_ID)
 {
 	switch (tools_ID)
@@ -271,6 +273,7 @@ int Tools_manager::get_tools_w(int tools_ID)
 	return 0;
 }
 
+//returns height based on identity
 int Tools_manager::get_ammo_h(int ammo_ID)
 {
 	switch (ammo_ID)
@@ -301,7 +304,6 @@ int Tools_manager::get_ammo_h(int ammo_ID)
 	}
 	return 0;
 }
-
 int Tools_manager::get_tools_h(int tools_ID)
 {
 	switch (tools_ID)
@@ -317,26 +319,27 @@ int Tools_manager::get_tools_h(int tools_ID)
 	return 0;
 }
 
+//sets tool's identity
 void Tools_manager::set_tool_ID(int ID)
 {
 	this->toolsID = ID;
 }
 
+//sets x coordinate
 void Tools_manager::set_x(int x)
 {
 	this->x = x;
 }
-
 void Tools_manager::set_x2(int x2)
 {
 	this->x2 = x2;
 }
 
+//sets y coordinate
 void Tools_manager::set_y(int y)
 {
 	this->y = y;
 }
-
 void Tools_manager::set_y2(int y2)
 {
 	this->y2 = y2;

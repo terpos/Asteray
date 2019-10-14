@@ -1,7 +1,7 @@
 #include "collision.h"
 
 
-
+//inital variable assignment
 collision::collision()
 {
 	num_of_kill = 0;
@@ -9,15 +9,13 @@ collision::collision()
 	cid = 0;
 	haych_damaged = 0;
 }
-
-
 collision::~collision()
 {
 
 }
 
-
-
+//if the player is about to go outside of the screen the player does not
+//continue moving in the same direction 
 void collision::win_collsion(std::vector <player*> &p)
 {
 	for (int i = 0; i < p.size(); i++)
@@ -47,6 +45,8 @@ void collision::win_collsion(std::vector <player*> &p)
 	
 }
 
+//if the enemy is about to go outside of the screen the enemy changes
+//direction 
 void collision::Enemy_boundary_collision(Enemy_Manager EN, std::vector <enemies*> &foe, int destroy_or_rebound)
 {
 	for (int i = 0; i < foe.size(); i++)
@@ -118,6 +118,8 @@ void collision::Enemy_boundary_collision(Enemy_Manager EN, std::vector <enemies*
 		
 }
 
+//if the boss is about to go outside of the screen the boss changes
+//direction 
 void collision::Boss_boundary_collision(Enemy_Manager EN, std::vector <boss*> &foe)
 {
 	for (int i = 0; i < foe.size(); i++)
@@ -178,9 +180,12 @@ void collision::Boss_boundary_collision(Enemy_Manager EN, std::vector <boss*> &f
 	}
 }
 
+//if the enemy gets hit by player's weapon,
+//damage is done depending on what weapon the
+//player shoots with
 void collision::enemy_gets_damaged(Enemy_Manager EN, weaponManager W, Tools_manager & tm, std::vector<Ammo*>& a,
-	std::vector<Tools*>& t, std::vector<enemies*>& f, std::vector<Weapon*>& l, 
-	Status & s, ALLEGRO_SAMPLE_INSTANCE * instance, ALLEGRO_SAMPLE_INSTANCE *hit_sound, ALLEGRO_FONT * font, Animate &hit, int & score)
+	std::vector<Tools*>& t, std::vector<enemies*>& f, std::vector<Weapon*>& l,Status & s, ALLEGRO_SAMPLE_INSTANCE * instance, 
+	ALLEGRO_SAMPLE_INSTANCE *hit_sound, ALLEGRO_FONT * font, Animate &hit, int & score)
 {
 	for (int i = 0; i < f.size(); i++)
 	{
@@ -274,10 +279,6 @@ void collision::enemy_gets_damaged(Enemy_Manager EN, weaponManager W, Tools_mana
 						f[i]->set_y(0);
 					}
 
-					//enemy_dies(font, NULL, s, score, t, )
-					//std::cout << "Enemy Health " << i << " :" << f[i]->get_health() << std::endl;
-
-
 					l.erase(l.begin() + j);
 
 				}
@@ -285,7 +286,35 @@ void collision::enemy_gets_damaged(Enemy_Manager EN, weaponManager W, Tools_mana
 		}
 	}
 }
+void collision::enemy_gets_damaged(Enemy_Manager EN, std::vector<Tools*>& t, std::vector<enemies*>& f, Status & s, ALLEGRO_FONT * font)
+{
+	for (int i = 0; i < f.size(); i++)
+	{
+		for (int j = 0; j < stunned_enemy.size(); j++)
+		{
 
+			if (f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) < f[stunned_enemy[j]]->get_x() && f[i]->get_x() < f[stunned_enemy[j]]->get_x() + 50
+				&& f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) < f[stunned_enemy[j]]->get_y() && f[i]->get_y() < f[stunned_enemy[j]]->get_y())
+			{
+				num_of_kill += 1;
+				set_num_of_kills(num_of_kill);
+				t.push_back(new Tools(f[i]->get_x(), f[i]->get_y(), rand() % 20));
+
+
+
+				f.erase(f.begin() + stunned_enemy[j]);
+				f.erase(f.begin() + i);
+
+
+				break;
+			}
+		}
+	}
+}
+
+//if the enemies health reaches zero or less
+//score is handled, the power ups and ammo maybe displayed,
+//and the vector index is deleted
 void collision::enemy_dies( ALLEGRO_FONT *font, Animate &d, Status &s, int &numkills, int &score, Tools_manager & tm, std::vector<Ammo*>& a,
 	std::vector<Tools*>& t, std::vector<enemies*>& f, bool weaponunlock[7], ALLEGRO_SAMPLE_INSTANCE * instance)
 {
@@ -376,32 +405,8 @@ void collision::enemy_dies( ALLEGRO_FONT *font, Animate &d, Status &s, int &numk
 	}
 }
 
-void collision::enemy_gets_damaged(Enemy_Manager EN, std::vector<Tools*>& t, std::vector<enemies*>& f, Status & s, ALLEGRO_FONT * font)
-{
-	for (int i = 0; i < f.size(); i++)
-	{
-		for (int j = 0; j < stunned_enemy.size(); j++)
-		{
-
-			if (f[i]->get_x() + EN.get_w(f[i]->get_name_ID()) < f[stunned_enemy[j]]->get_x() && f[i]->get_x() < f[stunned_enemy[j]]->get_x() + 50 
-				&& f[i]->get_y() + EN.get_h(f[i]->get_name_ID()) < f[stunned_enemy[j]]->get_y() && f[i]->get_y() < f[stunned_enemy[j]]->get_y())
-			{
-				num_of_kill += 1;
-				set_num_of_kills(num_of_kill);
-				t.push_back(new Tools(f[i]->get_x(), f[i]->get_y(), rand() % 20));
-
-				
-
-				f.erase(f.begin() + stunned_enemy[j]);
-				f.erase(f.begin() + i);
-
-			
-				break;
-			}
-		}
-	}
-}
-
+//if boss gets hit by player's weapon or
+//its own weapon (Spartak)
 void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vector <boss*> &b, std::vector <Boss_weapon*> &bw, std::vector <Weapon*> &f, 
 	ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_SAMPLE_INSTANCE *instance2, bool &bossdefeated)
 {
@@ -691,6 +696,8 @@ void collision::boss_gets_damaged(Enemy_Manager &EN, weaponManager W, std::vecto
 	}
 }
 
+//if the player hits certain boss's weapon,
+//the weapon will get redirected
 void collision::Ball_gets_redirected(Enemy_Manager &EN, weaponManager W, std::vector <Boss_weapon*> &bw, std::vector <Weapon*> &f,
 	ALLEGRO_SAMPLE_INSTANCE *instance, bool &bossdefeated)
 {
@@ -727,6 +734,8 @@ void collision::Ball_gets_redirected(Enemy_Manager &EN, weaponManager W, std::ve
 	}
 }
 
+//if the player hits certain boss's or enemy's weapon,
+//the weapon will get destroyed
 void collision::Ball_gets_destroyed(Enemy_Manager &EN, weaponManager W, Tools_manager & tm, std::vector <Boss_weapon*> &bw, std::vector <Weapon*> &f,
 	std::vector <Ammo*> &a, ALLEGRO_SAMPLE_INSTANCE *instance, bool &bossdefeated)
 {
@@ -758,6 +767,8 @@ void collision::Ball_gets_destroyed(Enemy_Manager &EN, weaponManager W, Tools_ma
 	}
 }
 
+//player's weapon will have no effect
+//on certain boss's or miniboss's weapon
 void collision::Boss_weapon_immune_to_weapon(Enemy_Manager &EN, Stages s, std::vector <enemies*> e, weaponManager W,
 	std::vector <Enemy_Lazer*> &lazer, std::vector <Weapon*> &f, std::vector <Turrets *> turrets, std::vector <Boss_weapon*> &bw,
 	ALLEGRO_SAMPLE_INSTANCE *instance, bool &bossdefeated)
@@ -827,7 +838,6 @@ void collision::Boss_weapon_immune_to_weapon(Enemy_Manager &EN, Stages s, std::v
 	}
 
 }
-
 void collision::Boss_weapon_immune_to_weapon(Enemy_Manager & EN, weaponManager W, std::vector<enemies*> e, std::vector<Weapon*>& f,
 	ALLEGRO_SAMPLE_INSTANCE * instance, bool & bossdefeated)
 {
@@ -870,6 +880,7 @@ void collision::Boss_weapon_immune_to_weapon(Enemy_Manager & EN, weaponManager W
 	}
 }
 
+//when player shoots miniboss, damage is done to the miniboss
 void collision::miniboss_gets_damaged(Enemy_Manager &EN, Stages s, weaponManager W, std::vector <mini_boss*> &mb, std::vector <Turrets *> &turrets, 
 	std::vector <Weapon*> &f, ALLEGRO_SAMPLE_INSTANCE * hit, ALLEGRO_SAMPLE_INSTANCE *die, bool &bossdefeated)
 {
@@ -912,6 +923,9 @@ void collision::miniboss_gets_damaged(Enemy_Manager &EN, Stages s, weaponManager
 	}
 }
 
+//if the player gets hit by enemy's, boss's, or miniboss's weapon,
+//the damage is dealt to the player and player's status may change
+//depending on the weapon
 void collision::player_gets_damaged(Enemy_Manager &EN, std::vector <mini_boss*> &mb, std::vector <boss*> &b, std::vector <enemies*> &f, std::vector <player*> &p, 
 	Status s, ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_FONT *font, ALLEGRO_EVENT e, Animate &hit, int &health)
 {
@@ -1062,7 +1076,6 @@ void collision::player_gets_damaged(Enemy_Manager &EN, std::vector <mini_boss*> 
 	}
 	
 }
-
 void collision::player_gets_damaged(Enemy_Manager & EN, std::vector<enemies*>& foes, std::vector<Enemy_Lazer*>& lazer, std::vector<player*>& p, 
 	Status s, ALLEGRO_SAMPLE_INSTANCE * instance, ALLEGRO_FONT * font, ALLEGRO_EVENT e, Animate & hit, int & health)
 {
@@ -1105,22 +1118,7 @@ void collision::player_gets_damaged(Enemy_Manager & EN, std::vector<enemies*>& f
 		}
 	}
 }
-
-void collision::check_position(Enemy_Manager E, std::vector<enemies*>& f)
-{
-	for (int i = 0; i < f.size(); i++)
-	{
-		for (int j = 0; j < f.size(); j++)
-		{
-			if (j != i && f[i]->get_x() + E.get_w(f[i]->get_name_ID()) < f[j]->get_x())
-			{
-				f[i]->set_y(f[i]->get_y() - E.get_w(f[i]->get_name_ID()));
-			}
-		}
-	}
-}
-
-void collision::player_gets_damaged(Enemy_Manager &EN, Stages stage, std::vector <enemies*> &foes, std::vector <Enemy_Lazer*> &lazer, 
+void collision::player_gets_damaged(Enemy_Manager &EN, Stages stage, std::vector <enemies*> &foes, std::vector <Enemy_Lazer*> &lazer,
 	std::vector <Turrets *> turrets, std::vector <player*> &p, std::vector <Boss_weapon*> &bw, Status s,
 	ALLEGRO_SAMPLE_INSTANCE *instance, ALLEGRO_FONT *font, ALLEGRO_EVENT e, Animate &hit, int &health)
 {
@@ -1182,7 +1180,7 @@ void collision::player_gets_damaged(Enemy_Manager &EN, Stages stage, std::vector
 
 			}
 
-			
+
 			else if (p[j]->get_x() < (bw[i]->get_x() + EN.get_boss_w(KAMETKHAN) / 2) + (bw[i]->get_r()) &&
 				p[j]->get_y() < (bw[i]->get_y() + EN.get_boss_h(KAMETKHAN) / 2) + (bw[i]->get_r()) &&
 				p[j]->get_x() + p[j]->get_w() > (bw[i]->get_x()) - (bw[i]->get_r()) &&
@@ -1203,7 +1201,7 @@ void collision::player_gets_damaged(Enemy_Manager &EN, Stages stage, std::vector
 					al_set_sample_instance_playmode(instance, ALLEGRO_PLAYMODE_ONCE);
 				}
 			}
-				
+
 		}
 	}
 
@@ -1280,6 +1278,24 @@ void collision::player_gets_damaged(Enemy_Manager &EN, Stages stage, std::vector
 	}
 }
 
+//the enemy is repositioned if there is an overlap between two index's 
+//x and y position
+void collision::check_position(Enemy_Manager E, std::vector<enemies*>& f)
+{
+	for (int i = 0; i < f.size(); i++)
+	{
+		for (int j = 0; j < f.size(); j++)
+		{
+			if (j != i && f[i]->get_x() + E.get_w(f[i]->get_name_ID()) < f[j]->get_x())
+			{
+				f[i]->set_y(f[i]->get_y() - E.get_w(f[i]->get_name_ID()));
+			}
+		}
+	}
+}
+
+//player collides with the tools/ammo which gives
+//players powerup and ammo reloading
 void collision::player_gets_tool(std::vector <player*> &p, Enemy_Manager EN, std::vector <enemies*> &fo,
 	std::vector <Tools*> &t, std::vector <Ammo*> &a, Tools_manager tm, Status s, Stages &stage, ALLEGRO_SAMPLE_INSTANCE *instance[3], 
 	ALLEGRO_FONT *f, int &health, int (& ammo)[7], bool &killonce)
@@ -1368,6 +1384,7 @@ void collision::player_gets_tool(std::vector <player*> &p, Enemy_Manager EN, std
 	}
 }
 
+//all enemies inside the box are deleted
 void collision::destroy_foes_inside(Enemy_Manager EN, std::vector<enemies*>& f)
 {
 	for (int i = 0; i < f.size(); i++)
@@ -1385,11 +1402,13 @@ void collision::destroy_foes_inside(Enemy_Manager EN, std::vector<enemies*>& f)
 	
 }
 
+//returns the number of kills
 int collision::get_num_of_kills()
 {
 	return this->num_of_kill;
 }
 
+//sets number of kills
 void collision::set_num_of_kills(int kill)
 {
 	this->num_of_kill = kill;

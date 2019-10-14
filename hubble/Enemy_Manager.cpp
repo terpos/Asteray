@@ -3,6 +3,7 @@
 
 Enemy_Manager::Enemy_Manager()
 {
+	//initial variable decleration
 	this->damaged = false;
 	sethit(this->damaged);
 	attack_Move = -1;
@@ -20,6 +21,7 @@ Enemy_Manager::~Enemy_Manager()
 
 void Enemy_Manager::load_enemy_img()
 {
+	//loads assets
 	Enemy.push_back(al_load_bitmap("blobby.png"));
 	Enemy.push_back(al_load_bitmap("Asterix.png"));
 	Enemy.push_back(al_load_bitmap("E_police.png"));
@@ -129,18 +131,22 @@ void Enemy_Manager::load_enemy_img()
 	Energized = al_load_sample("Spartak_energizing.ogg");
 	Release = al_load_sample("159399__noirenex__power-down.ogg");
 
+	//creates instances for sound assets
 	energized = al_create_sample_instance(Energized);
 	release = al_create_sample_instance(Release);
 	
+	//attatches sample instance to mixer
 	al_attach_sample_instance_to_mixer(energized, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(release, al_get_default_mixer());
 
+	//initial volume
 	al_set_sample_instance_gain(release, 2);
 	al_set_sample_instance_gain(energized, .5);
 
 	
 }
 
+//spawns boss based on its identity
 void Enemy_Manager::spawn_boss(std::vector <boss*> &b, int bossID)
 {
 	if (bossID == SPARTAK)
@@ -172,9 +178,13 @@ void Enemy_Manager::spawn_boss(std::vector <boss*> &b, int bossID)
 	}
 }
 
+//spawns mini boss based on its identity
 void Enemy_Manager::spawn_minboss(std::vector <mini_boss*> &mb, std::vector <Turrets *> &turrets, Stages &s, int minibossID)
 {
+	//initial frame position
 	ani.set_frame(0);
+
+
 	if (minibossID == E)
 	{
 		mb.push_back(new mini_boss(winx - get_E_w(), 0, NULL, minibossID));
@@ -188,6 +198,7 @@ void Enemy_Manager::spawn_minboss(std::vector <mini_boss*> &mb, std::vector <Tur
 		mb.push_back(new mini_boss(0, 0, ALLEGRO_FLIP_HORIZONTAL, minibossID));
 	}
 
+	//spawns turret for each mini boss
 	for (int i = 0; i < mb.size(); i++)
 	{
 		if (s.get_stage() == EARTH)
@@ -201,6 +212,8 @@ void Enemy_Manager::spawn_minboss(std::vector <mini_boss*> &mb, std::vector <Tur
 	}
 }
 
+//spawns enemy based on its identity
+//each function has different configuration for coordinates, directions, and amount of enemies to spawn
 void Enemy_Manager::spawn_enemy(std::vector <enemies*> &e, int enemy_health[12], int CID, int lim, int enemyID)
 {
 	for (int i = 0; i < lim; i++)
@@ -258,7 +271,6 @@ void Enemy_Manager::spawn_enemy(std::vector <enemies*> &e, int enemy_health[12],
 
 	}
 }
-
 void Enemy_Manager::spawn_enemy(std::vector <enemies*> &e, int enemy_health[12], int CID, 
 	int vel, int lim, int enemyID)
 {
@@ -317,7 +329,6 @@ void Enemy_Manager::spawn_enemy(std::vector <enemies*> &e, int enemy_health[12],
 
 	}
 }
-
 void Enemy_Manager::spawn_enemy(std::vector<enemies*>& e, int enemy_health[12], int x, int y, int CID, int vel, int enemyID)
 {
 	switch (enemyID)
@@ -372,14 +383,15 @@ void Enemy_Manager::spawn_enemy(std::vector<enemies*>& e, int enemy_health[12], 
 	}
 }
 
-
+//updates enemies, miniboss, turrets, and boss
 void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std::vector <mini_boss*> &mb, std::vector <Enemy_Lazer*> &lazer, 
 	std::vector <Turrets *> &turrets, std::vector <Boss_weapon*> &bw, Animate &a, Stages &s, Animate &hit)
 {
+	//updates frame
 	a.increment_frame();
 
 	
-	
+	//updates turrets based on stage level
 	for (int tur = 0; tur < turrets.size(); tur++)
 	{
 		if (s.get_stage() == EARTH)
@@ -393,6 +405,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 		}
 	}
 
+	//updates enemies and its weapon
 	for (int i = 0; i < e.size(); i++)
 	{
 		if (e[i]->get_coord_ID() < 7)
@@ -400,51 +413,63 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 			e[i]->shoot_probability();
 			if (e[i]->get_name_ID() == EPOLICE)
 			{
+				//enemies can shoot 2 bullet simultaneously
 				e[i]->load_ammo(2);
 			}
 
 			else
 			{
+				//enemies can shoot 1 bullet at a time
 				e[i]->load_ammo(1);
 			}
 		}
 		
-		else if (e[i]->get_coord_ID() > 7)
-		{
-			std::cout << i << ": " << e[i]->get_duration() << std::endl;
-		}
-
+		//enemies cannot shoot for a certain period of time
 		e[i]->decrement_delay();
 
+		//updates enemies coordinates, status, and its shooting ability
 		e[i]->update();
+
+		//if enemies are frozen, burned, or stunned, duration countsdown
 		e[i]->countdown_duration();
+
+		//enemies are free from being frozen, burned, or stunned
 		e[i]->release();
+
+		//updates enemies' animation
 		e[i]->update_animation();		
 	}
 
+	//updates enemy lazers' coordinates
 	for (int laz = 0; laz < lazer.size(); laz++)
 	{
+		//sets enemies' ability to shoot
 		lazer[laz]->set_shot(true);
+
+		//updates enemy weapon's coordinate
 		lazer[laz]->shoot();
 
+		//if enemies' weapon is off screen it gets deleted
 		if (lazer[laz]->get_y() + al_get_bitmap_height(E_Lazer) > winy || lazer[laz]->get_x() + al_get_bitmap_width(E_Lazer) > winx)
 		{
 			lazer.erase(lazer.begin() + laz);
 		}
-
 		else if (lazer[laz]->get_y() < 0 || lazer[laz]->get_x() < 0)
 		{
 			lazer.erase(lazer.begin() + laz);
 		}
 	}	
 
+	//updates boss's coordinates, health, and ability to shoot
 	for (int j = 0; j < b.size(); j++)
 	{
-
+		//if boss is spartak
 		if (b[j]->get_boss() == SPARTAK)
 		{
+			//spartak's attack move is always randomized
 			attack_Move = rand() % 4;
 
+			//if spartak is hit, it goes back and damage animation starts
 			if (ishit())
 			{
 				b[j]->set_action(-1);
@@ -456,6 +481,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					b[j]->set_y(0);
 				}
 
+				//if damage animation keyframe reached a certain position
 				if (b[j]->get_frame() >= 24)
 				{
 					sethit(false);
@@ -467,23 +493,21 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 				}
 			}
 
+			//if spartak is not hit or dead
 			else if (!ishit() && !isdying())
 			{
+				//updates spartak's coordinates, health, and ability to shoot
 				b[j]->update(Spartak[0], attack_Move, lazerb_shoot);
 
+				//if spartak is energizing, frame is updated
 				if (b[j]->get_energize())
 				{
 					b[j]->increment_frame();
 				}
 
-			
-
-				std::cout << "MOVEMENT: " << b[j]->get_coordID() << std::endl;
-				std::cout << "ACTION: " << b[j]->get_action() << std::endl;
-
+				//if spartak decides to shoot an energy ball 
 				if (attack_Move == BALL)
 				{
-					
 
 					if (b[j]->get_frame() == 99)
 					{
@@ -499,6 +523,9 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					}
 				}
 
+				//if spartak decides to shoot diamonds
+				//4 diamonds if spartak has high health
+				//8 diamonds if spartak is almost dying
 				else if (attack_Move >= DIAMONDS)
 				{
 					if (b[j]->get_frame() == 99)
@@ -527,7 +554,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					}
 				}
 
-
+				//if spartak is done energizing
 				if (b[j]->get_frame() == 200 && b[j]->get_energize())
 				{
 					al_stop_sample_instance(energized);
@@ -540,7 +567,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 			
 
-
+				//boss weapon is being updated
 				for (int l = 0; l < bw.size(); l++)
 				{
 					if (b[j]->get_frame() == 199)
@@ -557,6 +584,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 			}
 
+			//if spartak dies
 			else if (isdying())
 			{
 				b[j]->set_coordID(10);
@@ -568,10 +596,13 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 			}
 		}
 
+		//if boss is martianb
 		else if (b[j]->get_boss() == MARTIANB)
 		{
+			//if martianb is hit, it goes up right away and damage animation starts
 			if (ishit())
 			{
+
 				b[j]->set_coordID(UP);
 				b[j]->set_vel(15);
 
@@ -579,7 +610,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 				b[j]->update(Martianb[0], attack_Move, lazerb_shoot);
 				b[j]->move();
 
-
+				//if damage animation keyframe reached a certain position
 				if (b[j]->get_frame() == 24)
 				{
 					sethit(false);
@@ -587,20 +618,24 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					b[j]->set_frame(0);
 				}
 
-				
-
 			}
 
-			
+			//if spartak is not hit or dead
 			else if (!ishit() && !isdying())
 			{
+				//updates spartak's coordinates, health, and ability to shoot
 				b[j]->update(Martianb[0], attack_Move, lazerb_shoot);
 
+				//frames count up
 				b[j]->increment_frame();
+
+				//martianb moves sideways
 				b[j]->move();
-				//lazerb_action = true;
+
+				//if martianb decides to attack
 				if (b[j]->get_action() == ATTACK)
 				{
+					//if martianb decides to charge at the player
 					if (attack_Move == CHARGE)
 					{
 						if (b[j]->get_coordID() == LEFT || b[j]->get_coordID() == RIGHT)
@@ -615,6 +650,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 						b[j]->set_action(MOVE);
 					}
 
+					//if martianb decides to shoot egg bomb
 					else if (attack_Move == EGG)
 					{
 						bw.push_back(new Egg_Bomb(b[j]->get_x(), b[j]->get_y(), 10, DOWN));
@@ -622,6 +658,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 						lazerb_action = true;
 					}
 
+					//if martianb decides to do sonic turbulence
 					else if (attack_Move == TURBULENCE)
 					{
 						bw.push_back(new Sonic_Turbulence(b[j]->get_x(), b[j]->get_y(), 10, DOWN));
@@ -629,6 +666,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 						lazerb_action = true;
 					}
 
+					//if martianb decides to shoot laser
 					else if (attack_Move == B_LAZER)
 					{
 
@@ -648,6 +686,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 						}
 
+						//if it decides not to attack
 						else
 						{
 							attack_Move = rand() % 4;
@@ -658,12 +697,14 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					}	
 				}
 
+				//updates the weapon's position
 				for (int l = 0; l < bw.size(); l++)
 				{
 					bw[l]->shootball();
 				}
 			}
 
+			//if martianb is dead
 			else if (isdying())
 			{
 				b[j]->set_coordID(10);
@@ -675,13 +716,17 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 			}
 		}
 
+		//if boss is kametkhan
 		else if (b[j]->get_boss() == KAMETKHAN)
 		{
+			
+			//if kametkhan is hit it stops for a seconds and damage animation starts
 			if (ishit())
 			{
 				b[j]->set_action(-1);
 				b[j]->increment_frame();
 
+				//once damage animation reaches certain frame, the damage animation stops
 				if (b[j]->get_frame() == 24)
 				{
 					sethit(false);
@@ -696,6 +741,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 				}
 			}
 
+			//if kametkhan did not get shot or is not dead
 			else if (!ishit() && !isdying())
 			{
 				b[j]->update(Kametkhan[0], attack_Move, lazerb_shoot);
@@ -746,6 +792,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 			}
 
+			//if kametkhan is dead
 			else if (isdying())
 			{
 				b[j]->set_coordID(10);
@@ -757,9 +804,11 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 			}
 		}
 
+		//if boss is xorgana
 		else if (b[j]->get_boss() == XORGANA)
 		{
 
+			//if xorgana is hit it keeps moving, still shoots, and damage animation starts
 			if (ishit())
 			{
 				b[j]->update(Xorgana[0], attack_Move, lazerb_shoot);
@@ -767,6 +816,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 				b[j]->set_action(-1);
 				b[j]->increment_frame();
 
+				//once damage animation reaches certain frame, the damage animation stops
 				if (b[j]->get_frame() == 24)
 				{
 					sethit(false);
@@ -777,16 +827,15 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 					{
 						b[j]->set_y(b[j]->get_y() + get_boss_h(XORGANA));
 					}
-
-
-
 				}
+
 				for (int n = 0; n < bw.size(); n++)
 				{
 					bw[n]->shootball();
 				}
 			}
 
+			//if xorgana is not hit or dead
 			else if (!ishit() && !isdying())
 			{
 				b[j]->update(Xorgana[0], attack_Move, lazerb_shoot);
@@ -827,7 +876,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 				
 			}
 
-
+			//is xorgana is dead
 			else if (isdying())
 			{
 				b[j]->set_coordID(10);
@@ -841,9 +890,8 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 	}
 
-	//std::cout << "BOSS WEAPON: " << bw.size() << std::endl;
-	//std::cout << "ATTACK MOVE: " << attack_Move << std::endl;
-	
+	//boss weapon is updating
+	//if boss weapon goes off screen, it gets deleted
 	for (int l = 0; l < bw.size(); l++)
 	{
 
@@ -866,6 +914,7 @@ void Enemy_Manager::update(std::vector<enemies*>& e, std::vector <boss*> &b, std
 
 void Enemy_Manager::update(std::vector<enemies*>& e, Animate &hit)
 {
+	//updates enemies' coordinates, health, and animation
 	for (int i = 0; i < e.size(); i++)
 	{
 		if (e[i]->get_coord_ID() < 7)
@@ -873,31 +922,38 @@ void Enemy_Manager::update(std::vector<enemies*>& e, Animate &hit)
 			e[i]->shoot_probability();
 			if (e[i]->get_name_ID() == EPOLICE)
 			{
+				//shoots two bullets simultaneously
 				e[i]->load_ammo(2);
 			}
 
 			else
 			{
+				//shoots one bullet at a time
 				e[i]->load_ammo(1);
 			}
 		}
 
-		else if (e[i]->get_coord_ID() > 7)
-		{
-			std::cout << i << ": " << e[i]->get_duration() << std::endl;
-		}
-
+		//counts down amount of time enemies can shoot again
 		e[i]->decrement_delay();
 
+		//updates enemies' coordinates, health, and animation
 		e[i]->update();
+
+		//counts down the amount of time until enemies is freed
+		//from being frozen, burned, or stunned
 		e[i]->countdown_duration();
+
+		//enemies is freed from being frozen, burned, or stunned
 		e[i]->release();
+
+		//enemies updates animation
 		e[i]->update_animation();
 
 		
 	}
 }
 
+//displays enemies on screen depending on identities
 void Enemy_Manager::renderenemy(std::vector<enemies*>& e, Animate &hit)
 {
 
@@ -946,12 +1002,14 @@ void Enemy_Manager::renderenemy(std::vector<enemies*>& e, Animate &hit)
 	}
 }
 
+//displays boss on screen depending on identites
 void Enemy_Manager::renderboss(std::vector <boss*> &b,std::vector <Enemy_Lazer*> &lazer, std::vector <Boss_weapon*> &bw, 
 	Animate a, ALLEGRO_SAMPLE_INSTANCE *destroy, int &frame)
 {
 	
 	for (int i = 0; i < b.size(); i++)
 	{
+		//if bosses are dead, dead animation sprite begins
 		if (isdying() && b[i]->get_health() <= 0)
 		{
 			switch (b[i]->get_boss())
@@ -1024,17 +1082,20 @@ void Enemy_Manager::renderboss(std::vector <boss*> &b,std::vector <Enemy_Lazer*>
 			}
 		}
 
+		//if boss are not dead
 		else if (b[i]->get_health() > 0)
 		{
 			switch (b[i]->get_boss())
 			{
 			case SPARTAK:
 
+				//if spartak got hit
 				if (ishit())
 				{
 					a.two_frames_custom(Spartak[0], Spartak[2], b[i]->get_x(), b[i]->get_y(), b[i]->get_frame(), 5, 0, 2);
 				}
 
+				//if spartak energize, it starts slow then goes fast at the end
 				else
 				{
 					if (b[i]->get_energize())
@@ -1089,6 +1150,7 @@ void Enemy_Manager::renderboss(std::vector <boss*> &b,std::vector <Enemy_Lazer*>
 
 			case MARTIANB:
 
+				//if martianb got hit
 				if (ishit())
 				{
 					a.two_frames_custom(Martianb[0], Martianb[2], b[i]->get_x(), b[i]->get_y(), b[i]->get_frame(), 5, 0, 2);
@@ -1112,6 +1174,7 @@ void Enemy_Manager::renderboss(std::vector <boss*> &b,std::vector <Enemy_Lazer*>
 					}
 				}
 
+				//if martian decides to attack
 				else
 				{
 					a.two_frames_custom(Martianb[0], Martianb[1], b[i]->get_x(), b[i]->get_y(), b[i]->get_frame(), 17, 0, 8);
@@ -1138,6 +1201,8 @@ void Enemy_Manager::renderboss(std::vector <boss*> &b,std::vector <Enemy_Lazer*>
 				break;
 
 			case KAMETKHAN:
+
+				//if kametkhan got hit
 				if (ishit())
 				{
 					for (int j = 0; j < bw.size(); j++)
@@ -1161,6 +1226,7 @@ void Enemy_Manager::renderboss(std::vector <boss*> &b,std::vector <Enemy_Lazer*>
 					a.two_frames_custom(Kametkhan[0], Kametkhan[2], b[i]->get_x(), b[i]->get_y(), b[i]->get_frame(), 5, 0, 2);
 				}
 
+				//if kametkhan decides to attack
 				else
 				{	
 					for (int j = 0; j < bw.size(); j++)
@@ -1187,6 +1253,8 @@ void Enemy_Manager::renderboss(std::vector <boss*> &b,std::vector <Enemy_Lazer*>
 				break;
 
 			case XORGANA:
+
+				//if xorgana got hit
 				if (ishit())
 				{
 					for (int j = 0; j < bw.size(); j++)
@@ -1205,6 +1273,7 @@ void Enemy_Manager::renderboss(std::vector <boss*> &b,std::vector <Enemy_Lazer*>
 					a.two_frames_custom(Xorgana[0], Xorgana[1], b[i]->get_x(), b[i]->get_y(), b[i]->get_frame(), 5, 0, 2);
 				}
 
+				//if xorgana decides to attack
 				else
 				{
 					for (int j = 0; j < bw.size(); j++)
@@ -1230,6 +1299,7 @@ void Enemy_Manager::renderboss(std::vector <boss*> &b,std::vector <Enemy_Lazer*>
 	}
 }
 
+//displays miniboss on screen depending on identites and what stage the player is in
 void Enemy_Manager::renderminiboss(std::vector<mini_boss*>& mb, std::vector<Turrets*>& turrets, Stages s, Animate a)
 {
 	for (int i = 0; i < mb.size(); i++)
@@ -1272,17 +1342,20 @@ void Enemy_Manager::renderminiboss(std::vector<mini_boss*>& mb, std::vector<Turr
 
 }
 
+//function not used
 void Enemy_Manager::destroy_enemy(std::vector <enemies*>& e, int index)
 {
 	e.erase(e.begin() + index);
 		
 }
 
+//clears all enemies
 void Enemy_Manager::clear_enemy(std::vector<enemies*>& e)
 {
 	e.clear();
 }
 
+//deallocates all assets
 void Enemy_Manager::destroy_enemy_img()
 {
 	for (int i = 0; i < Enemy.size(); i++)
@@ -1386,6 +1459,8 @@ void Enemy_Manager::destroy_enemy_img()
 }
 
 
+//gets height of enemies, boss, turrets, 
+//and miniboss, enemy weapon, turret weapon, and boss weapon
 int Enemy_Manager::get_h(int enemyID)
 {
 	switch (enemyID)
@@ -1442,7 +1517,6 @@ int Enemy_Manager::get_h(int enemyID)
 
 	return 0;
 }
-
 int Enemy_Manager::get_turret_h(int enemyID)
 {
 	if (enemyID == EARTH)
@@ -1456,7 +1530,6 @@ int Enemy_Manager::get_turret_h(int enemyID)
 	}
 	return 0;
 }
-
 int Enemy_Manager::get_turretweapon_h(int enemyID)
 {
 	if (enemyID == EARTH)
@@ -1470,17 +1543,14 @@ int Enemy_Manager::get_turretweapon_h(int enemyID)
 	}
 	return 0;
 }
-
 int Enemy_Manager::get_E_h()
 {
 	return al_get_bitmap_height(earth_gate);
 }
-
 int Enemy_Manager::get_M_h()
 {
 	return al_get_bitmap_height(mars_gate);
 }
-
 int Enemy_Manager::get_boss_h(int bossID)
 {
 	for (int i = 0; i < 2; i++)
@@ -1502,8 +1572,94 @@ int Enemy_Manager::get_boss_h(int bossID)
 		}
 	}
 }
+int Enemy_Manager::get_Eweapon_h(int enemyID)
+{
+	switch (enemyID)
+	{
+	case BLOBBY:
+		return al_get_bitmap_height(Blobby_w);
+		break;
 
+	case ASTERIX:
+		return al_get_bitmap_height(Asterix_w);
+		break;
 
+	case EPOLICE:
+		return al_get_bitmap_height(E_Lazer);
+		break;
+
+	case JUPIBALL:
+		return al_get_bitmap_height(Planet_w);
+		break;
+
+	case MPOLICE:
+		return al_get_bitmap_height(Mpolice_w);
+		break;
+
+	case SATUSPHERE:
+		return al_get_bitmap_height(Planet_w);
+		break;
+
+	case SPACESHIP:
+		return al_get_bitmap_height(Spaceship_w);
+		break;
+
+	case SPYDER:
+		return al_get_bitmap_height(Spyder_w);
+		break;
+
+	case WYRM:
+		return al_get_bitmap_height(E_Lazer);
+		break;
+
+	case VOLCANON:
+		return al_get_bitmap_height(Volcanon_w);
+		break;
+
+	case XYBTOFY:
+		return al_get_bitmap_height(Xybtofy_w);
+		break;
+	}
+
+	return 0;
+}
+int Enemy_Manager::boss_weapon_h(int bossweaponID)
+{
+	switch (bossweaponID)
+	{
+	case BALL:
+		return al_get_bitmap_height(Spartakball);
+		break;
+	case DIAMONDS:
+		return al_get_bitmap_height(Diamond);
+		break;
+	case EGG:
+		return al_get_bitmap_height(Egg_bomb);
+		break;
+	case TURBULENCE:
+		return al_get_bitmap_height(Sonic_Turbulance);
+		break;
+	case B_LAZER:
+		return al_get_bitmap_height(LaserB);
+		break;
+	case MOLTEN:
+		return al_get_bitmap_height(Kamekhan_weapon);
+		break;
+	case KAMET:
+		return al_get_bitmap_height(kamet);
+		break;
+	case V:
+		return al_get_bitmap_height(Xorgana_weapon);
+		break;
+	case SINGTW:
+		return al_get_bitmap_height(SingleTwin);
+		break;
+	}
+	return 0;
+}
+
+//gets width of enemies, boss, turrets, 
+//and miniboss, enemy weapon, turret weapon, and boss weapon
 int Enemy_Manager::get_w(int enemyID)
 {
 	switch (enemyID)
@@ -1559,7 +1715,6 @@ int Enemy_Manager::get_w(int enemyID)
 
 	return 0;
 }
-
 int Enemy_Manager::get_Eweapon_w(int enemyID)
 {
 	switch (enemyID)
@@ -1611,7 +1766,6 @@ int Enemy_Manager::get_Eweapon_w(int enemyID)
 
 	return 0;
 }
-
 int Enemy_Manager::get_turret_w(int enemyID)
 {
 	if (enemyID == EARTH)
@@ -1625,7 +1779,6 @@ int Enemy_Manager::get_turret_w(int enemyID)
 	}
 	return 0;
 }
-
 int Enemy_Manager::get_turretweapon_w(int enemyID)
 {
 	if (enemyID == EARTH)
@@ -1639,17 +1792,14 @@ int Enemy_Manager::get_turretweapon_w(int enemyID)
 	}
 	return 0;
 }
-
 int Enemy_Manager::get_E_w()
 {
 	return al_get_bitmap_width(earth_gate);
 }
-
 int Enemy_Manager::get_M_w()
 {
 	return al_get_bitmap_width(mars_gate);
 }
-
 int Enemy_Manager::get_boss_w(int bossID)
 {
 	for (int i = 0; i < 2; i++)
@@ -1671,7 +1821,6 @@ int Enemy_Manager::get_boss_w(int bossID)
 		}
 	}
 }
-
 int Enemy_Manager::boss_weapon_w(int bossweaponID)
 {
 	switch (bossweaponID)
@@ -1707,122 +1856,36 @@ int Enemy_Manager::boss_weapon_w(int bossweaponID)
 
 	return 0;
 }
-
-int Enemy_Manager::boss_weapon_h(int bossweaponID)
-{
-	switch (bossweaponID)
-	{
-	case BALL:
-		return al_get_bitmap_height(Spartakball);
-		break;
-	case DIAMONDS:
-		return al_get_bitmap_height(Diamond);
-		break;
-	case EGG:
-		return al_get_bitmap_height(Egg_bomb);
-		break;
-	case TURBULENCE:
-		return al_get_bitmap_height(Sonic_Turbulance);
-		break;
-	case B_LAZER:
-		return al_get_bitmap_height(LaserB);
-		break;
-	case MOLTEN:
-		return al_get_bitmap_height(Kamekhan_weapon);
-		break;
-	case KAMET:
-		return al_get_bitmap_height(kamet);
-		break;
-	case V:
-		return al_get_bitmap_height(Xorgana_weapon);
-		break;
-	case SINGTW:
-		return al_get_bitmap_height(SingleTwin);
-		break;
-	}
-	return 0;
-}
-
 int Enemy_Manager::get_elazer_w()
 {
 	return al_get_bitmap_width(E_Lazer);
 }
 
-int Enemy_Manager::get_Eweapon_h(int enemyID)
-{
-	switch (enemyID)
-	{
-	case BLOBBY:
-		return al_get_bitmap_height(Blobby_w);
-		break;
-
-	case ASTERIX:
-		return al_get_bitmap_height(Asterix_w);
-		break;
-
-	case EPOLICE:
-		return al_get_bitmap_height(E_Lazer);
-		break;
-
-	case JUPIBALL:
-		return al_get_bitmap_height(Planet_w);
-		break;
-
-	case MPOLICE:
-		return al_get_bitmap_height(Mpolice_w);
-		break;
-
-	case SATUSPHERE:
-		return al_get_bitmap_height(Planet_w);
-		break;
-
-	case SPACESHIP:
-		return al_get_bitmap_height(Spaceship_w);
-		break;
-
-	case SPYDER:
-		return al_get_bitmap_height(Spyder_w);
-		break;
-
-	case WYRM:
-		return al_get_bitmap_height(E_Lazer);
-		break;
-
-	case VOLCANON:
-		return al_get_bitmap_height(Volcanon_w);
-		break;
-
-	case XYBTOFY:
-		return al_get_bitmap_height(Xybtofy_w);
-		break;
-	}
-
-	return 0;
-}
-
-
-
-
+//returns number of enemies
 int Enemy_Manager::get_num_of_enemy(std::vector <enemies*> e)
 {
 	return e.size();
 }
 
+//returns if boss got hit
 int Enemy_Manager::ishit()
 {
 	return this->damaged;
 }
 
+//returns if boss is dead
 bool Enemy_Manager::isdying()
 {
 	return this->dying;
 }
 
+//sets boss hit if it got hit
 void Enemy_Manager::sethit(bool hit)
 {
 	this->damaged = hit;
 }
 
+//sets death of the boss
 void Enemy_Manager::set_death(bool dying)
 {
 	this->dying = dying;

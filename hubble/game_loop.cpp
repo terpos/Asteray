@@ -3,6 +3,7 @@
 
 game_loop::game_loop()
 {
+	//initialize all variables
 	health = 100;
 	lvl = 1;
 	sc = 0;
@@ -16,10 +17,8 @@ game_loop::game_loop()
 	backgroundvol = 1.5;
 	options = -1;
 	scorecounter = 500;
-	//s.set_y(0);
 	increment = 0;
 	num_of_kills = 0;
-	//disfig_index = 0;
 	miniboss_battle = false;
 	advance = false;
 	advance_increment = 0;
@@ -53,8 +52,6 @@ game_loop::game_loop()
 	enemy_health[WYRM] = 12; // DEFAULT:12
 	enemy_health[XYBTOFY] = 2; // DEFAULT:2
 
-	//spaceship = player();
-
 	draw = false;
 	battle = false;
 	bossdefeated = false;
@@ -64,6 +61,7 @@ game_loop::game_loop()
 	mouse = false;
 	disfig = false;
 
+	//sets all keyframe to zero
 	credit.set_frame(0);
 	player_damaged.set_frame(0);
 	enemy_damaged.set_frame(0);
@@ -78,6 +76,7 @@ game_loop::~game_loop()
 
 void game_loop::replay()
 {
+	//stops all sounds that are played
 	al_stop_sample_instance(Earth);
 	al_stop_sample_instance(Earth_Factory);
 	al_stop_sample_instance(Mars);
@@ -88,6 +87,7 @@ void game_loop::replay()
 	al_stop_sample_instance(Final_Boss);
 	al_set_sample_instance_position(Stage_Completed, 1);
 
+	//erases all vector variables
 	foes.clear();
 	b.clear();
 	foes_scroll1.clear();
@@ -96,7 +96,6 @@ void game_loop::replay()
 	foes_scroll4.clear();
 	foes_scroll5.clear();
 	mb.clear();
-	spaceship.push_back(new player());
 	t.clear();
 	t2.clear();
 	t3.clear();
@@ -124,7 +123,8 @@ void game_loop::replay()
 	bw.clear();
 	turrets.clear();
 	
-
+	//reloads player and initial variables are set
+	spaceship.push_back(new player());
 	for (int i = 0; i < spaceship.size(); i++)
 	{
 		spaceship[i]->load();
@@ -133,12 +133,11 @@ void game_loop::replay()
 
 	}
 	
-
+	//initial variables are set
 	health = 100;
 	lvl = 1;
 	sc = 0;
 	pauseCounter = 0;
-	
 
 	ammo[ICET] = 10;
 	ammo[INFERRED] = 10;
@@ -167,7 +166,7 @@ void game_loop::replay()
 
 void game_loop::init()
 {
-
+	// this function is the same as replay except the player does not reload
 	al_stop_sample_instance(Earth);
 	al_stop_sample_instance(Earth_Factory);
 	al_stop_sample_instance(Mars);
@@ -288,6 +287,7 @@ void game_loop::init()
 
 void game_loop::load_stuff()
 {
+	//loads all assets
 	s.load_stages();
 	
 	T.load();
@@ -297,6 +297,28 @@ void game_loop::load_stuff()
 	T5.load();
 	T6.load();
 
+	burned_red = al_load_bitmap("burned_red.png");
+	burned_yellow = al_load_bitmap("burned_yellow.png");
+
+	for (int j = 0; j < spaceship.size(); j++)
+	{
+		spaceship[j]->load();
+		spaceship[j]->set_coords(winx / 2, winy - 150);
+		spaceship[j]->ship_hit(false);
+	}
+
+	s.set_stage(this->stagenumber);
+
+	shipWeapon.load_weapon_img();
+
+	al_set_sample_instance_gain(enemy_hit, 2);
+
+	E.load_enemy_img();
+	E2.load_enemy_img();
+	E3.load_enemy_img();
+	E4.load_enemy_img();
+	E5.load_enemy_img();
+	E6.load_enemy_img();
 
 	spaceship.push_back(new player());
 	status = al_load_ttf_font("bahnschrift.ttf", 15, NULL);
@@ -385,6 +407,7 @@ void game_loop::load_stuff()
 	Credit = al_create_sample_instance(cre);
 	Countdown = al_create_sample_instance(cntdwn);
 
+	//attaches the sample instance to the default mixer
 	al_attach_sample_instance_to_mixer(Earth, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(Earth_Factory, al_get_default_mixer());
 	al_attach_sample_instance_to_mixer(Mars, al_get_default_mixer());
@@ -427,7 +450,7 @@ void game_loop::load_stuff()
 	al_set_sample_instance_playmode(Stage_Completed, ALLEGRO_PLAYMODE_ONCE);
 	al_set_sample_instance_playmode(Credit, ALLEGRO_PLAYMODE_ONCE);
 
-
+	//sets volume value to certain backgound music and sound effects
 	for (int i = 0; i < 3; i++)
 	{
 		al_set_sample_instance_gain(pickup[i], 2);
@@ -442,46 +465,27 @@ void game_loop::load_stuff()
 	al_set_sample_instance_gain(Credit, 2);
 	al_set_sample_instance_gain(Countdown, 2);
 
+	//sets the sound positon to zero
 	al_set_sample_instance_position(Stage_Completed, 1);
 	al_set_sample_instance_position(Credit, 0);
 
-
-	burned_red = al_load_bitmap("burned_red.png");
-	burned_yellow = al_load_bitmap("burned_yellow.png");
-	
-	for (int j = 0; j < spaceship.size(); j++)
-	{
-		spaceship[j]->load();
-		spaceship[j]->set_coords(winx / 2, winy - 150);
-		spaceship[j]->ship_hit(false);
-	}
-
-	s.set_stage(this->stagenumber);
-
-	shipWeapon.load_weapon_img();
-	
-	al_set_sample_instance_gain(enemy_hit, 2);
-
-	E.load_enemy_img();
-	E2.load_enemy_img();
-	E3.load_enemy_img();
-	E4.load_enemy_img();
-	E5.load_enemy_img();
-	E6.load_enemy_img();
 }
 
 void game_loop::loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop)
 {
-
+	//sets spaceship movement to true
 	for (int j = 0; j < spaceship.size(); j++)
 	{
 		spaceship[j]->set_movement(true);
 	}
 
+	//sets stage background to the beginning
 	s.set_y(s.get_h());
 	
+	//game loop
 	while (!done)
 	{
+		//if player kills all enemies
 		if (E.get_num_of_enemy(foes) == 0 && battle)
 		{
 			battle = false;
@@ -489,6 +493,7 @@ void game_loop::loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop)
 			lvl++;
 		}
 
+		//if player defeates miniboss
 		if (mb.size() == 0 && miniboss_battle)
 		{
 			minibossdefeated = true;
@@ -499,8 +504,10 @@ void game_loop::loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop)
 			forward(spaceship[0]);
 		}
 
+		//if the player is still alive
 		if (spaceship.size() > 0)
 		{
+			//if player defeated miniboss and advanced
 			if (spaceship[0]->get_y() < 0 && minibossdefeated)
 			{
 				advance_increment = 0;
@@ -521,6 +528,7 @@ void game_loop::loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop)
 
 		}
 
+		//if player defeated miniboss
 		if (bossdefeated && boss_battle && b.size() == 0)
 		{
 			al_stop_samples();
@@ -551,7 +559,6 @@ void game_loop::loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop)
 				{
 					boss_battle = false;
 					pauseCounter = 5;
-					//std::cout << "Pause Counter: " << pauseCounter << std::endl;
 				}
 			}
 			
@@ -563,10 +570,12 @@ void game_loop::loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop)
 			}
 		}
 
+		//handles event and updates variables
 		Event_listenter(ev, q);
 		update(ev, q);
 	}
 
+	//if the loop breaks all background music stops playing
 	al_stop_sample_instance(Earth);
 	al_stop_sample_instance(Earth_Factory);
 	al_stop_sample_instance(Mars);
@@ -580,6 +589,7 @@ void game_loop::loop(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q, bool &loop)
 
 void game_loop::stage_advance(player *&p)
 {
+	//if player is adjusted to the bottom middle position
 	spaceship[0]->set_movement(false);
 	if (p->get_x() < winx / 2)
 	{
@@ -604,7 +614,8 @@ void game_loop::stage_advance(player *&p)
 
 void game_loop::forward(player *&p)
 {
-
+	// if players are in position
+	//earth background music stops playing
 	if (spaceship[0]->get_x() == winx / 2 && spaceship[0]->get_y() == winy - 150)
 	{
 		al_stop_sample_instance(Earth);
@@ -617,10 +628,8 @@ void game_loop::forward(player *&p)
 		al_set_sample_instance_position(Earth, 0);
 		stage_advance(p);
 	}
-	std::cout << "ADVANCE: " << advance << std::endl;
-	std::cout << "advance y: " << spaceship[0]->get_y() << std::endl;
 
-
+	//when player advances
 	if (advance)
 	{
 		//spaceship[0]->set_movement(false);
@@ -638,12 +647,14 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 {
 	al_wait_for_event(q, &ev);
 
+	//if x button is clicked
 	if (ev.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
 	{
 		destroy_stuff();
 		exit(EXIT_SUCCESS);
 	}
-		
+	
+	//if the game is minimized
 	if (ev.type == ALLEGRO_EVENT_DISPLAY_SWITCH_OUT)
 	{
 		if (pauseCounter != 5)
@@ -652,20 +663,27 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 		}
 	}
 
+	//if a key is pressed
 	else if (ev.type == ALLEGRO_EVENT_KEY_DOWN)
 	{
+		//mouse is false
 		mouse = false;
+
+		//in the pause counter while player is still alive
 		if (pauseCounter == 1 && spaceship.size() > 0)
 		{
 			for (int j = 0; j < spaceship.size(); j++)
 			{
 				switch (ev.keyboard.keycode)
 				{
+					//if escape key is pressed, the game closes
 				case ALLEGRO_KEY_ESCAPE:
 					destroy_stuff();
 					exit(EXIT_SUCCESS);
 					break;
 
+					//if p key is pressed the screen transition to 
+					//the game
 				case ALLEGRO_KEY_P:
 					pauseCounter = 0;
 					al_set_sample_instance_position(Pause_On, 0);
@@ -673,8 +691,11 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 					al_play_sample_instance(Pause_On);
 					break;
 
+					//if r key is pressed, the player replays the stage
 				case ALLEGRO_KEY_R:
 
+					//ship deallocates the assets and 
+					//vector is erased
 					if (spaceship.size() != 0)
 					{
 						spaceship[j]->destroy();
@@ -685,6 +706,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 					
 					break;
 
+					//if down key is pressed options value increases 
 				case ALLEGRO_KEY_DOWN:
 					options = (options + 1) % 5;
 					al_set_sample_instance_position(Pause_On, 0);
@@ -692,7 +714,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 					al_play_sample_instance(Pause_On);
 					break;
 
-
+					//if up key is pressed options value decreases 
 				case ALLEGRO_KEY_UP:
 					options = (options - 1) % 5;
 					al_set_sample_instance_position(Pause_On, 0);
@@ -704,6 +726,8 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 					}
 					break;
 
+					//if enter key is pressed whatever options value is stored
+					//will be used
 				case ALLEGRO_KEY_ENTER:
 					switch (options)
 					{
@@ -749,17 +773,22 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
+		//stage completed screen while player is still alive
 		else if (pauseCounter == 4 && spaceship.size() > 0)
 		{
 			for (int j = 0; j < spaceship.size(); j++)
 			{
 				switch (ev.keyboard.keycode)
 				{
+					//if escape key is pressed
+					//the game closes
 				case ALLEGRO_KEY_ESCAPE:
 					destroy_stuff();
 					exit(EXIT_SUCCESS);
 					break;
 
+					//if enter key is pressed
+					//player goes to next stage
 				case ALLEGRO_KEY_ENTER:
 
 					if (scorecounter <= 0)
@@ -789,28 +818,34 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
+		//game over screen
 		else if (spaceship.size() <= 0 && pauseCounter != 5)
 		{
 			switch (ev.keyboard.keycode)
 			{
-
+				//if escape key is pressed, the game closes
 			case ALLEGRO_KEY_ESCAPE:
 				destroy_stuff();
 				exit(EXIT_SUCCESS);
 				break;
 
+				//if r key is pressed, player 
+				//starts form the beginning of the stage
 			case ALLEGRO_KEY_R:
 				replay();
-				//stage(ev, q);
 				break;
 
+				//if down key is pressed, options value increases
 			case ALLEGRO_KEY_DOWN:
 				options = (options + 1) % 2;
 				break;
+
+				//if up key is pressed, options value decreases
 			case ALLEGRO_KEY_UP:
 				options = abs((options - 1) % 2);
 				break;
 
+				//if enter key is pressed, options value is used
 			case ALLEGRO_KEY_ENTER:
 				switch (options)
 				{
@@ -830,17 +865,20 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
+		//the game itself
 		else if (pauseCounter == 0 && spaceship.size() > 0)
 		{
 			for (int j = 0; j < spaceship.size(); j++)
 			{
 				switch (ev.keyboard.keycode)
 				{
+					//if escape key is pressed, the game closes
 				case ALLEGRO_KEY_ESCAPE:
 					destroy_stuff();
 					exit(EXIT_SUCCESS);
 					break;
 
+					//if p key is pressed, the game pauses
 				case ALLEGRO_KEY_P:
 					pauseCounter = 1;
 					al_set_sample_instance_position(Pause_On, 0);
@@ -848,6 +886,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 					al_play_sample_instance(Pause_On);
 					break;
 
+					//if s key is pressed the weaponsel value increases
 				case ALLEGRO_KEY_S:
 					if (num_of_weapon > 0)
 					{
@@ -866,6 +905,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 					}
 					break;
 
+					//if a key is pressed the weaponsel value decreases
 				case ALLEGRO_KEY_A:
 					
 					if (num_of_weapon > 0)
@@ -886,6 +926,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 					}
 					break;
 
+					//if z key is pressed, player shoots laser
 				case ALLEGRO_KEY_Z:
 					if (spaceship[j]->get_ability_to_shoot())
 					{
@@ -897,6 +938,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 					}
 					break;
 
+					//if x key is pressed, player shoots special weapon
 				case ALLEGRO_KEY_X:
 					if (spaceship[j]->get_ability_to_shoot())
 					{
@@ -977,15 +1019,18 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
+		//how to play screen
 		else if (pauseCounter == 3 && spaceship.size() > 0)
 		{
 			switch (ev.keyboard.keycode)
 			{
+				//if escape key is pressed, the game closes
 			case ALLEGRO_KEY_ESCAPE:
 				destroy_stuff();
 				exit(EXIT_SUCCESS);
 				break;
 
+				//if space key is pressed, screen transition to pause menu
 			case ALLEGRO_KEY_SPACE:
 				pauseCounter = 1;
 				al_set_sample_instance_position(Pause_On, 0);
@@ -995,15 +1040,18 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
+		//credit screen
 		else if (pauseCounter == 5)
 		{
 			switch (ev.keyboard.keycode)
 			{
+				//if escape key is pressed, the game closes
 			case ALLEGRO_KEY_ESCAPE:
 				destroy_stuff();
 				exit(EXIT_SUCCESS);
 				break;
 
+				//if enter key is pressed, the game closes
 			case ALLEGRO_KEY_ENTER:
 				if (credit.get_frame() >= 700)
 				{
@@ -1017,14 +1065,20 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 		}
 	}
 
+	//if mouse cursor moves in the game
+	//if the mouse moves to different options
+	//the value is stored to options variable
+	//and colors changed
 	else if (ev.type == ALLEGRO_EVENT_MOUSE_AXES)
 	{
+	//mouse becomes true
 		mouse = true;
 
 		
-
+		//if ship is still alive
 		if (spaceship.size() > 0)
 		{
+			//pause screen
 			if (pauseCounter == 1)
 			{
 
@@ -1064,6 +1118,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 				}
 			}
 
+			//how to play screen
 			else if (pauseCounter == 3)
 			{
 
@@ -1079,6 +1134,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 				}
 			}
 
+			//stage completed screen
 			else if (pauseCounter == 4)
 			{
 
@@ -1097,6 +1153,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 			
 		}
 
+		//credit screen
 		else if (pauseCounter == 5)
 		{
 
@@ -1112,6 +1169,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
+		//game over screen 
 		else if (spaceship.size() <= 0 && pauseCounter != 5)
 		{
 			if (ev.mouse.x >= 190 && ev.mouse.x <= 200 + al_get_text_width(status, "PLAY AGAIN") &&
@@ -1134,18 +1192,22 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 
 	}
 	
+	//if mouse is clicked 
 	else if (ev.type == ALLEGRO_EVENT_MOUSE_BUTTON_DOWN)
 	{
+	//if left mouse click is pressed options value is used
 		if (ev.mouse.button == 1)
 		{
-
+			//if player is still alive 
 			if (spaceship.size() > 0)
 			{
+				//if in game screen, the pause screen appears
 				if (pauseCounter == 0)
 				{
 					pauseCounter = 1;
 				}
 
+				//in pause screen, the options value is handled
 				else if (pauseCounter == 1)
 				{
 
@@ -1200,6 +1262,8 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 
 				}
 
+				//in how to play screen, if the box is clicked,
+				//the pause screen shows up
 				else if (pauseCounter == 3)
 				{
 
@@ -1221,6 +1285,8 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 
 				}
 
+				//in stage completed screen, if the box is clicked
+				//player moves on to the next stage
 				else if (pauseCounter == 4)
 				{
 
@@ -1261,6 +1327,7 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 				}	
 			}
 
+			//in the credit screen, if the box is clicked, the game closes
 			else if (pauseCounter == 5)
 			{
 				switch (options)
@@ -1273,6 +1340,9 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 				}
 			}
 
+			//in game over screen, if play again is clicked, the player starts from
+			//the beginning of the stage
+			//if quit is clicked, the game closes
 			else if (spaceship.size() <= 0 && pauseCounter != 5)
 			{
 				switch (options)
@@ -1304,11 +1374,12 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 
 	}
 
+	//if ship is alive
 	for (int j = 0; j < spaceship.size(); j++)
 	{
+		//if miniboss is not defeated, the player key control is enabled
 		if (!minibossdefeated)
 		{
-			//spaceship[j]->set_movement(false);
 			spaceship[j]->control(ev);
 		}
 	}
@@ -1317,6 +1388,8 @@ void game_loop::Event_listenter(ALLEGRO_EVENT &ev, ALLEGRO_EVENT_QUEUE *q)
 
 void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 {
+	//if player health is zero,
+	//player dies and game over screen is shown
 	if (stat.gethealth() <= 0)
 	{
 		for (int i = 0; i < spaceship.size(); i++)
@@ -1330,16 +1403,15 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 				al_set_sample_instance_playmode(game_over, ALLEGRO_PLAYMODE_ONCE);
 				al_play_sample_instance(game_over);
 				spaceship.erase(spaceship.begin());
-				//std::cout << "Ship Size: " << spaceship.size() << std::endl;
 			}
 		}
 
 	}
 	
+	//game screen update
 	if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 0 && spaceship.size() > 0)
 	{
-		//std::cout << ammo[INFERRED] << std::endl;
-
+		//if ammo is less than zero
 		for (int i = 0; i < 6; i++)
 		{
 			if (ammo[i] < 0)
@@ -1348,6 +1420,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
+		//updates player's coord, health, and status
 		for (int j = 0; j < spaceship.size(); j++)
 		{
 			spaceship[j]->update();
@@ -1366,8 +1439,11 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
+		//if player is on earth
 		if (stagenumber == EARTH)
 		{
+			//as the stage scrolls down 
+			//enemies will pop out in different y coords
 			if (!battle)
 			{
 				if (spaceship.size() > 0)
@@ -1444,8 +1520,11 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		}
 
+		//if player is on mars
 		else if (stagenumber == MARS)
 		{
+			//as the stage scrolls down 
+			//enemies will pop out in different y coords
 			if (!battle)
 			{
 				if (spaceship.size() > 0)
@@ -1524,6 +1603,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		else if (stagenumber == AST)
 		{
+			//each level will have enemies
 			if (stat.getlvl() == 1)
 			{
 				if (s.get_y() == -2800 && !battle)
@@ -1633,6 +1713,8 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 				}
 			}
 
+			//if the player reaches to the end of the stage,
+			//he will have to beat the boss
 			else if (stat.getlvl() == 8)
 			{
 
@@ -1652,6 +1734,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		else if (stagenumber == SATURN)
 		{
+		//each level will have enemies
 			if (stat.getlvl() == 1)
 			{
 				if (s.get_y() == -800 && !battle)
@@ -1684,6 +1767,9 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			
 			}
 
+			//if the player reaches to the end of the stage,
+			//he will have to beat the final boss
+
 			else if (stat.getlvl() == 3)
 			{
 				if (s.get_y() == 0 && !boss_battle)
@@ -1703,6 +1789,8 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 		
+		//end of level 1 for earth and mars
+		//player have to beat the enemies to advance
 		if (s.get_y() == -2400 && !battle && lvl == 1)
 		{
 			battle = true;
@@ -1728,6 +1816,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		}
 
+		//at the end of level 2 player have to beat miniboss on earth
 		else if (s.get_y() == -1562 && !miniboss_battle && lvl == 2 && !minibossdefeated)
 		{
 			if (stagenumber == EARTH)
@@ -1738,6 +1827,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
+		//at the end of level 2 player have to beat miniboss on mars
 		else if (s.get_y() == -1600 && !miniboss_battle && lvl == 2 && !minibossdefeated)
 		{
 			if (stagenumber == MARS)
@@ -1748,6 +1838,9 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 		
+
+		//end of level 3 for earth and mars
+		//player have to beat the enemies to advance
 		else if (s.get_y() == -800 && !battle && lvl == 3)
 		{
 			battle = true;
@@ -1766,6 +1859,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
+		//at the end of the stage player have to beat the boss
 		else if (s.get_y() == 0 && !boss_battle && lvl == 4)
 		{
 
@@ -1783,10 +1877,14 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			}
 		}
 
+		//updates player for maneuvering and shooting
 		shipWeapon.update(w);
 		shipWeapon.destroy_ammo(w);
 
+		//keeps player half inside the screen
 		col.win_collsion(spaceship);
+
+		//keeps enemies inside the screen
 		col.Enemy_boundary_collision(E, foes, REBOUND);
 		col2.Enemy_boundary_collision(E2, foes_scroll1, REBOUND);
 		col3.Enemy_boundary_collision(E3, foes_scroll2, DESTROY);
@@ -1794,12 +1892,17 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		col5.Enemy_boundary_collision(E5, foes_scroll4, DESTROY);
 		col6.Enemy_boundary_collision(E6, foes_scroll5, DESTROY);
 
-		
+		//keeps bosses inside the screen
 		col.Boss_boundary_collision(E, b);
 
+		//deals damage to the boss if player manage to shoot with the right
+		//weapon at the right time
 		col.boss_gets_damaged(E, shipWeapon, b, bw, w, bosshit, reflect, bossdefeated);
+		
+		//deals damage to miniboss when shot with laser
 		col.miniboss_gets_damaged(E, s, shipWeapon, mb, turrets, w, bosshit, Boss_destroyed, bossdefeated);
 		
+		//deals damage to enemies when player shoots them with lasers
 		col.enemy_gets_damaged(E, shipWeapon, T, am, t, foes, w, stat, destroy, enemy_hit, status, enemy_damaged, sc);
 		col2.enemy_gets_damaged(E2, shipWeapon, T2, am2, t2, foes_scroll1, w, stat, destroy, enemy_hit, status, enemy_while_scroll_damaged, sc);
 		col3.enemy_gets_damaged(E3, shipWeapon, T3, am3, t3, foes_scroll2, w, stat, destroy, enemy_hit, status, enemy_while_scroll_damaged, sc);
@@ -1807,7 +1910,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		col5.enemy_gets_damaged(E5, shipWeapon, T5, am5, t5, foes_scroll4, w, stat, destroy, enemy_hit, status, enemy_while_scroll_damaged, sc);
 		col6.enemy_gets_damaged(E6, shipWeapon, T6, am6, t6, foes_scroll5, w, stat, destroy, enemy_hit, status, enemy_while_scroll_damaged, sc);
 
-
+		//when enemies' health reaches zero it dies and possibly leave behind items
 		col.enemy_dies(status, adestroy, stat, num_of_enemies, sc, T, am, t, foes, unlockweapon, destroy);
 		col2.enemy_dies(status, adestroy, stat, num_of_enemies, sc, T2, am2, t2, foes_scroll1, unlockweapon, destroy);
 		col3.enemy_dies(status, adestroy, stat, num_of_enemies, sc, T3, am3, t3, foes_scroll2, unlockweapon, destroy);
@@ -1815,7 +1918,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		col5.enemy_dies(status, adestroy, stat, num_of_enemies, sc, T5, am5, t5, foes_scroll4, unlockweapon, destroy);
 		col6.enemy_dies(status, adestroy, stat, num_of_enemies, sc, T6, am6, t6, foes_scroll5, unlockweapon, destroy);
 
-
+		//updates enemies', minibosses', and bosses' coordinates and shooting
 		E.update(foes, b, mb, elazer, turrets, bw, ani, s, enemy_damaged);
 		E2.update(foes_scroll1, enemy_while_scroll_damaged);
 		E3.update(foes_scroll2, enemy_while_scroll_damaged);
@@ -1823,6 +1926,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		E5.update(foes_scroll4, enemy_while_scroll_damaged);
 		E6.update(foes_scroll5, enemy_while_scroll_damaged);
 
+		//updates tools and ammos
 		T.update(am, t);
 		T2.update(am2, t2);
 		T3.update(am3, t3);
@@ -1830,14 +1934,17 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		T5.update(am5, t5);
 		T6.update(am6, t6);
 
+		//when player collides with power ups and other items, stuff happens
 		col.player_gets_tool(spaceship, E, foes, t, am, T, stat, s, pickup, status, health, ammo, disfig);
 		col2.player_gets_tool(spaceship, E2, foes_scroll1, t2, am2, T, stat, s, pickup, status, health, ammo, disfig);
 		col3.player_gets_tool(spaceship, E3, foes_scroll2, t3, am3, T, stat, s, pickup, status, health, ammo, disfig);
 		col4.player_gets_tool(spaceship, E4, foes_scroll3, t4, am4, T, stat, s, pickup, status, health, ammo, disfig);
 		col5.player_gets_tool(spaceship, E5, foes_scroll4, t5, am5, T, stat, s, pickup, status, health, ammo, disfig);
 		col6.player_gets_tool(spaceship, E6, foes_scroll5, t6, am6, T, stat, s, pickup, status, health, ammo, disfig);
+		
 		s.update_animation();
 
+		//if player did not get damaged
 		if (!spaceship[0]->ishit())
 		{
 			col.player_gets_damaged(E, mb, b, foes, spaceship, stat, hit, status, ev, player_damaged, health);
@@ -1858,6 +1965,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 		}
 		
+		//if player gets disfigurement all the enemies fully inside the window dies
 		if (disfig)
 		{
 			col.destroy_foes_inside(E, foes);
@@ -1870,25 +1978,33 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 			disfig = false;
 		}
 
+		//when player shoots spartak energy ball, it reflects
 		col.Ball_gets_redirected(E, shipWeapon, bw, w, ballreflect, bossdefeated);
+
+		//when player shoots certian weapons like molten ball, it gets destroyed
 		col.Ball_gets_destroyed(E, shipWeapon, T, bw, w, am, reflect, bossdefeated);
+
+		//bosses weapon are immune to player's weapon
 		col.Boss_weapon_immune_to_weapon(E, s, foes, shipWeapon, elazer, w, turrets, bw, reflect, bossdefeated);
 
+		//enemies weapon are destroyed when player shoots them with laser
 		col2.Boss_weapon_immune_to_weapon(E, shipWeapon, foes_scroll1, w, reflect, bossdefeated);
 		col3.Boss_weapon_immune_to_weapon(E, shipWeapon, foes_scroll2, w, reflect, bossdefeated);
 		col4.Boss_weapon_immune_to_weapon(E, shipWeapon, foes_scroll3, w, reflect, bossdefeated);
 		col5.Boss_weapon_immune_to_weapon(E, shipWeapon, foes_scroll4, w, reflect, bossdefeated);
 		col6.Boss_weapon_immune_to_weapon(E, shipWeapon, foes_scroll5, w, reflect, bossdefeated);
 
-		
+		//render is enabled
 		draw = true;
 		render();
 
 	}
 
+	//pause screen update
 	else if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 1 && spaceship.size() > 0)
 	{
 
+	//all music stops playing
 		al_stop_sample_instance(Earth);
 		al_stop_sample_instance(Earth_Factory);
 		al_stop_sample_instance(Mars);
@@ -1898,41 +2014,48 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		al_stop_sample_instance(Saturn);
 		al_stop_sample_instance(Final_Boss);
 
+	
+		//render is enabled
 		draw = true;
 		render();
 	}
 
+	//how to play screen update
 	else if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 3 && spaceship.size() > 0)
 	{
+	//render is enabled
 		draw = true;
 		render();
 	}
 
+	//stage completed screen update
 	else if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 4 && spaceship.size() > 0)
 	{
-
-
+	//player's weapon is cleared
 		w.clear();
-
-		//std::cout << al_get_sample_instance_position(Stage_Completed) << std::endl;
 		
+		//if the stage completed music is done, the stage completed score winds down
 		if (al_get_sample_instance_position(Stage_Completed) == 0 && scorecounter > 0)
 		{
 			al_stop_sample_instance(Stage_Completed);
 			increment = 1;
 		}
 
+		//if stage completed music is not done, the stage completed score does not wind down
 		else if (al_get_sample_instance_position(Stage_Completed) > 0)
 		{
 			al_play_sample_instance(Stage_Completed);
 
 		}
 
+		//once the stage completed score is completed and less than zero
+		//it stops winding
 		if (scorecounter < 0)
 		{
 			increment = 0;
 		}
 
+		//stops all background music from playing
 		al_stop_sample_instance(Earth);
 		al_stop_sample_instance(Earth_Factory);
 		al_stop_sample_instance(Mars);
@@ -1942,6 +2065,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		al_stop_sample_instance(Saturn);
 		al_stop_sample_instance(Final_Boss);
 		
+		//render is enabled
 		draw = true;
 		render();
 
@@ -1950,8 +2074,10 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 	}
 
+	//credit screen update
 	else if (ev.type == ALLEGRO_EVENT_TIMER && pauseCounter == 5)
 	{
+	// all vectors are deleted
 		w.clear();
 		spaceship.clear();
 		foes.clear();
@@ -1987,6 +2113,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		st.clear();
 		credit.increment_frame();
 
+		//all music stops playing
 		al_stop_sample_instance(Earth);
 		al_stop_sample_instance(Earth_Factory);
 		al_stop_sample_instance(Mars);
@@ -1995,15 +2122,16 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		al_stop_sample_instance(Boss);
 		al_stop_sample_instance(Saturn);
 		al_stop_sample_instance(Final_Boss);
-		//std::cout << credit.get_frame() << std::endl;
 
+		//render is enabled
 		draw = true;
 		render();
 	}
 
+	//game over screen update
 	else if (ev.type == ALLEGRO_EVENT_TIMER && spaceship.size() <= 0 && pauseCounter!= 5)
 	{
-
+		//background music stops playing
 		al_stop_sample_instance(Earth);
 		al_stop_sample_instance(Earth_Factory);
 		al_stop_sample_instance(Mars);
@@ -2013,6 +2141,7 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 		al_stop_sample_instance(Saturn);
 		al_stop_sample_instance(Final_Boss);
 
+		//render is enabled
 		draw = true;
 		render();
 	}
@@ -2020,11 +2149,12 @@ void game_loop::update(ALLEGRO_EVENT ev, ALLEGRO_EVENT_QUEUE *q)
 
 void game_loop::render()
 {
-	
+	//game screen
 	if (draw && pauseCounter == 0 && spaceship.size() > 0)
 	{
 		if (b.size() == 0 && spaceship.size() > 0)
 		{
+			//background music stops when miniboss is defeated
 			if (minibossdefeated)
 			{
 				al_stop_sample_instance(Earth);
@@ -2037,6 +2167,7 @@ void game_loop::render()
 				al_stop_sample_instance(Final_Boss);
 			}
 
+			//background music are played for the appropiate settings
 			switch (s.get_stage())
 			{
 			case EARTH:
@@ -2094,6 +2225,7 @@ void game_loop::render()
 			}
 		}
 		
+		//when boss appeared, stage background is still there
 		else if (b.size() > 0 && spaceship.size() > 0)
 		{
 
@@ -2137,6 +2269,7 @@ void game_loop::render()
 			}
 		}
 		
+		//if boss health is zero
 		for (int i = 0; i < b.size(); i++)
 		{
 			if (b[i]->get_health() <= 0)
@@ -2154,18 +2287,18 @@ void game_loop::render()
 		}
 		
 
-
+		//renders enemies, bosses, and minibosses appropriate at different
+		//places in each stage
 		E.renderenemy(foes, enemy_damaged);
 		E.renderenemy(foes_scroll1, enemy_while_scroll_damaged);
 		E.renderenemy(foes_scroll2, enemy_while_scroll_damaged);
 		E.renderenemy(foes_scroll3, enemy_while_scroll_damaged);
 		E.renderenemy(foes_scroll4, enemy_while_scroll_damaged);
 		E.renderenemy(foes_scroll5, enemy_while_scroll_damaged);
-		
 		E.renderboss(b, elazer, bw, ani, Boss_destroyed, frame);
 		E.renderminiboss(mb, turrets, s, ani);
 
-		
+		//display stage background based on appropriate stage 
 		switch (s.get_stage())
 		{
 		case EARTH:
@@ -2183,7 +2316,7 @@ void game_loop::render()
 		}
 
 
-
+		//if enemies gets frozen, or burned
 		for (int i = 0; i < foes.size(); i++)
 		{
 			if (foes[i]->get_duration() > 0)
@@ -2323,7 +2456,7 @@ void game_loop::render()
 		}
 
 		
-		
+		//draws ammo and tools
 		for (int i = 0; i < am.size(); i++)
 		{
 			T.draw(am[i]->get_ammo_ID(), unlockweapon, am[i]->get_x(), am[i]->get_y());
@@ -2386,18 +2519,20 @@ void game_loop::render()
 		}
 		
 		
-		
+		//displays status for each player
 		stat.Status_box(0, winy - 100, winx, winy);
 		stat.sethealth(health, status);
 		stat.set_health_bar(211, 440, 311, 455);
 		stat.setlvl(lvl, status);
 		stat.setscore(sc, status);
 
+		//displays player
 		for (int j = 0; j < spaceship.size(); j++)
 		{
 			spaceship[j]->render(stat, status, player_damaged);
 		}
 
+		//if certain amount of enemies are killed the weapons are unlocked
 		if (weaponsel < 1 && unlockweapon[ICET])
 		{
 			weaponsel = 1;
@@ -2460,31 +2595,40 @@ void game_loop::render()
 			shipWeapon.renderweapon(w, w[k]->getweaponID(), stat, ammo[w[k]->getweaponID()]);
 		}
 
+		//players weapon are displayed on the box
 		shipWeapon.renderweaponinbox(LAZER, stat, NULL);
 
 		shipWeapon.renderweaponinbox(weaponsel, stat, ammo);
 		
 		
 
-
+		// renders the display
 		al_flip_display();
+		//clears all color to black
 		al_clear_to_color(al_map_rgb(0, 0, 0));
+		//displays drawing
 		draw = false;
 	}
 	
+	//pause screen
 	else if (draw && pauseCounter == 1 && spaceship.size() > 0)
 	{
+	//clears background to black
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 
+		//displays pause title
 		stat.setnotification("PAUSE", pause, 200, 150, al_map_rgb(0,255,0));
 		
+		//displays pause list
 		stat.setnotification("CONTINUE [P]", pause_options, 190, 230, al_map_rgb(255, 255, 255));
 		stat.setnotification("REPLAY [R]", pause_options, 195, 260, al_map_rgb(255, 255, 255));
 		stat.setnotification("HOW TO PLAY", pause_options, 190, 290, al_map_rgb(255, 255, 255));
 		stat.setnotification("BACK TO MAIN MENU", pause_options, 160, 320, al_map_rgb(255, 255, 255));
 		stat.setnotification("QUIT [ESC]", pause_options, 200, 350, al_map_rgb(255, 255, 255));
 		
-
+		//if mouse coursor is moved and on certian parts on the list
+		//the option change color
+		// if up/down key is pressed, the words will be in red
 		if (mouse)
 		{
 			switch (options)
@@ -2552,15 +2696,22 @@ void game_loop::render()
 		al_flip_display();
 	}
 
+	//game over screen
 	else if (draw && spaceship.size() <= 0 && pauseCounter != 5)
 	{
+		//clears background to slightly red
 		al_clear_to_color(al_map_rgb(200, 0, 0));
 
+		//game over title
 		stat.setnotification("GAME OVER", pause, 170, 150, al_map_rgb(0, 0, 0));
 		
-		
+		//game over title list
 		stat.setnotification("PLAY AGAIN", pause_options, 190, 230, al_map_rgb(0, 0, 0));
 		stat.setnotification("QUIT [ESC]", pause_options, 200, 260, al_map_rgb(0, 0, 0));
+		
+		//if mouse moved and hover over different options
+		//the options will change color
+		//if up/down key is pressed the text option will be shown in blue
 		if (mouse)
 		{
 			switch (options)
@@ -2597,12 +2748,16 @@ void game_loop::render()
 		al_flip_display();
 	}
 
+	//how to play screen
 	else if (draw && pauseCounter == 3 && spaceship.size() > 0)
 	{
+		//clears background to black
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 
+		//how to play title
 		stat.setnotification("HOW TO PLAY", pause, 150, 0, al_map_rgb(200, 0, 100));
 
+		//shows different keys on how to play
 		stat.setnotification("PRESS (ESC) IF YOU WANT TO QUIT", pause_options, 0, 100, al_map_rgb(50, 255, 255));
 		stat.setnotification("PRESS (P) IF YOU WANT TO CONTINUE OR PAUSE", pause_options, 0, 130, al_map_rgb(50, 255, 255));
 		stat.setnotification("PRESS (R) TO RESET THE GAME (ONLY IN PAUSE MENU)", pause_options, 0, 160, al_map_rgb(50, 255, 255));
@@ -2611,10 +2766,12 @@ void game_loop::render()
 		stat.setnotification("PRESS (X) TO SHOOT SPECIAL WEAPONS", pause_options, 0, 250, al_map_rgb(50, 255, 255));
 		stat.setnotification("PRESS (A) or (S) TO SWITCH SPECIAL WEAPONS", pause_options, 0, 280, al_map_rgb(50, 255, 255));
 
+		//back to menu box
 		al_draw_filled_rectangle(170, 500 - 2 * al_get_font_line_height(status), 180 + al_get_text_width(status, "BACK TO MAIN MENU"), 500, al_map_rgb(100, 0, 0));
 		stat.setnotification("BACK TO MAIN MENU", status, 175, 500 - 2 * al_get_font_line_height(status), al_map_rgb(255, 255, 255));
 		stat.setnotification("[SPACEBAR]", status, 200, 500 - al_get_font_line_height(status), al_map_rgb(255, 255, 255));
 
+		//if mouse cursor hovers the box, it changes color
 		if (mouse && options == 0)
 		{
 			al_draw_rectangle(170, 500 - 2 * al_get_font_line_height(status), 180 + al_get_text_width(status, "BACK TO MAIN MENU"), 500, al_map_rgb(100, 0, 0), 1);
@@ -2623,27 +2780,40 @@ void game_loop::render()
 			stat.setnotification("[SPACEBAR]", status, 200, 500 - al_get_font_line_height(status), al_map_rgb(155, 0, 0));
 		}
 
+		//renders display
 		al_flip_display();
 
 	}
 
+	//stage completed screen
 	else if (draw && pauseCounter == 4 && spaceship.size() > 0)
 	{
+	//clears the background to green yellow color
 		al_clear_to_color(al_map_rgb(100, 200, 0));
 
+		//stage completed title
 		stat.setnotification("Stage Completed", pause, 150, 0, al_map_rgb(50, 100, 50));
 		
+		//plays countdown score sound
 		if (increment == 1)
 		{
 			al_set_sample_instance_position(Countdown, 0);
 			al_play_sample_instance(Countdown);
 		}
 
-
+		//decrements stage completed score
 		scorecounter -= increment;
+		
+		//sets the score value
 		stat.setscore(scorecounter, pause_options, "STAGE SCORE: ", 150, 100);
 
+		//increments the score from the stage completed score
 		sc+=increment;
+
+		//gives you info about the plot
+		//if mouse coursor is moved and on certian parts on the list
+		//the option change color
+		//if space key is pressed player goes to the next stage
 		if (scorecounter <= 0)
 		{
 			if (s.get_stage() == EARTH)
@@ -2685,22 +2855,23 @@ void game_loop::render()
 
 		}
 
+		//sets the score
 		stat.setscore(sc, pause_options, 150, 150);
 
 
 	
-
+		//renders
 		al_flip_display();
 
 	}
 
+	//credit screen
 	else if (draw && pauseCounter == 5)
 	{
-
-		
-
+		//background color cleared to black
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 
+		//credit change depending on keyframe
 		if (credit.get_frame() >= 0 && credit.get_frame() < 125)
 		{
 			stat.setnotification("Director", pause_options, 205, 200, al_map_rgb(255, 255, 255));
@@ -2785,6 +2956,7 @@ void game_loop::render()
 
 void game_loop::destroy_stuff()
 {
+	//destroys assets and clears vectors
 	al_destroy_bitmap(frozen);
 
 	al_destroy_sample(earth);

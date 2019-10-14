@@ -8,13 +8,11 @@
 #include <allegro5/allegro_ttf.h>
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
-
 #include <vector>
 #include <iostream>
 #include <random>
 #include <time.h>
 #include <math.h>
-
 #include "Status.h"
 #include "Animate.h"
 
@@ -41,10 +39,11 @@ enum {
 	SPACESHIP, VOLCANON, WYRM, XYBTOFY
 };
 
-//boss
-enum {
-	SPARTAK, MARTIANB, KAMETKHAN, XORGANA
-};
+//miniboss
+enum { E, M };
+
+//bosses
+enum {SPARTAK, MARTIANB, KAMETKHAN, XORGANA};
 
 //weapon
 enum{ICET=1, INFERRED, ZIGGONET, HAYCH, HAYCHBA, SONICWAVE, LAZER};
@@ -55,20 +54,9 @@ enum {HEALTH, DISFIG, ICE=5, FIRE=7, ZIG=9, H=11, HBAR=13, WAVE = 15};
 //status
 enum {FROZEN = 11, BURNED, STUNNED};
 
-//miniboss
-enum { E, M };
-
 //choice for boss
 enum {ATTACK, MOVE};
 
-//Spartak's Attack Moves
+//boss's attack moves
 enum {BALL, DIAMONDS, S_LAZER, CHARGE, EGG, TURBULENCE, B_LAZER, MOLTEN, KAMET, HEAT, SINGTW, V};
 
-//MartianB's Attack Moves
-//enum {CHARGE, EGG, TURBULENCE, B_LAZER};
-
-//KametKhan's Attack Moves
-//enum {MOLTEN, KAMET, HEAT};
-
-//Xorgana's Attack Moves
-//enum {SINGTW, V};
